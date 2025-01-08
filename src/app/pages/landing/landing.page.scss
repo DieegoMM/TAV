@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    flex-direction: column;
+    align-items: center; /* Centra el contenido verticalmente */
+    height: 80%; /* Ocupa toda la altura de la pantalla */
+  }
+  
+  .title {
+    text-align: center;
+    width: 100%;
+  }
+  
+  ion-fab {
+    display: flex;
+    justify-content: center; /* Centra el fab button */
+    width: 100%;
+  }
+  
