@@ -1,25 +1,35 @@
 <ion-content [fullscreen]="true">
-  <div>
-    <ion-title>Welcome Back</ion-title>
-    <p>Sing in to acjkasdjas</p>
+  <div class="header">
+    <ion-title class="title">Bienvenido de vuelta</ion-title>
+    <p class="subTitle">Ingresa para usar tu cuenta</p>
   </div>
 
   <form>
+    
     <div class="ion-padding">
       <ion-item>
-        <ion-input></ion-input>
-        <ion-icon name="person-outline"></ion-icon>
+        <ion-input placeholder="Email" class="input"></ion-input>
+        <ion-icon name="mail-outline"></ion-icon>
       </ion-item>
+
       <ion-item>
-        <ion-input></ion-input>
-        <ion-icon name="lock-closed-outline"></ion-icon>
-      </ion-item>
-      <ion-item>
-        <ion-input></ion-input>
+        <ion-input placeholder="Contraseña" class="input"></ion-input>
         <ion-icon name="lock-closed-outline"></ion-icon>
       </ion-item>
     </div>
-    <div>
-      <a [routerLink]="['/reset-password']">Forgot Passowrd</a>
+
+    <div class="forgotPassword">
+      <a [routerLink]="['/reset-password']" style="color: #1c8a7a">Recupera tu contraseña</a>
     </div>
+
+    <div class="signupLink">
+      <p>¿Eres nuevo? <a style="color: #1c8a7a" [routerLink]="['/signup']">Crear cuenta</a></p>
+    </div>
+
+    <ion-fab vertical="bottom" horizontal="center" style="margin-bottom: 275px;">
+      <ion-fab-button [routerLink]="['/home']">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
   </form>
