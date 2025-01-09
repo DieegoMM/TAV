@@ -1,43 +1,42 @@
-<ion-content>
-  <ion-header>
-    <ion-toolbar>
-      <ion-title class="title">Regístrate</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true">
+  <div class="header">
+    <ion-title class="title">Bienvenido</ion-title>
+    <p class="subTitle">Regístrate para usar tu cuenta</p>
+  </div>
 
-  <p>Regístrate para usar tu cuenta</p>
   <form>
+
     <div class="ion-padding">
-      <!-- Campo para nombre de usuario -->
       <ion-item>
-        <ion-input placeholder="Ingresa tu nombre de usuario"></ion-input>
-        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-input class="input" placeholder="Ingresa tu nombre de usuario"></ion-input>
+        <ion-icon name="person-outline"></ion-icon>
       </ion-item>
+
       <ion-item>
-        <ion-input placeholder="Ingresa tu correo"></ion-input>
+        <ion-input class="input" placeholder="Ingresa tu email"></ion-input>
         <ion-icon name="mail-outline"></ion-icon>
       </ion-item>
+
       <ion-item>
-        <ion-input placeholder="Ingresa una contraseña"></ion-input>
+        <ion-input class="input" placeholder="Ingresa tu Contraseña"></ion-input>
         <ion-icon name="lock-closed-outline"></ion-icon>
       </ion-item>
+
       <ion-item>
-        <ion-input placeholder="Repite tu contraseña"></ion-input>
+        <ion-input class="input" placeholder="Confirma tu Contraseña"></ion-input>
         <ion-icon name="lock-closed-outline"></ion-icon>
       </ion-item>
-      <!-- Campo para fecha de nacimiento -->
-      <ion-item>
-        <ion-datetime placeholder="Fecha de nacimiento" presentation="date"></ion-datetime>
-        <ion-icon name="calendar-outline"></ion-icon>
-      </ion-item>
-      <div>
-        <p>¿Ya tienes cuenta? <a [routerLink]="['/login']" style="color: #21daa7;">Iniciar Sesión</a></p>
-      </div>
+
     </div>
-    <ion-fab vertical="bottom" horizontal="center" style="margin-bottom: 30px;">
+
+    <div class="signinLink">
+      <p>¿Ya tienes cuenta? <a [routerLink]="['/login']" style="color: #1c8a7a">Ingresa Aquí</a></p>
+    </div>
+
+    <ion-fab vertical="bottom" horizontal="center" style="margin-bottom: 150px;">
       <ion-fab-button [routerLink]="['/home']">
         <ion-icon name="chevron-forward"></ion-icon>
       </ion-fab-button>
     </ion-fab>
+    
   </form>
-</ion-content>
