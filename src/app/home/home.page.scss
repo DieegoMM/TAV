@@ -1,27 +1,100 @@
-#container {
+ion-content {
+  width: 100%;
+  --background-color: #f2f4f3 !important;
+
+  .heading {
+    background-color: #595daf; /* Fondo del encabezado */
+    width: 100%;
+    height: 350px; /* Incrementa la altura del encabezado */
+    border-bottom-right-radius: 55px;
+    border-bottom-left-radius: 55px;
+    display: flex;
+    flex-direction: column; /* Alinea elementos verticalmente */
+    align-items: center;
+    justify-content: flex-start; /* Alineación hacia arriba */
+    padding: 20px;
+  }
+
+  .btn_flex {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; /* Alineación a la izquierda */
+    align-items: center;
+  }
+
+  ion-label {
+    font-size: 40px; /* Tamaño del texto "Get Fix" */
+    color: #fff;
+    font-weight: bold;
+    margin-left: 45px;
+  }
+
+  ion-menu-button {
+    font-size: 24px;
+    color: black;
+    display: block; /* Asegura que sea visible */
+  }
+
+  input {
+    margin-top: 20px; /* Espaciado entre el título y la barra */
+    width: 90%;
+    height: 45px; /* Altura más pequeña */
+    border-radius: 10px;
+    padding-left: 15px;
+    border: 1px solid #ccc; /* Bordes suaves */
+    font-size: 16px;
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+  }
+
+  /* Estilo de los enlaces */
+  p {
+    text-align: center;
+    margin-top: 15px;
+    a {
+      color: #ffffff;
+      text-decoration: none;
+      margin: 0 10px; /* Espaciado entre enlaces */
+      font-size: 14px; /* Tamaño más pequeño */
+      font-weight: 500;
+    }
+    a:hover {
+      text-decoration: underline; /* Subrayado al pasar el mouse */
+    }
+  }
+
+  /* Estilo del botón de "Ver locales" */
+  /* Estilo más específico con una clase */
+/* Reducción del texto con máxima prioridad */
+ion-item.ver-locales {
+  margin-top: 20px;
+  background-color: #000000; 
+  color: #ffffff; 
+  width: 80%;
+  height: 40px; /* Altura más pequeña */
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); 
+  padding: 8px;
+  font-size: 12px !important; /* Forzar reducción */
+  font-weight: normal !important;
+  line-height: 1.2 !important; /* Ajusta la separación de línea */
+  text-transform: none !important; /* Desactiva mayúsculas forzadas */
+}
+
+ion-label {
+  font-size: 12px !important;
+  font-weight: normal !important;
   text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  white-space: normal !important; /* Evita que se expanda */
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+ion-icon {
+  font-size: 16px !important; 
+  margin-right: 6px;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
 
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
 }
