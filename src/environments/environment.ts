@@ -3,16 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false, // Cambia a true en el archivo environment.prod.ts si estás en producción
-  firebaseConfig: {
-    apiKey: "AIzaSyCWdHusSW_KQvAoGs3TOk2aHHWgLC4mcU4",
-    authDomain: "auth-example-ad121.firebaseapp.com",
-    projectId: "auth-example-ad121",
-    storageBucket: "auth-example-ad121.firebasestorage.app",
-    messagingSenderId: "782051730521",
-    appId: "1:782051730521:web:11851b783c805bd44dfd48",
-    measurementId: "G-90CLM5Z3DG",
-  },
+  production: false,
+  firebaseConfig : {
+    apiKey: "AIzaSyAkwor_F0clS1OX-AMdGie_JoHWMC-o0h8",
+    authDomain: "tav-try1.firebaseapp.com",
+    projectId: "tav-try1",
+    storageBucket: "tav-try1.firebasestorage.app",
+    messagingSenderId: "491519742217",
+    appId: "1:491519742217:web:f0d643facdbea77ab203d8",
+    measurementId: "G-DR1J4RFQKT"
+  }
 };
 
 /*

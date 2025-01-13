@@ -4,18 +4,26 @@
     <p class="subTitle">Ingresa para usar tu cuenta</p>
   </div>
 
-  <form>
-    
+  <!-- Formulario con el evento `ngSubmit` para que valide el formulario -->
+  <form [formGroup]="loginForm" novalidate>
     <div class="ion-padding">
+      <!-- Campo Email -->
       <ion-item>
-        <ion-input placeholder="Email" class="input"></ion-input>
+        <ion-input formControlName="email" placeholder="Ingresa tu email"></ion-input>
         <ion-icon name="mail-outline"></ion-icon>
       </ion-item>
+      <ion-text *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']">
+        El email es obligatorio.
+      </ion-text>
 
+      <!-- Campo Contraseña -->
       <ion-item>
-        <ion-input placeholder="Contraseña" class="input"></ion-input>
+        <ion-input formControlName="password" type="password" placeholder="Ingresa tu contraseña"></ion-input>
         <ion-icon name="lock-closed-outline"></ion-icon>
       </ion-item>
+      <ion-text *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']">
+        La contraseña es obligatoria.
+      </ion-text>
     </div>
 
     <div class="forgotPassword">
@@ -26,10 +34,11 @@
       <p>¿Eres nuevo? <a style="color: #1c8a7a" [routerLink]="['/signup']">Crear cuenta</a></p>
     </div>
 
-    <ion-fab vertical="bottom" horizontal="center" style="margin-bottom: 275px;">
-      <ion-fab-button [routerLink]="['/home']">
+    <!-- Botón flotante con `click` en vez de `type="submit"` -->
+    <ion-fab vertical="bottom" horizontal="center" style="margin-bottom: 150px;">
+      <ion-fab-button (click)="login()"> 
         <ion-icon name="chevron-forward"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-
   </form>
+</ion-content>
