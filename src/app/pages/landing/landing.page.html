@@ -1,18 +1,27 @@
 <ion-content [fullscreen]="true">
+  <!-- Contenido principal del componente -->
   <div class="container">
-    <!-- Fondo con GIF -->
+    
+    <!-- Sección del fondo animado con un GIF -->
     <div class="gif-background">
+      <!-- Imagen animada que sirve como fondo del componente -->
       <img src="../../../assets/icon/background.gif" alt="Fondo animado" />
     </div>
 
-    <!-- Logo -->
-    <ion-img src="../../../assets/icon/Logo.png" style="width: 400px; height: 400px;"></ion-img>
+    <!-- Logo de la aplicación -->
+    <ion-img 
+      src="../../../assets/icon/Logo.png" 
+      style="width: 400px; height: 400px;">
+    </ion-img>
     
-    <!-- Botón para ir al login -->
+    <!-- Botón flotante para redirigir al usuario a la pantalla de login -->
     <ion-fab vertical="bottom" horizontal="center" style="margin-bottom: 40px;">
+      <!-- Botón que utiliza Ionic Fab y redirige a la ruta '/login' -->
       <ion-fab-button [routerLink]="['/login']">
+        <!-- Icono de flecha hacia adelante dentro del botón -->
         <ion-icon name="chevron-forward"></ion-icon>
       </ion-fab-button>
     </ion-fab>
+
   </div>
 </ion-content>

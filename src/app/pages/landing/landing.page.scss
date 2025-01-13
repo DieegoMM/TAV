@@ -1,21 +1,48 @@
 .container {
-    display: flex;
-    justify-content: center; /* Centra el contenido horizontalmente */
-    flex-direction: column;
-    align-items: center; /* Centra el contenido verticalmente */
-    height: 80%; /* Ocupa toda la altura de la pantalla */
-  }
-  
-  .title {
-    text-align: center;
-    width: 100%;
-  }
-  
-  ion-fab {
-    display: flex;
-    justify-content: center; /* Centra el fab button */
-    width: 100%;
-  }
+  display: flex; /* Utilizamos flexbox para alinear los elementos */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  flex-direction: column; /* Organiza los elementos en una columna */
+  align-items: center; /* Centra el contenido verticalmente */
+  height: 100%; /* La altura del contenedor ocupa toda la pantalla */
+  position: relative; /* Permite posicionar elementos internos de forma absoluta */
+}
 
-  
-  
+/* Estilos para el fondo con un GIF */
+.gif-background {
+  position: absolute; /* Hace que el fondo se posicione relativo al contenedor */
+  top: 0; /* Alinea el fondo en la parte superior */
+  left: 0; /* Alinea el fondo en la parte izquierda */
+  width: 100%; /* El fondo ocupa todo el ancho disponible */
+  height: 100%; /* El fondo ocupa toda la altura disponible */
+  z-index: -1; /* Envía el fondo detrás de otros elementos del contenedor */
+  overflow: hidden; /* Oculta cualquier parte del GIF que sobresalga */
+}
+
+.gif-background img {
+  width: 100%; /* El GIF se ajusta al ancho del contenedor */
+  height: 100%; /* El GIF se ajusta a la altura del contenedor */
+  object-fit: cover; /* Escala el GIF para cubrir todo el espacio sin deformarse */
+  opacity: 1.0; /* Define la opacidad del GIF, haciéndolo completamente visible */
+}
+
+/* Estilos personalizados para el botón flotante */
+ion-fab-button {
+  --background: #0048e2; /* Color de fondo azul marino */
+  --color: white; /* Color blanco para el icono dentro del botón */
+  --border-radius: 12px; /* Bordes redondeados para el botón */
+  --padding-start: 20px; /* Espaciado interno a la izquierda */
+  --padding-end: 20px; /* Espaciado interno a la derecha */
+  --padding-top: 10px; /* Espaciado interno superior */
+  --padding-bottom: 50px; /* Espaciado interno inferior */
+}
+
+/* Efecto al pasar el cursor sobre el botón */
+ion-fab-button:hover {
+  --background: #0f0d53; /* Cambia a un azul más oscuro cuando el usuario pasa el cursor */
+}
+
+/* Estilos para la imagen del logo */
+ion-img {
+  margin-bottom: 20px; /* Añade espacio debajo del logo */
+  z-index: 1; /* Asegura que el logo se mantenga encima del fondo GIF */
+}

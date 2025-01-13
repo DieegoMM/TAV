@@ -1,42 +1,51 @@
 <ion-content [fullscreen]="true">
-  <div class="header">
-    <ion-title class="title">Bienvenido de vuelta</ion-title>
-    <p class="subTitle">Ingresa para usar tu cuenta</p>
+  <!-- Contenedor principal con el fondo animado -->
+  <div class="gif-background">
+    <img src="../../../assets/icon/Browser.gif" alt="Fondo animado" />
   </div>
 
-  <!-- Formulario con el evento `ngSubmit` para que valide el formulario -->
+  <!-- Encabezado del formulario -->
+  <div class="header">
+    <p class="subTitle">Conéctate para continuar.</p>
+  </div>
+
+  <!-- Formulario de inicio de sesión -->
   <form [formGroup]="loginForm" novalidate>
     <div class="ion-padding">
-      <!-- Campo Email -->
+      <!-- Campo para el email -->
       <ion-item>
         <ion-input formControlName="email" placeholder="Ingresa tu email"></ion-input>
         <ion-icon name="mail-outline"></ion-icon>
       </ion-item>
+      <!-- Mensaje de validación si el email es obligatorio -->
       <ion-text *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']">
         El email es obligatorio.
       </ion-text>
 
-      <!-- Campo Contraseña -->
+      <!-- Campo para la contraseña -->
       <ion-item>
         <ion-input formControlName="password" type="password" placeholder="Ingresa tu contraseña"></ion-input>
         <ion-icon name="lock-closed-outline"></ion-icon>
       </ion-item>
+      <!-- Mensaje de validación si la contraseña es obligatoria -->
       <ion-text *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']">
         La contraseña es obligatoria.
       </ion-text>
     </div>
 
+    <!-- Enlace para recuperar la contraseña -->
     <div class="forgotPassword">
-      <a [routerLink]="['/reset-password']" style="color: #1c8a7a">Recupera tu contraseña</a>
+      <a [routerLink]="['/reset-password']">Recupera tu contraseña</a>
     </div>
 
+    <!-- Enlace para registrarse -->
     <div class="signupLink">
-      <p>¿Eres nuevo? <a style="color: #1c8a7a" [routerLink]="['/signup']">Crear cuenta</a></p>
+      <p>¿Eres nuevo? <a [routerLink]="['/signup']">Crear cuenta</a></p>
     </div>
 
-    <!-- Botón flotante con `click` en vez de `type="submit"` -->
+    <!-- Botón flotante para enviar el formulario -->
     <ion-fab vertical="bottom" horizontal="center" style="margin-bottom: 150px;">
-      <ion-fab-button (click)="login()"> 
+      <ion-fab-button (click)="login()">
         <ion-icon name="chevron-forward"></ion-icon>
       </ion-fab-button>
     </ion-fab>

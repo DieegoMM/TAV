@@ -1,51 +1,123 @@
-.input{
-    font-size: 300;
-}
-
-ion-item{
-    --background: #1c8a7a;
-    border-radius: 10px;
-    margin-bottom: 16px;
-}
-
-.header{
-    margin-top: 100px;
-    margin-bottom: 80px;
-    text-align: center;
-    .subTitle{
-        color: gray;
-        font-size: 0.9rem;
-    }
-    title{
-        font-size: 1rem;
-    }
-}
-
-.signupLink{
-    display: flex;
-    margin: auto;
-    flex-direction: row;
-    align-items: center;
-    position: absolute;
+/* Fondo animado con GIF */
+.gif-background {
+    position: fixed; /* Fija el fondo en la pantalla */
+    top: 0;
     left: 0;
-    width: 80%;
-    right: 0;
-    justify-content: center;
-
-    p{
-        font-size: 0.95rem;
-    }
-    a{
-        text-decoration: none;
-    }
+    width: 100%; /* Cubre el 100% del ancho */
+    height: 100%; /* Cubre el 100% del alto */
+    z-index: -1; /* Detrás del contenido */
+    overflow: hidden;
 }
 
-.forgotPassword{
+.gif-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Evita la distorsión */
+    opacity: 0.5; /* Fondo menos opaco para destacar contenido */
+}
+
+/* Encabezado */
+.header {
+    margin-top: 0; /* Quitar el margen superior */
+    margin-bottom: 60px; /* Ajuste para centrar el contenido */
+    text-align: center;
+}
+
+.header .title {
+    font-size: 2rem; /* Tamaño grande para el título */
+    color: #ffffff; /* Blanco para buen contraste */
+    font-weight: bold;
+    margin-bottom: 10px; /* Espaciado entre título y subtítulo */
+}
+
+.header .subTitle {
+    color: #dcdcdc; /* Gris claro */
+    font-size: 1rem;
+}
+
+/* Estilo de los campos de entrada */
+ion-item {
+    --background: rgba(255, 255, 255, 0.103); /* Fondo translúcido */
+    --border-color: rgb(255, 255, 255); /* Borde blanco */
+    --border-width: 2px;
+    border-radius: 25px; /* Bordes redondeados */
+    margin-bottom: 16px;
+    padding: 5px 10px; /* Espaciado interno */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0); /* Sombra para relieve */
+}
+
+ion-item:hover {
+    --border-color: rgb(255, 255, 255); /* Suavizar borde al pasar el cursor */
+}
+
+.input {
+    font-size: 1rem;
+    padding: 10px;
+    color: white;
+    caret-color: white; /* Color del cursor al escribir */
+}
+
+ion-icon {
+    color: white;
+}
+
+/* Enlace de contraseña olvidada */
+.forgotPassword {
     display: flex;
     justify-content: center;
-    a{
-        font-weight: 400;
-        font-size: 0.95rem;
-        text-decoration: none;
-    }
+    margin-top: 10px;
+}
+
+.forgotPassword a {
+    font-size: 0.95rem;
+    color: #2de7ff; /* Azul vibrante */
+    text-decoration: none;
+}
+
+.forgotPassword a:hover {
+    text-decoration: underline; /* Subrayado al pasar el mouse */
+}
+
+/* Enlace de registro */
+.signupLink {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.signupLink a {
+    text-decoration: none;
+    color: #ff1100f1;
+    margin-left: 5px;
+}
+
+.signupLink a:hover {
+    text-decoration: underline; /* Subrayado al pasar el mouse */
+}
+
+/* Botón flotante */
+ion-fab-button {
+    --background: rgba(43, 75, 255, 0.904);
+    --box-shadow: 0px 4px 10px rgb(26, 26, 26); /* Sombra para el botón */
+    --size: 60px; /* Tamaño del botón */
+    transition: transform 0.2s ease-in-out; /* Animación suave */
+}
+
+ion-fab-button:hover {
+    --background: rgba(0, 83, 207, 1); /* Intensificar el color */
+    transform: scale(1.1); /* Ampliación al pasar el mouse */
+}
+
+/* Estilo general */
+ion-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1); /* Fondo ligeramente transparente */
+    border-radius: 20px;
+    backdrop-filter: blur(5px); /* Efecto de vidrio */
 }
