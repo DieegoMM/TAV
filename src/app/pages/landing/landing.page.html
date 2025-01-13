@@ -1,12 +1,15 @@
 <ion-content [fullscreen]="true">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title class="title">Second Game</ion-title>
-    </ion-toolbar>
-  </ion-header>
   <div class="container">
-    <ion-img src="../../../assets/icon/logo.png" style="width: 600px; height: 600px;"></ion-img>
-    <ion-fab vertical="bottom" horizontal="center" style="margin-bottom: 30px;">
+    <!-- Fondo con GIF -->
+    <div class="gif-background">
+      <img src="../../../assets/icon/background.gif" alt="Fondo animado" />
+    </div>
+
+    <!-- Logo -->
+    <ion-img src="../../../assets/icon/Logo.png" style="width: 400px; height: 400px;"></ion-img>
+    
+    <!-- Botón para ir al login -->
+    <ion-fab vertical="bottom" horizontal="center" style="margin-bottom: 40px;">
       <ion-fab-button [routerLink]="['/login']">
         <ion-icon name="chevron-forward"></ion-icon>
       </ion-fab-button>
