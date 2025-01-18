@@ -42,6 +42,10 @@ const routes: Routes = [
     path: 'allproducts',
     loadChildren: () => import('./products/allproducts/allproducts.module').then( m => m.AllproductsPageModule)
   },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },
 
   
 ];
