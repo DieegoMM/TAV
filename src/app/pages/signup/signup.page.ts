@@ -72,17 +72,18 @@ export class SignupPage implements OnInit {
             const userCredential = await this.authService.registerUser(
                 this.regForm.get('email')?.value,
                 this.regForm.get('password')?.value
+                
             );
 
+            alert('¡Usuario registrado con éxito!');
+            this.router.navigate(['/home']);  
+            
             // ✅ Guardar datos en Firestore
             await this.firestore.collection('users').doc(userCredential.user.uid).set({
                 fullname: this.regForm.get('fullname')?.value,
                 email: this.regForm.get('email')?.value,
                 edad: this.regForm.get('edad')?.value
             });
-
-            alert('¡Usuario registrado con éxito!');
-            this.router.navigate(['/home']);  
             
         } catch (error) {
             console.error('Error al registrar:', error);
