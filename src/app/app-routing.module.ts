@@ -26,7 +26,23 @@ const routes: Routes = [
   {
     path: 'reset-password',
     loadChildren: () => import('./pages/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
+  },  {
+    path: 'consoles',
+    loadChildren: () => import('./products/consoles/consoles.module').then( m => m.ConsolesPageModule)
   },
+  {
+    path: 'games',
+    loadChildren: () => import('./products/games/games.module').then( m => m.GamesPageModule)
+  },
+  {
+    path: 'controllers',
+    loadChildren: () => import('./products/controllers/controllers.module').then( m => m.ControllersPageModule)
+  },
+  {
+    path: 'allproducts',
+    loadChildren: () => import('./products/allproducts/allproducts.module').then( m => m.AllproductsPageModule)
+  },
+
   
 ];
 

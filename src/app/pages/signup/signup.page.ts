@@ -77,7 +77,7 @@ export class SignupPage implements OnInit {
 
             alert('¡Usuario registrado con éxito!');
             this.router.navigate(['/home']);  
-            
+
             // ✅ Guardar datos en Firestore
             await this.firestore.collection('users').doc(userCredential.user.uid).set({
                 fullname: this.regForm.get('fullname')?.value,
