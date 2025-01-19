@@ -20,7 +20,8 @@ export class ChangedataPage implements OnInit {
     // Inicializa el formulario reactivo
     this.changeDataForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
-      age: ['', [Validators.required, Validators.min(1)]],
+      age: ['', [Validators.required, Validators.min(18)]],
+      phone: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]], // Valida que tenga exactamente 9 dígitos
     });
   }
 
@@ -38,6 +39,7 @@ export class ChangedataPage implements OnInit {
           this.changeDataForm.patchValue({
             username: userData.username || '',
             age: userData.age || '',
+            phoneNumber: userData.phoneNumber || '',
           });
         }
       }
@@ -48,6 +50,9 @@ export class ChangedataPage implements OnInit {
   }
 
   async saveChanges() {
+    console.log('Estado del formulario:', this.changeDataForm.invalid);
+    console.log('Valores del formulario:', this.changeDataForm.value);
+  
     if (this.changeDataForm.invalid) {
       alert('Por favor, completa todos los campos correctamente.');
       return;
@@ -58,15 +63,17 @@ export class ChangedataPage implements OnInit {
       if (user) {
         await this.authService.updateUserData(
           user.uid,
-          this.changeDataForm.get('username')?.value, // fullname en Firestore
-          this.changeDataForm.get('age')?.value       // edad en Firestore
+          this.changeDataForm.get('username')?.value, // Nombre de usuario
+          this.changeDataForm.get('age')?.value,      // Edad
+          this.changeDataForm.get('phone')?.value     // Teléfono
         );
         alert('Datos actualizados con éxito.');
-        this.router.navigate(['/profile']); // Redirige al perfil
+        this.router.navigate(['/profile']);
       }
     } catch (error) {
       console.error('Error al actualizar los datos:', error);
       alert('Hubo un error al actualizar los datos.');
     }
   }
+  
 }

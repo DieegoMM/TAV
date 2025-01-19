@@ -83,7 +83,7 @@
       El número de teléfono es obligatorio.
     </ion-text>
     <ion-text *ngIf="regForm.get('phone')?.touched && regForm.get('phone')?.errors?.['pattern']" class="error">
-      Ingresa un número de teléfono válido.
+      El número de teléfono debe tener exactamente 9 dígitos
     </ion-text>
 
     </div>

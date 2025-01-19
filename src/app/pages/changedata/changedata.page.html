@@ -19,7 +19,15 @@
       <ion-input formControlName="age" type="number" placeholder="Ingresa tu edad"></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="changeDataForm.get('age')?.touched && changeDataForm.get('age')?.invalid">
-      La edad es obligatoria y debe ser mayor a 0.
+      La edad es obligatoria y debe ser mayor a 18.
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Número de Teléfono</ion-label>
+      <ion-input formControlName="phone" placeholder="Ingresa tu número de teléfono"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="changeDataForm.get('phone')?.touched && changeDataForm.get('phone')?.invalid">
+      El número de teléfono es obligatorio y debe tener exactamente 10 dígitos.
     </ion-text>
 
     <ion-button expand="block" type="submit" [disabled]="changeDataForm.invalid">Guardar Cambios</ion-button>

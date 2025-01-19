@@ -9,6 +9,7 @@ export interface UserData {
   username: string; // Nombre de usuario
   age: number;      // Edad del usuario
   email: string;    // Correo electrónico del usuario
+  phoneNumber: number; // Número de teléfono
   createdAt?: Date; // Fecha opcional de creación
   updatedAt?: Date; // Fecha opcional de actualización
 }
@@ -108,12 +109,13 @@ export class AutheticationService {
     }
   }
 
-  async updateUserData(uid: string, fullname: string, edad: number) {
+  async updateUserData(uid: string, fullname: string, age: number, phoneNumber: string): Promise<void> {
     try {
       const userRef = this.firestore.collection('users').doc(uid); // Referencia al documento
       await userRef.update({
-        fullname: fullname, // Actualiza el campo fullname
-        edad: edad,         // Actualiza el campo edad
+        fullname: fullname,        // Actualiza el campo fullname
+        edad: age,                  // Actualiza el campo edad
+        phone: phoneNumber,  // Actualiza el campo phoneNumber  
       });
       console.log('Datos actualizados correctamente en Firestore.');
     } catch (error) {

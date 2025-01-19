@@ -62,7 +62,7 @@ export class SignupPage implements OnInit {
           '',
           [
             Validators.required,
-            Validators.pattern('^[0-9]{9,15}$'), // Valida números de 9 a 15 dígitos
+            Validators.pattern('^[0-9]{9}$'), // Valida exactamente 9 números
           ],
         ],
       },
