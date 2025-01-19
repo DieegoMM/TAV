@@ -12,6 +12,7 @@ export interface UserData {
   phoneNumber: number; // Número de teléfono
   createdAt?: Date; // Fecha opcional de creación
   updatedAt?: Date; // Fecha opcional de actualización
+  profileImage?: string; // URL o Base64 de la imagen de perfil
 }
 
 @Injectable({
@@ -109,13 +110,20 @@ export class AutheticationService {
     }
   }
 
-  async updateUserData(uid: string, fullname: string, age: number, phoneNumber: string): Promise<void> {
+  async updateUserData(
+    uid: string,
+    fullname: string,
+    age: number,
+    phoneNumber: string,
+    profileImage: string = 'https://th.bing.com/th/id/OIP.TDTNaTcRv_p8SxiSt4x8qgHaHa?rs=1&pid=ImgDetMain' // Valor predeterminado
+  ): Promise<void> {
     try {
-      const userRef = this.firestore.collection('users').doc(uid); // Referencia al documento
+      const userRef = this.firestore.collection('users').doc(uid);
       await userRef.update({
-        fullname: fullname,        // Actualiza el campo fullname
-        edad: age,                  // Actualiza el campo edad
-        phone: phoneNumber,  // Actualiza el campo phoneNumber  
+        fullname,
+        edad: age,
+        phone: phoneNumber,
+        profileImage, // Se asegura de que siempre tenga un valor
       });
       console.log('Datos actualizados correctamente en Firestore.');
     } catch (error) {

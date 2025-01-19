@@ -58,7 +58,8 @@ export class ProfilePage implements OnInit {
           uid,
           updatedData.username, // Nombre de usuario
           updatedData.age,      // Edad
-          updatedData.phoneNumber // Número de teléfono
+          updatedData.phoneNumber, // Número de teléfono
+          updatedData.profileImage || 'https://th.bing.com/th/id/OIP.TDTNaTcRv_p8SxiSt4x8qgHaHa?rs=1&pid=ImgDetMain' // Manejo de imagen predeterminada
         );
         alert('Datos actualizados correctamente');
         this.ngOnInit(); // Recargar datos

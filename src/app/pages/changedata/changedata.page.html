@@ -27,9 +27,22 @@
       <ion-input formControlName="phone" placeholder="Ingresa tu número de teléfono"></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="changeDataForm.get('phone')?.touched && changeDataForm.get('phone')?.invalid">
-      El número de teléfono es obligatorio y debe tener exactamente 10 dígitos.
+      El número de teléfono es obligatorio y debe tener exactamente 9 dígitos.
     </ion-text>
 
-    <ion-button expand="block" type="submit" [disabled]="changeDataForm.invalid">Guardar Cambios</ion-button>
+    <ion-item>
+      <ion-label>Foto de Perfil</ion-label>
+      <ion-button (click)="selectImage()" expand="block">Usar Cámara o Galería</ion-button>
+    </ion-item>
+
+    <ion-img
+      *ngIf="changeDataForm.get('profileImage')?.value"
+      [src]="changeDataForm.get('profileImage')?.value"
+      style="margin-top: 10px; width: 100px; height: 100px;">
+    </ion-img>
+
+    <ion-button expand="block" type="submit" [disabled]="changeDataForm.invalid">
+      Guardar Cambios
+    </ion-button>
   </form>
 </ion-content>
