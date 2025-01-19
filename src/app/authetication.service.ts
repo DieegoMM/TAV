@@ -3,6 +3,7 @@ import firebase from 'firebase/compat/app';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { lastValueFrom } from 'rxjs';
+import 'firebase/compat/auth'; // Asegúrate de que esta línea esté incluida
 
 export interface UserData {
   username: string; // Nombre de usuario
@@ -119,5 +120,43 @@ export class AutheticationService {
       console.error('Error al actualizar los datos en Firestore:', error);
       throw error;
     }
+  }
+
+  async updatePassword(currentPassword: string, newPassword: string): Promise<void> {
+    try {
+      // Reautenticar al usuario
+      await this.reauthenticate(currentPassword);
+  
+      // Obtener el usuario autenticado
+      const user = await this.afAuth.currentUser;
+      if (!user) {
+        throw new Error('No se encontró un usuario autenticado.');
+      }
+  
+      // Actualizar la contraseña
+      await user.updatePassword(newPassword);
+      console.log('Contraseña actualizada correctamente.');
+    } catch (error) {
+      console.error('Error al actualizar la contraseña:', error);
+      throw error;
+    }
+  }
+  
+  
+
+  private async reauthenticate(currentPassword: string): Promise<void> {
+    const user = await this.afAuth.currentUser; // Obtén el usuario autenticado
+    if (!user || !user.email) {
+      throw new Error('No se encontró un usuario autenticado.');
+    }
+  
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      user.email,
+      currentPassword
+    );
+  
+    // Reautenticar al usuario con las credenciales actuales
+    await user.reauthenticateWithCredential(credential);
+    console.log('Usuario reautenticado correctamente.');
   }
 }
