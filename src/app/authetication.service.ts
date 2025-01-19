@@ -99,5 +99,14 @@ export class AutheticationService {
     }
   }
 
-  
+  async updateUserData(uid: string, updatedData: { fullname: string; edad: number }) {
+    try {
+      const userRef = this.firestore.collection('users').doc(uid);
+      await userRef.update(updatedData); // Actualiza los datos en Firestore
+      console.log('Datos actualizados correctamente en Firestore.');
+    } catch (error) {
+      console.error('Error al actualizar los datos en Firestore:', error);
+      throw error;
+    }
+  }
 }
