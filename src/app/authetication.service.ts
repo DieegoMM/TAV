@@ -107,12 +107,12 @@ export class AutheticationService {
     }
   }
 
-  async updateUserData(uid: string, username: string, age: number) {
+  async updateUserData(uid: string, fullname: string, edad: number) {
     try {
-      const userRef = this.firestore.collection('users').doc(uid);
+      const userRef = this.firestore.collection('users').doc(uid); // Referencia al documento
       await userRef.update({
-        username: username,
-        age: age,
+        fullname: fullname, // Actualiza el campo fullname
+        edad: edad,         // Actualiza el campo edad
       });
       console.log('Datos actualizados correctamente en Firestore.');
     } catch (error) {

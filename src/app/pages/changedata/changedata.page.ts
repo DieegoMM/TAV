@@ -52,14 +52,14 @@ export class ChangedataPage implements OnInit {
       alert('Por favor, completa todos los campos correctamente.');
       return;
     }
-
+  
     try {
       const user = await this.authService.getProfile();
       if (user) {
         await this.authService.updateUserData(
           user.uid,
-          this.changeDataForm.get('username')?.value,
-          this.changeDataForm.get('age')?.value
+          this.changeDataForm.get('username')?.value, // fullname en Firestore
+          this.changeDataForm.get('age')?.value       // edad en Firestore
         );
         alert('Datos actualizados con éxito.');
         this.router.navigate(['/profile']); // Redirige al perfil
