@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cambiar Datos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="changeDataForm" (ngSubmit)="saveChanges()">
+    <ion-item>
+      <ion-label position="stacked">Nombre de Usuario</ion-label>
+      <ion-input formControlName="username" placeholder="Ingresa tu nombre"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="changeDataForm.get('username')?.touched && changeDataForm.get('username')?.invalid">
+      El nombre es obligatorio y debe tener al menos 3 caracteres.
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Edad</ion-label>
+      <ion-input formControlName="age" type="number" placeholder="Ingresa tu edad"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="changeDataForm.get('age')?.touched && changeDataForm.get('age')?.invalid">
+      La edad es obligatoria y debe ser mayor a 0.
+    </ion-text>
+
+    <ion-button expand="block" type="submit" [disabled]="changeDataForm.invalid">Guardar Cambios</ion-button>
+  </form>
+</ion-content>

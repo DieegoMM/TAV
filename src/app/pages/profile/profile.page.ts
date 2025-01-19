@@ -54,7 +54,7 @@ export class ProfilePage implements OnInit {
       const updatedData = this.editForm.value; // Obtener datos del formulario
 
       try {
-        await this.authService.updateUserData(uid, updatedData);
+        await this.authService.updateUserData(uid, updatedData.username, updatedData.age);
         alert('Datos actualizados correctamente');
         this.ngOnInit(); // Recargar datos
       } catch (error) {

@@ -46,7 +46,11 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },  {
+    path: 'changedata',
+    loadChildren: () => import('./pages/changedata/changedata.module').then( m => m.ChangedataPageModule)
   },
+
 
 
   
