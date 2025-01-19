@@ -7,12 +7,15 @@ import 'firebase/compat/auth'; // Asegúrate de que esta línea esté incluida
 
 export interface UserData {
   username: string; // Nombre de usuario
-  age: number;      // Edad del usuario
-  email: string;    // Correo electrónico del usuario
-  phoneNumber: number; // Número de teléfono
-  createdAt?: Date; // Fecha opcional de creación
-  updatedAt?: Date; // Fecha opcional de actualización
-  profileImage?: string; // URL o Base64 de la imagen de perfil
+  fullname?: string; // Nombre completo (opcional si no lo necesitas)
+  age?: number; // Edad
+  edad?: number; // Alias para edad
+  phone?: string; // Teléfono
+  phoneNumber?: string; // Alias para teléfono
+  email?: string; // Correo electrónico
+  profileImage?: string; // URL o base64 de la imagen de perfil
+  createdAt?: Date; // Fecha de creación
+  updatedAt?: Date; // Fecha de actualización
 }
 
 @Injectable({
@@ -61,10 +64,10 @@ export class AutheticationService {
 
   async getProfile() {
     try {
-      const user = await this.afAuth.currentUser; // Obtén el usuario autenticado
+      const user = await this.afAuth.currentUser;
       if (user) {
         console.log('Usuario autenticado en getProfile:', user);
-        return user; // Retorna el usuario si está autenticado
+        return user;
       } else {
         console.warn('No hay un usuario autenticado.');
         return null;
@@ -93,13 +96,9 @@ export class AutheticationService {
   async getUserData(uid: string): Promise<UserData | null> {
     try {
       console.log('Obteniendo datos para el UID:', uid);
-  
-      // Utiliza lastValueFrom para convertir el observable a una promesa
-      const userDoc = await lastValueFrom(this.firestore.collection('users').doc(uid).get());
-  
+      const userDoc = await this.firestore.collection('users').doc(uid).get().toPromise();
       if (userDoc.exists) {
-        console.log('Documento encontrado:', userDoc.data());
-        return userDoc.data() as UserData; // Asegura que los datos son de tipo UserData
+        return userDoc.data() as UserData;
       } else {
         console.warn('No se encontró un documento para el UID:', uid);
         return null;
@@ -113,17 +112,17 @@ export class AutheticationService {
   async updateUserData(
     uid: string,
     fullname: string,
-    age: number,
-    phoneNumber: string,
-    profileImage: string = 'https://th.bing.com/th/id/OIP.TDTNaTcRv_p8SxiSt4x8qgHaHa?rs=1&pid=ImgDetMain' // Valor predeterminado
+    edad: number,
+    phone: string,
+    profileImage: string
   ): Promise<void> {
     try {
       const userRef = this.firestore.collection('users').doc(uid);
       await userRef.update({
-        fullname,
-        edad: age,
-        phone: phoneNumber,
-        profileImage, // Se asegura de que siempre tenga un valor
+        fullname, // Campo fullname
+        edad,     // Campo edad
+        phone,    // Campo phone
+        profileImage // Campo profileImage
       });
       console.log('Datos actualizados correctamente en Firestore.');
     } catch (error) {
@@ -131,7 +130,6 @@ export class AutheticationService {
       throw error;
     }
   }
-
   async updatePassword(currentPassword: string, newPassword: string): Promise<void> {
     try {
       // Reautenticar al usuario
@@ -169,4 +167,5 @@ export class AutheticationService {
     await user.reauthenticateWithCredential(credential);
     console.log('Usuario reautenticado correctamente.');
   }
+
 }

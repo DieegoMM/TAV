@@ -6,22 +6,25 @@
 
 <ion-content>
   <form [formGroup]="changeDataForm" (ngSubmit)="saveChanges()">
+    <!-- Campo Nombre -->
     <ion-item>
       <ion-label position="stacked">Nombre de Usuario</ion-label>
-      <ion-input formControlName="username" placeholder="Ingresa tu nombre"></ion-input>
+      <ion-input formControlName="fullname" placeholder="Ingresa tu nombre"></ion-input>
     </ion-item>
-    <ion-text color="danger" *ngIf="changeDataForm.get('username')?.touched && changeDataForm.get('username')?.invalid">
+    <ion-text color="danger" *ngIf="changeDataForm.get('fullname')?.touched && changeDataForm.get('fullname')?.invalid">
       El nombre es obligatorio y debe tener al menos 3 caracteres.
     </ion-text>
 
+    <!-- Campo Edad -->
     <ion-item>
       <ion-label position="stacked">Edad</ion-label>
-      <ion-input formControlName="age" type="number" placeholder="Ingresa tu edad"></ion-input>
+      <ion-input formControlName="edad" type="number" placeholder="Ingresa tu edad"></ion-input>
     </ion-item>
-    <ion-text color="danger" *ngIf="changeDataForm.get('age')?.touched && changeDataForm.get('age')?.invalid">
-      La edad es obligatoria y debe ser mayor a 18.
+    <ion-text color="danger" *ngIf="changeDataForm.get('edad')?.touched && changeDataForm.get('edad')?.invalid">
+      La edad es obligatoria y debe ser mayor o igual a 18.
     </ion-text>
 
+    <!-- Campo Teléfono -->
     <ion-item>
       <ion-label position="stacked">Número de Teléfono</ion-label>
       <ion-input formControlName="phone" placeholder="Ingresa tu número de teléfono"></ion-input>
@@ -30,19 +33,25 @@
       El número de teléfono es obligatorio y debe tener exactamente 9 dígitos.
     </ion-text>
 
+    <!-- Botón para usar cámara o galería -->
     <ion-item>
       <ion-label>Foto de Perfil</ion-label>
       <ion-button (click)="selectImage()" expand="block">Usar Cámara o Galería</ion-button>
     </ion-item>
 
+    <!-- Input para cargar desde la galería directamente -->
+    <ion-item>
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" style="margin-top: 10px;" />
+    </ion-item>
+
+    <!-- Vista previa de la imagen seleccionada -->
     <ion-img
       *ngIf="changeDataForm.get('profileImage')?.value"
       [src]="changeDataForm.get('profileImage')?.value"
       style="margin-top: 10px; width: 100px; height: 100px;">
     </ion-img>
 
-    <ion-button expand="block" type="submit" [disabled]="changeDataForm.invalid">
-      Guardar Cambios
-    </ion-button>
+    <!-- Botón Guardar Cambios -->
+    <ion-button expand="block" type="submit" [disabled]="changeDataForm.invalid">Guardar Cambios</ion-button>
   </form>
 </ion-content>
