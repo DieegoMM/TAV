@@ -4,6 +4,7 @@ import { LoadingController } from '@ionic/angular';
 import { AutheticationService } from 'src/app/authetication.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-signup',
@@ -18,6 +19,7 @@ export class SignupPage implements OnInit {
     private formBuilder: FormBuilder,
     public loadingCtrl: LoadingController,
     private authService: AutheticationService,
+    private afAuth: AngularFireAuth, // Servicio de Firebase Auth
     private firestore: AngularFirestore,
     private router: Router
   ) {}
@@ -94,6 +96,9 @@ export class SignupPage implements OnInit {
         this.regForm.get('password')?.value
       );
 
+       // Depuración: Verificar el usuario registrado
+      console.log('Usuario registrado:', userCredential.user);
+
       // Verificar si el usuario se creó correctamente
       if (userCredential.user) {
         // Guardar datos adicionales en Firestore
@@ -105,7 +110,11 @@ export class SignupPage implements OnInit {
         });
 
         alert('¡Usuario registrado con éxito!');
-        this.router.navigate(['/home']); // Redirigir a la página principal
+
+        // Depuración: Confirmar redirección
+      console.log('Redirigiendo a la página de perfil...');
+      this.router.navigate(['/profile']); // Redirige al perfil
+      
       }
     } catch (error) {
       console.error('Error al registrar:', error);
@@ -120,4 +129,5 @@ export class SignupPage implements OnInit {
   get errorControl() {
     return this.regForm.controls;
   }
+  
 }

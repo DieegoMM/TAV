@@ -1,13 +1,19 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-title>Perfil del Usuario</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-card *ngIf="userData">
+    <ion-card-header>
+      <ion-card-title>Bienvenido, {{ userData.username }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Email:</strong> {{ userData.email }}</p>
+      <p><strong>Edad:</strong> {{ userData.age }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-text *ngIf="!userData">Cargando datos del usuario...</ion-text>
 </ion-content>
