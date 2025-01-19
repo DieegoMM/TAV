@@ -73,6 +73,19 @@
       <ion-text *ngIf="regForm.get('edad')?.touched && regForm.get('edad')?.errors?.['max']" class="error">
         La edad máxima permitida es 100 años.
       </ion-text>
+
+      <!-- Número de Teléfono -->
+    <ion-item>
+      <ion-input formControlName="phone" type="tel" placeholder="Ingresa tu número de teléfono"></ion-input>
+      <ion-icon name="call-outline"></ion-icon>
+    </ion-item>
+    <ion-text *ngIf="regForm.get('phone')?.touched && regForm.get('phone')?.errors?.['required']" class="error">
+      El número de teléfono es obligatorio.
+    </ion-text>
+    <ion-text *ngIf="regForm.get('phone')?.touched && regForm.get('phone')?.errors?.['pattern']" class="error">
+      Ingresa un número de teléfono válido.
+    </ion-text>
+
     </div>
 
     <!-- Enlace para iniciar sesión -->

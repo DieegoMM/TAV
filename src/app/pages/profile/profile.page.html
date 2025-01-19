@@ -16,5 +16,13 @@
     </ion-card-content>
   </ion-card>
 
+  <div>
+    <a [routerLink]="['/changedata']">Cambia tus datos</a>
+  </div>
+
+  <div>
+    <p><a [routerLink]="['/changepassword']">Cambia tu contraseña</a></p>
+  </div>
+
   <ion-text *ngIf="!userData">Cargando datos del usuario...</ion-text>
 </ion-content>

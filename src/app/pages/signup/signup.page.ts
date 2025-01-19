@@ -58,6 +58,13 @@ export class SignupPage implements OnInit {
           '',
           [Validators.required, Validators.min(18), Validators.max(100)],
         ],
+        phone: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('^[0-9]{9,15}$'), // Valida números de 9 a 15 dígitos
+          ],
+        ],
       },
       { validator: this.passwordsCoinciden } // Validador personalizado para contraseñas
     );
@@ -106,6 +113,7 @@ export class SignupPage implements OnInit {
           fullname: this.regForm.get('fullname')?.value, // Nombre completo
           email: this.regForm.get('email')?.value, // Email
           edad: this.regForm.get('edad')?.value, // Edad
+          phone: this.regForm.get('phone')?.value, // Guardar el número de teléfono
           createdAt: new Date(), // Fecha de creación
         });
 
