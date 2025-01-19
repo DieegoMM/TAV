@@ -7,11 +7,11 @@
 <ion-content>
   <ion-card *ngIf="userData">
     <ion-card-header>
-      <ion-card-title>Bienvenido, {{ userData.username }}</ion-card-title>
+      <ion-card-title>Bienvenido, {{ userData.fullname }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <p><strong>Email:</strong> {{ userData.email }}</p>
-      <p><strong>Edad:</strong> {{ userData.age }}</p>
+      <p><strong>Edad:</strong> {{ userData.edad }}</p>
     </ion-card-content>
   </ion-card>
 

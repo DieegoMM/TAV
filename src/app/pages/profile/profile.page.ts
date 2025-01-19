@@ -17,25 +17,25 @@ export class ProfilePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Usar el método público del servicio para escuchar authState
     this.authService.getAuthState().subscribe((user) => {
       if (user) {
         console.log('Usuario autenticado:', user);
-        this.loadUserProfile(user.uid); // Cargar datos desde Firestore
+        this.loadUserProfile(user.uid); // Carga los datos usando el UID
       } else {
         console.warn('No se encontró un usuario autenticado.');
         alert('Por favor, inicia sesión primero.');
-        this.router.navigate(['/login']); // Redirigir si no hay sesión
+        this.router.navigate(['/login']); // Redirige al login
       }
     });
   }
 
   async loadUserProfile(uid: string) {
     try {
-      this.userData = await this.authService.getUserData(uid);
-      console.log('Datos del usuario cargados:', this.userData);
+      console.log('Intentando obtener los datos del usuario con UID:', uid);
+      this.userData = await this.authService.getUserData(uid); // Llama al servicio para cargar los datos
+      console.log('Datos del usuario cargados:', this.userData); // Verifica qué se cargó
     } catch (error) {
-      console.error('Error al cargar los datos del usuario:', error);
+      console.error('Error al cargar los datos del usuario:', error); // Maneja errores
     }
   }
 }

@@ -81,17 +81,23 @@ export class AutheticationService {
 
   async getUserData(uid: string) {
     try {
+      console.log('Obteniendo datos para el UID:', uid); // Depuración: Muestra el UID
+  
+      // Utiliza lastValueFrom para convertir el observable a una promesa
       const userDoc = await lastValueFrom(this.firestore.collection('users').doc(uid).get());
-      if (userDoc.exists) {
-        console.log('Documento encontrado:', userDoc.data());
-        return userDoc.data();
+      
+      if (userDoc.exists) { // Verifica si el documento existe
+        console.log('Documento encontrado:', userDoc.data()); // Muestra los datos obtenidos
+        return userDoc.data(); // Devuelve los datos del usuario
       } else {
-        console.warn('No se encontró un documento para el UID:', uid);
+        console.warn('No se encontró un documento para el UID:', uid); // Advertencia si no existe
         return null;
       }
     } catch (error) {
-      console.error('Error al obtener los datos:', error);
+      console.error('Error al obtener los datos del usuario:', error);
       throw error;
     }
   }
+
+  
 }
