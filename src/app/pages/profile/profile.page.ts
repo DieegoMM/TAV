@@ -69,4 +69,20 @@ export class ProfilePage implements OnInit {
       }
     }
   }
+
+  async loadUserData() {
+    try {
+      const user = await this.authService.getProfile(); // Obtener usuario autenticado
+      if (user) {
+        this.userData = await this.authService.getUserData(user.uid); // Obtener datos desde Firestore
+      } else {
+        console.warn('No hay un usuario autenticado.');
+        alert('No hay un usuario autenticado. Por favor inicia sesión.');
+      }
+    } catch (error) {
+      console.error('Error al cargar los datos del usuario:', error);
+      alert('Hubo un error al cargar los datos del usuario.');
+    }
+  }
+
 }

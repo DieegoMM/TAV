@@ -8,15 +8,26 @@
   <!-- Mostrar datos actuales -->
   <ion-card *ngIf="userData">
     <ion-card-header>
-      <ion-card-title>Bienvenido, {{ userData.fullname }}</ion-card-title>
+      <ion-card-title>
+        Bienvenido, {{ userData.fullname || 'Usuario' }}
+      </ion-card-title>
     </ion-card-header>
     <ion-card-content>
+      <!-- Imagen de perfil -->
+      <ion-img
+        *ngIf="userData.profileImage"
+        [src]="userData.profileImage"
+        style="width: 100px; height: 100px; border-radius: 50px; margin-bottom: 15px;">
+      </ion-img>
+
+      <!-- Datos del usuario -->
       <p><strong>Email:</strong> {{ userData.email }}</p>
       <p><strong>Edad:</strong> {{ userData.edad }}</p>
       <p><strong>Teléfono:</strong> {{ userData.phone }}</p>
     </ion-card-content>
   </ion-card>
 
+  <!-- Enlaces para cambiar datos y contraseña -->
   <div>
     <a [routerLink]="['/changedata']">Cambia tus datos</a>
   </div>
