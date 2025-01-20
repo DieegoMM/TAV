@@ -18,8 +18,12 @@ export class ProductService {
         throw new Error('No se encontró al usuario autenticado');
       }
   
+      // Genera un nuevo ID para el producto
+      const productId = this.firestore.createId();
+  
       const product = {
         ...productData,
+        id: productId, // Incluye el ID generado
         ownerId: user.uid,
         ownerName: user.fullname,
         ownerEmail: user.email,
@@ -27,13 +31,15 @@ export class ProductService {
         createdAt: new Date(),
       };
   
-      await this.firestore.collection('products').add(product);
+      // Guarda el producto usando el ID generado
+      await this.firestore.collection('products').doc(productId).set(product);
       console.log('Producto agregado correctamente.');
     } catch (error) {
       console.error('Error al agregar producto:', error);
       throw error;
     }
-  }  
+  }
+  
   
   
   async getProductsByUser(uid: string): Promise<any[]> {
@@ -67,8 +73,7 @@ export class ProductService {
       console.error('Error al actualizar el producto:', error);
       throw error;
     }
-  }
-  
+  }  
 
   async getProductById(productId: string): Promise<any> {
     try {
@@ -83,4 +88,16 @@ export class ProductService {
       throw error;
     }
   }
+
+  async deleteProduct(productId: string): Promise<void> {
+    try {
+      console.log('Eliminando producto con ID:', productId);
+      await this.firestore.collection('products').doc(productId).delete();
+      console.log('Producto eliminado con éxito');
+    } catch (error) {
+      console.error('Error al eliminar el producto:', error);
+      throw error;
+    }
+  }  
+
 }

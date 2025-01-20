@@ -39,7 +39,7 @@ export class AddProductPage {
       try {
         await this.productService.addProduct(this.productForm.value);
         alert('Producto agregado exitosamente');
-        this.router.navigate(['/profile']);
+        // this.router.navigate(['/profile']);
       } catch (error) {
         console.error('Error al agregar producto:', error);
         alert('Hubo un error al agregar el producto');
@@ -107,37 +107,46 @@ export class AddProductPage {
 
   async ngOnInit() {
     this.productId = this.activatedRoute.snapshot.paramMap.get('id');
+    console.log('ID del producto para edición:', this.productId);
+    
     if (this.productId) {
       this.isEditing = true;
+      console.log('Modo edición activado');
+    
       try {
         const product = await this.productService.getProductById(this.productId);
         if (product) {
-          this.productForm.patchValue(product); // Cargar datos en el formulario
           console.log('Producto cargado para edición:', product);
+          this.productForm.patchValue(product); // Cargar datos en el formulario
+        } else {
+          console.warn('No se encontró ningún producto con el ID proporcionado.');
         }
       } catch (error) {
         console.error('Error al cargar el producto:', error);
       }
+    } else {
+      console.log('Modo creación activado. No hay ID de producto.');
     }
-  }
-  
+  }  
 
   async saveProduct() {
+    console.log('Método saveProduct llamado');
     if (this.productForm.valid) {
       try {
         if (this.isEditing && this.productId) {
-          // Modo de edición
-          await this.productService.updateProduct(this.productId, this.productForm.value);
-          alert('Producto actualizado exitosamente');
-        } else {
-          // Modo de creación
-          await this.productService.addProduct(this.productForm.value);
-          alert('Producto agregado exitosamente');
+          console.log('Intentando eliminar el producto con ID:', this.productId);
+          await this.productService.deleteProduct(this.productId);
+          console.log('Producto eliminado correctamente.');
         }
-        this.router.navigate(['/profile']); // Redirige al perfil
+  
+        console.log('Agregando o actualizando producto:', this.productForm.value);
+        await this.productService.addProduct(this.productForm.value);
+        console.log('Producto agregado correctamente.');
+  
+        alert('Producto guardado correctamente.');
       } catch (error) {
-        alert('Hubo un error al guardar el producto');
-        console.error(error);
+        console.error('Error en saveProduct:', error);
+        alert('Hubo un error al guardar el producto.');
       }
     } else {
       alert('Por favor, completa todos los campos requeridos.');

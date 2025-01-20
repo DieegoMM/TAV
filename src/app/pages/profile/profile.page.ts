@@ -109,4 +109,11 @@ export class ProfilePage implements OnInit {
     }
   }
 
+  editProduct(productId: string) {
+    console.log('Editando producto con ID:', productId); // Agregar log
+    this.router.navigate(['/addproduct', productId]); // Pasa el ID del producto a editar
+  }
+  
+  
+
 }

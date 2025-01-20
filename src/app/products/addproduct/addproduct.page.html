@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+  <form [formGroup]="productForm" (ngSubmit)="isEditing ? saveProduct() : addProduct()">
     <!-- Nombre del producto -->
     <ion-item>
       <ion-label position="stacked">Nombre</ion-label>

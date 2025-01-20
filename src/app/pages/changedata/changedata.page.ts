@@ -87,7 +87,6 @@ export class ChangedataPage implements OnInit {
           updatedData.profileImage
         );
         alert('Datos actualizados correctamente.');
-        this.router.navigate(['/profile']);
       } else {
         alert('No hay un usuario autenticado.');
         this.router.navigate(['/login']);
