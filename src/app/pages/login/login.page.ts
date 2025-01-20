@@ -28,6 +28,11 @@ export class LoginPage implements OnInit {
     });
   }
 
+  guestLogin() {
+    alert('Ingresaste como invitado.');
+    this.router.navigate(['/home']); // Redirige al home
+  }
+
   // ✅ Método para iniciar sesión
   async login() {
     const loading = await this.loadingCtrl.create();
@@ -43,7 +48,7 @@ export class LoginPage implements OnInit {
 
             await loading.dismiss();
             alert('¡Inicio de sesión exitoso!');
-            this.router.navigate(['/profile']);
+            this.router.navigate(['/home']);
         } catch (error) {
             await loading.dismiss();
             alert('Error al iniciar sesión: ' + error.message);

@@ -58,7 +58,11 @@ const routes: Routes = [
     path: 'changepassword',
     loadChildren: () => import('./pages/changepassword/changepassword.module').then(m => m.ChangepasswordPageModule),
     canActivate: [AuthGuard], // Proteger con el guard
+  },  {
+    path: 'addproduct',
+    loadChildren: () => import('./products/addproduct/addproduct.module').then( m => m.AddproductPageModule)
   },
+
 
 
 

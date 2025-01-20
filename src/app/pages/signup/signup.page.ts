@@ -121,7 +121,7 @@ export class SignupPage implements OnInit {
 
         // Depuración: Confirmar redirección
       console.log('Redirigiendo a la página de perfil...');
-      this.router.navigate(['/profile']); // Redirige al perfil
+      this.router.navigate(['/home']); // Redirige al perfil
       
       }
     } catch (error) {

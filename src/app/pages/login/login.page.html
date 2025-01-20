@@ -17,7 +17,6 @@
         <ion-input formControlName="email" placeholder="Ingresa tu email"></ion-input>
         <ion-icon name="mail-outline"></ion-icon>
       </ion-item>
-      <!-- Mensaje de validación si el email es obligatorio -->
       <ion-text *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']">
         El email es obligatorio.
       </ion-text>
@@ -27,7 +26,6 @@
         <ion-input formControlName="password" type="password" placeholder="Ingresa tu contraseña"></ion-input>
         <ion-icon name="lock-closed-outline"></ion-icon>
       </ion-item>
-      <!-- Mensaje de validación si la contraseña es obligatoria -->
       <ion-text *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']">
         La contraseña es obligatoria.
       </ion-text>
@@ -50,4 +48,9 @@
       </ion-fab-button>
     </ion-fab>
   </form>
+
+  <!-- Botón para ingresar como invitado -->
+  <div class="guest-login" style="text-align: center; margin-top: 20px;">
+    <ion-button (click)="guestLogin()" expand="block" fill="outline">Ingresar como Invitado</ion-button>
+  </div>
 </ion-content>
