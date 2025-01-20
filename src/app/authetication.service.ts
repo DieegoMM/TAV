@@ -30,13 +30,12 @@ export class AutheticationService {
       // Inyecta manualmente AngularFireAuth y AngularFirestore
       this.afAuth = this.injector.get(AngularFireAuth);
       this.firestore = this.injector.get(AngularFirestore);
-
-      // Configura persistencia de sesión
+  
+      // Configura la persistencia de sesión en LOCAL
       this.afAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch((error) => {
         console.error('Error al configurar la persistencia:', error);
       });
-    } 
-    catch (error) {
+    } catch (error) {
       console.error('Error al inicializar AutheticationService:', error);
     }
   }
@@ -62,19 +61,21 @@ export class AutheticationService {
     return await this.afAuth.signOut();
   }
 
-  async getProfile() {
+  async getProfile(): Promise<any> {
     try {
-      const user = await this.afAuth.currentUser;
-      if (user) {
-        console.log('Usuario autenticado en getProfile:', user);
-        return user;
-      } else {
-        console.warn('No hay un usuario autenticado.');
-        return null;
-      }
+      const user = await new Promise((resolve, reject) => {
+        this.afAuth.onAuthStateChanged((authUser) => {
+          if (authUser) {
+            resolve(authUser); // Usuario autenticado
+          } else {
+            resolve(null); // No hay usuario autenticado
+          }
+        });
+      });
+      return user;
     } catch (error) {
       console.error('Error al obtener el perfil del usuario:', error);
-      throw error;
+      return null;
     }
   }
 

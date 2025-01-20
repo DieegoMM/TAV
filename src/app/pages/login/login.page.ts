@@ -43,7 +43,7 @@ export class LoginPage implements OnInit {
 
             await loading.dismiss();
             alert('¡Inicio de sesión exitoso!');
-            this.router.navigate(['/home']);
+            this.router.navigate(['/profile']);
         } catch (error) {
             await loading.dismiss();
             alert('Error al iniciar sesión: ' + error.message);

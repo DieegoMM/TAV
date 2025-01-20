@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard'; // Importa tu guard
 
 const routes: Routes = [
   {
@@ -45,14 +46,18 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
-  },  {
+    loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
+    canActivate: [AuthGuard], // Proteger con el guard
+  },
+  {
     path: 'changedata',
-    loadChildren: () => import('./pages/changedata/changedata.module').then( m => m.ChangedataPageModule)
+    loadChildren: () => import('./pages/changedata/changedata.module').then(m => m.ChangedataPageModule),
+    canActivate: [AuthGuard], // Proteger con el guard
   },
   {
     path: 'changepassword',
-    loadChildren: () => import('./pages/changepassword/changepassword.module').then( m => m.ChangepasswordPageModule)
+    loadChildren: () => import('./pages/changepassword/changepassword.module').then(m => m.ChangepasswordPageModule),
+    canActivate: [AuthGuard], // Proteger con el guard
   },
 
 
