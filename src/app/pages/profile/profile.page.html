@@ -42,5 +42,32 @@
     </ion-button>    
   </div>
 
+
+  <!-- Mostrar productos en venta -->
+<ion-card *ngIf="products && products.length > 0">
+  <ion-card-header>
+    <ion-card-title>Productos en venta</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item *ngFor="let product of products">
+        <ion-thumbnail slot="start">
+          <ion-img [src]="product.image"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ product.name }}</h2>
+          <p><strong>Tipo:</strong> {{ product.type }}</p>
+          <p><strong>Estado:</strong> {{ product.state }}</p>
+          <p><strong>Precio:</strong> {{ product.price | currency }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
+
+<ion-text *ngIf="products && products.length === 0">
+  Aún no tienes productos en venta.
+</ion-text>
+
   <ion-text *ngIf="!userData">Cargando datos del usuario...</ion-text>
 </ion-content>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AutheticationService } from 'src/app/authetication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,11 +13,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ProfilePage implements OnInit {
   userData: any; // Datos del usuario
   editForm: FormGroup; // Formulario de edición
+  products: any[] = [];
 
   constructor(
     private authService: AutheticationService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private productService: ProductService
   ) {
     // Configurar el formulario reactivo
     this.editForm = this.formBuilder.group({
@@ -30,9 +33,21 @@ export class ProfilePage implements OnInit {
       async (user) => {
         if (user) {
           console.log('Usuario autenticado:', user);
-          const userData = await this.authService.getUserData(user.uid);
-          if (userData) {
-            this.userData = userData;
+          try {
+            // Obtener datos del usuario autenticado
+            const userData = await this.authService.getUserData(user.uid);
+            if (userData) {
+              this.userData = userData;
+  
+              // Obtener productos del usuario autenticado
+              this.products = await this.productService.getProductsByUser(user.uid);
+              console.log('Productos del usuario:', this.products);
+            } else {
+              console.warn('No se encontraron datos del usuario.');
+            }
+          } catch (error) {
+            console.error('Error al obtener los datos del usuario o productos:', error);
+            alert('Hubo un problema al cargar tus datos. Por favor, intenta nuevamente.');
           }
         } else {
           console.warn('No se encontró un usuario autenticado.');
