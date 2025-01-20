@@ -50,4 +50,14 @@ export class ProductService {
       throw error;
     }
   }
+
+  async getAllProducts(): Promise<any[]> {
+    try {
+      const snapshot = await this.firestore.collection('products').get().toPromise();
+      return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as any) }));
+    } catch (error) {
+      console.error('Error al obtener los productos:', error);
+      throw error;
+    }
+  }
 }

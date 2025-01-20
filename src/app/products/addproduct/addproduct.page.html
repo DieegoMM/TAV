@@ -58,12 +58,17 @@
 
     <!-- Imagen -->
     <ion-item>
-      <ion-label position="stacked">Imagen</ion-label>
-      <ion-input
-        formControlName="image"
-        placeholder="URL de la imagen del producto"
-      ></ion-input>
+      <ion-label position="stacked">Imagen del producto</ion-label>
+      <ion-button (click)="selectImage()" expand="block">
+        Usar Cámara o Galería
+      </ion-button>
     </ion-item>
+
+    <ion-img
+    *ngIf="productForm.get('image')?.value"
+    [src]="productForm.get('image')?.value"
+    style="margin-top: 10px; width: 100px; height: 100px;">
+  </ion-img>
 
     <!-- Botón para agregar el producto -->
     <ion-button expand="block" type="submit" [disabled]="productForm.invalid">

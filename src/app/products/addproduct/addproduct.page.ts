@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router'; // Importa el Router
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import imageCompression from 'browser-image-compression';
 
 @Component({
   selector: 'app-addproduct',
@@ -41,4 +43,61 @@ export class AddProductPage {
       alert('Por favor, completa todos los campos requeridos.');
     }
   }
+
+  async selectImage() {
+    try {
+      // Abrir cámara o galería
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl, // Base64
+        source: CameraSource.Prompt, // Permite elegir entre cámara o galería
+      });
+  
+      if (image.dataUrl) {
+        // Convertir el DataURL a un archivo
+        const imageFile = this.dataURLtoFile(image.dataUrl, 'productImage.jpg');
+      
+        // Comprimir el archivo de imagen
+        const compressedImage = await imageCompression(imageFile, {
+          maxSizeMB: 0.5,
+          maxWidthOrHeight: 1024,
+        });
+      
+        // Convertir el archivo comprimido de nuevo a DataURL si es necesario
+        const compressedImageDataUrl = await this.fileToDataURL(compressedImage);
+      
+        // Guardar la imagen comprimida en el formulario
+        this.productForm.patchValue({ image: compressedImageDataUrl });
+      
+        console.log('Imagen comprimida seleccionada:', compressedImageDataUrl);
+      }
+    } catch (error) {
+      console.error('Error al seleccionar la imagen:', error);
+      alert('No se pudo acceder a la cámara o galería.');
+    }
+  }
+  
+  // Helper para convertir Base64 a archivo
+  dataURLtoFile(dataUrl: string, fileName: string): File {
+    const arr = dataUrl.split(',');
+    const mime = arr[0].match(/:(.*?);/)![1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], fileName, { type: mime });
+  }
+
+  fileToDataURL(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+  
 }

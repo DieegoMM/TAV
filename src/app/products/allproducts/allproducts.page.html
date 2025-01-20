@@ -1,13 +1,21 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>allproducts</ion-title>
+    <ion-title>Todos los Productos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">allproducts</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-card *ngFor="let product of products">
+    <ion-img [src]="product.image" alt="Imagen del producto"></ion-img>
+    <ion-card-header>
+      <ion-card-title>{{ product.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Precio:</strong> {{ product.price | currency }}</p>
+      <p><strong>Estado:</strong> {{ stateMap[product.state] || product.state }}</p>
+      <p><strong>Vendedor:</strong> {{ product.ownerName }}</p>
+      <p><strong>Email:</strong> {{ product.ownerEmail }}</p>
+      <p><strong>Teléfono:</strong> {{ product.ownerPhone }}</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
