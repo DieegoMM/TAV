@@ -65,6 +65,7 @@ const routes: Routes = [
       import('./products/addproduct/addproduct.module').then(
         (m) => m.AddProductPageModule
       ),
+      canActivate: [AuthGuard], // Proteger con el guard
   },
   {
     path: 'addproduct/:id',
@@ -72,10 +73,12 @@ const routes: Routes = [
       import('./products/addproduct/addproduct.module').then(
         (m) => m.AddProductPageModule
       ),
+      canActivate: [AuthGuard], // Proteger con el guard
   },
   {
     path: 'editproducts',
-    loadChildren: () => import('./products/editproducts/editproducts.module').then( m => m.EditproductsPageModule)
+    loadChildren: () => import('./products/editproducts/editproducts.module').then( m => m.EditproductsPageModule),
+    canActivate: [AuthGuard], // Proteger con el guard
   },
 
 

@@ -144,6 +144,10 @@ export class AddProductPage {
         console.log('Producto agregado correctamente.');
   
         alert('Producto guardado correctamente.');
+        
+        // Redirige al perfil después de guardar el producto
+        this.router.navigate(['/profile']);
+        
       } catch (error) {
         console.error('Error en saveProduct:', error);
         alert('Hubo un error al guardar el producto.');
@@ -151,6 +155,6 @@ export class AddProductPage {
     } else {
       alert('Por favor, completa todos los campos requeridos.');
     }
-  }  
+  }
   
 }

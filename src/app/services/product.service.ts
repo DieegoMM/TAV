@@ -98,6 +98,7 @@ export class ProductService {
       console.error('Error al eliminar el producto:', error);
       throw error;
     }
-  }  
+  }
+  
 
 }
