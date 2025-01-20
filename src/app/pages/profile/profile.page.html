@@ -65,6 +65,13 @@
   </ion-card-content>
 </ion-card>
 
+<div>
+  <ion-button [routerLink]="['/editproducts']" expand="block">
+    Editar Productos
+  </ion-button>    
+</div>
+
+
 <ion-text *ngIf="products && products.length === 0">
   Aún no tienes productos en venta.
 </ion-text>

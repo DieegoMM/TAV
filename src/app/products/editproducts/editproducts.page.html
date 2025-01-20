@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Editar Productos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let product of userProducts">
+      <ion-label>
+        <h2>{{ product.name }}</h2>
+        <p>Estado: {{ product.state }}</p>
+        <p>Precio: {{ product.price | currency }}</p>
+      </ion-label>
+      <ion-button (click)="editProduct(product.id)" color="primary">Editar</ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>
