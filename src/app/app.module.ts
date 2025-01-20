@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { environment } from '../environments/environment';
 import { AutheticationService } from './authetication.service';
+import { ProductService } from './services/product.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,7 @@ import { AutheticationService } from './authetication.service';
     AngularFireAuthModule,
     AngularFirestoreModule,
   ],
-  providers: [AutheticationService],
+  providers: [AutheticationService, ProductService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

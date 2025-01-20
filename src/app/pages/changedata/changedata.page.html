@@ -35,15 +35,10 @@
 
     <!-- Botón para usar cámara o galería -->
     <ion-item>
-      <ion-label>Foto de Perfil</ion-label>
+      <ion-label position="stacked">Foto de Perfil</ion-label>
       <ion-button (click)="selectImage()" expand="block">Usar Cámara o Galería</ion-button>
     </ion-item>
-
-    <!-- Input para cargar desde la galería directamente -->
-    <ion-item>
-      <input type="file" accept="image/*" (change)="onFileSelected($event)" style="margin-top: 10px;" />
-    </ion-item>
-
+    
     <!-- Vista previa de la imagen seleccionada -->
     <ion-img
       *ngIf="changeDataForm.get('profileImage')?.value"

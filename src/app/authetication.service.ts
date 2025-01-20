@@ -73,14 +73,34 @@ export class AutheticationService {
           if (authUser) {
             resolve(authUser); // Usuario autenticado
           } else {
-            resolve(null); // No hay usuario autenticado
+            reject('No hay usuario autenticado'); // No hay usuario autenticado
           }
         });
       });
-      return user;
+  
+      if (user) {
+        const userDoc = await this.firestore
+          .collection('users')
+          .doc(user['uid'])
+          .get()
+          .toPromise();
+  
+        if (userDoc.exists) {
+          const userData = userDoc.data(); // This might be undefined
+  
+          if (userData && typeof userData === 'object') {
+            return { uid: user['uid'], ...userData }; // Spread operator works on objects
+          } else {
+            throw new Error('El documento del usuario no contiene datos válidos');
+          }
+        } else {
+          throw new Error('El documento del usuario no existe en Firestore');
+        }
+      }
+      return null;
     } catch (error) {
       console.error('Error al obtener el perfil del usuario:', error);
-      return null;
+      throw error;
     }
   }
 

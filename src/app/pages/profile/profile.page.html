@@ -36,5 +36,11 @@
     <p><a [routerLink]="['/changepassword']">Cambia tu contraseña</a></p>
   </div>
 
+  <div>
+    <ion-button [routerLink]="['/addproduct']" expand="block">
+      Agregar Producto
+    </ion-button>    
+  </div>
+
   <ion-text *ngIf="!userData">Cargando datos del usuario...</ion-text>
 </ion-content>

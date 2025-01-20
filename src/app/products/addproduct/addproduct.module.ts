@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
-import { AddproductPageRoutingModule } from './addproduct-routing.module';
-
-import { AddproductPage } from './addproduct.page';
+import { AddProductPageRoutingModule } from './addproduct-routing.module';
+import { AddProductPage } from './addproduct.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
-    AddproductPageRoutingModule
+    AddProductPageRoutingModule,
   ],
-  declarations: [AddproductPage]
+  declarations: [AddProductPage],
 })
-export class AddproductPageModule {}
+export class AddProductPageModule {}
