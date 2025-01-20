@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AutheticationService } from 'src/app/authetication.service';
 
 @Component({
   selector: 'app-home',
@@ -6,8 +8,21 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
   standalone: false,
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  isAuthenticated: boolean = false; // Variable para saber si el usuario está autenticado
 
-  constructor() {}
+  constructor(private authService: AutheticationService, private router: Router) {}
 
+  async ngOnInit() {
+    // Detecta si el usuario está autenticado
+    const user = await this.authService.getProfile();
+    this.isAuthenticated = !!user;
+  }
+
+  // Función para cerrar sesión
+  async logout() {
+    await this.authService.signOut();
+    this.isAuthenticated = false;
+    this.router.navigate(['/login']);
+  }
 }

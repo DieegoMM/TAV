@@ -57,8 +57,13 @@ export class AutheticationService {
     return await this.afAuth.sendPasswordResetEmail(email);
   }
 
-  async signOut() {
-    return await this.afAuth.signOut();
+  async signOut(): Promise<void> {
+    try {
+      await this.afAuth.signOut(); // Cierra sesión en Firebase
+      console.log('Sesión cerrada correctamente.');
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
   }
 
   async getProfile(): Promise<any> {
