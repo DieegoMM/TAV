@@ -61,15 +61,24 @@
           <p><strong>Estado:</strong> {{ stateMap[product.state] }}</p>
           <p><strong>Precio:</strong> {{ product.price | currency }}</p>
         </ion-label>
+        <!-- Botón para eliminar producto -->
+        <ion-button 
+          slot="end" 
+          color="danger" 
+          (click)="deleteProduct(product.id)">
+          Eliminar
+        </ion-button>
       </ion-item>
     </ion-list>
   </ion-card-content>
 </ion-card>
 
+
 <div>
   <ion-button [routerLink]="['/editproducts']" expand="block">
     Editar Productos
   </ion-button>    
+  
 </div>
 
 

@@ -113,7 +113,24 @@ export class ProfilePage implements OnInit {
     console.log('Editando producto con ID:', productId); // Agregar log
     this.router.navigate(['/addproduct', productId]); // Pasa el ID del producto a editar
   }
+
+  async deleteProduct(productId: string) {
+    const userConfirmed = confirm("¿Estás seguro de que deseas eliminar este producto?");
+    if (userConfirmed) {
+      try {
+        console.log('Eliminando producto con ID:', productId);
+        await this.productService.deleteProduct(productId);
+        console.log('Producto eliminado correctamente.');
   
+        // Actualiza la lista de productos en la vista
+        this.products = this.products.filter(product => product.id !== productId);
   
+        alert('Producto eliminado correctamente.');
+      } catch (error) {
+        console.error('Error al eliminar el producto:', error);
+        alert('Hubo un error al intentar eliminar el producto.');
+      }
+    }
+  }  
 
 }
