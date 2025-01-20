@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AutheticationService } from 'src/app/authetication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
+import { stateMap } from 'src/app/utils/state-map';
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +12,7 @@ import { ProductService } from '../../services/product.service';
   standalone: false,
 })
 export class ProfilePage implements OnInit {
+  stateMap = stateMap; // Ahora está disponible en la plantilla
   userData: any; // Datos del usuario
   editForm: FormGroup; // Formulario de edición
   products: any[] = [];

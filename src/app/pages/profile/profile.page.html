@@ -57,7 +57,7 @@
         <ion-label>
           <h2>{{ product.name }}</h2>
           <p><strong>Tipo:</strong> {{ product.type }}</p>
-          <p><strong>Estado:</strong> {{ product.state }}</p>
+          <p><strong>Estado:</strong> {{ stateMap[product.state] }}</p>
           <p><strong>Precio:</strong> {{ product.price | currency }}</p>
         </ion-label>
       </ion-item>
