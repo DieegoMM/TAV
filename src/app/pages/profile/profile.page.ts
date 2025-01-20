@@ -102,4 +102,11 @@ export class ProfilePage implements OnInit {
     }
   }
 
+  async ionViewWillEnter() {
+    const user = await this.authService.getProfile();
+    if (user) {
+      this.products = await this.productService.getProductsByUser(user.uid);
+    }
+  }
+
 }

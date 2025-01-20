@@ -70,9 +70,10 @@
     style="margin-top: 10px; width: 100px; height: 100px;">
   </ion-img>
 
-    <!-- Botón para agregar el producto -->
+    <!-- Botón para agregar o editar el producto -->
     <ion-button expand="block" type="submit" [disabled]="productForm.invalid">
-      Agregar Producto
+      {{ isEditing ? 'Guardar Cambios' : 'Agregar Producto' }}
     </ion-button>
+    
   </form>
 </ion-content>

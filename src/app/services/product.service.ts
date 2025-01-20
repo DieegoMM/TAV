@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AutheticationService } from '../authetication.service'; // Ruta de tu servicio de autenticación
-
+import { AutheticationService } from '../authetication.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +11,7 @@ export class ProductService {
     private authService: AutheticationService
   ) {}
 
-  // Método para agregar un producto
-  async addProduct(productData: any) {
+  async addProduct(productData: any): Promise<void> {
     try {
       const user = await this.authService.getProfile();
       if (!user) {
@@ -35,16 +33,16 @@ export class ProductService {
       console.error('Error al agregar producto:', error);
       throw error;
     }
-  }
-
-  // Método para obtener productos por usuario
+  }  
+  
+  
   async getProductsByUser(uid: string): Promise<any[]> {
     try {
       const snapshot = await this.firestore
         .collection('products', (ref) => ref.where('ownerId', '==', uid))
         .get()
         .toPromise();
-        return snapshot.docs.map((doc) => ({ id: doc.id, ...(doc.data() as any) }));
+      return snapshot.docs.map((doc) => ({ id: doc.id, ...(doc.data() as any) }));
     } catch (error) {
       console.error('Error al obtener productos:', error);
       throw error;
@@ -54,9 +52,34 @@ export class ProductService {
   async getAllProducts(): Promise<any[]> {
     try {
       const snapshot = await this.firestore.collection('products').get().toPromise();
-      return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as any) }));
+      return snapshot.docs.map((doc) => ({ id: doc.id, ...(doc.data() as any) }));
     } catch (error) {
       console.error('Error al obtener los productos:', error);
+      throw error;
+    }
+  }
+
+  async updateProduct(productId: string, productData: any): Promise<void> {
+    try {
+      await this.firestore.collection('products').doc(productId).update(productData);
+      console.log('Producto actualizado correctamente.');
+    } catch (error) {
+      console.error('Error al actualizar el producto:', error);
+      throw error;
+    }
+  }
+  
+
+  async getProductById(productId: string): Promise<any> {
+    try {
+      const productDoc = await this.firestore.collection('products').doc(productId).get().toPromise();
+      if (productDoc.exists) {
+        return { id: productDoc.id, ...(productDoc.data() as any)}; // Incluye el ID del documento
+      } else {
+        throw new Error('Producto no encontrado');
+      }
+    } catch (error) {
+      console.error('Error al obtener el producto:', error);
       throw error;
     }
   }

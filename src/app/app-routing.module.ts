@@ -61,8 +61,19 @@ const routes: Routes = [
   },
   {
     path: 'addproduct',
-    loadChildren: () => import('./products/addproduct/addproduct.module').then(m => m.AddProductPageModule),
-  },  {
+    loadChildren: () =>
+      import('./products/addproduct/addproduct.module').then(
+        (m) => m.AddProductPageModule
+      ),
+  },
+  {
+    path: 'addproduct/:id',
+    loadChildren: () =>
+      import('./products/addproduct/addproduct.module').then(
+        (m) => m.AddProductPageModule
+      ),
+  },
+  {
     path: 'editproducts',
     loadChildren: () => import('./products/editproducts/editproducts.module').then( m => m.EditproductsPageModule)
   },

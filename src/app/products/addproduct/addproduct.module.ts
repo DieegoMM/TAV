@@ -1,10 +1,16 @@
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AddProductPage } from './addproduct.page';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
-import { AddProductPageRoutingModule } from './addproduct-routing.module';
-import { AddProductPage } from './addproduct.page';
+const routes: Routes = [
+  {
+    path: '',
+    component: AddProductPage,
+  },
+];
 
 @NgModule({
   imports: [
@@ -12,7 +18,7 @@ import { AddProductPage } from './addproduct.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    AddProductPageRoutingModule,
+    RouterModule.forChild(routes),
   ],
   declarations: [AddProductPage],
 })

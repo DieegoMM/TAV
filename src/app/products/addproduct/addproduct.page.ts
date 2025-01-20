@@ -4,6 +4,7 @@ import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router'; // Importa el Router
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import imageCompression from 'browser-image-compression';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-addproduct',
@@ -13,11 +14,14 @@ import imageCompression from 'browser-image-compression';
 })
 export class AddProductPage {
   productForm: FormGroup;
+  isEditing = false;
+  productId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
-    private router: Router // Inyecta el Router aquí
+    private router: Router,
+    private activatedRoute: ActivatedRoute // Agregado
   ) {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
@@ -25,19 +29,20 @@ export class AddProductPage {
       state: ['', Validators.required],
       description: [''],
       price: ['', [Validators.required, Validators.min(0)]],
-      image: ['', Validators.required],
+      image: [''],
     });
   }
-
+  
   async addProduct() {
+    console.log('Método addProduct llamado'); // Añade este log
     if (this.productForm.valid) {
       try {
         await this.productService.addProduct(this.productForm.value);
         alert('Producto agregado exitosamente');
-        this.router.navigate(['/profile']); // Ahora debería funcionar
+        this.router.navigate(['/profile']);
       } catch (error) {
+        console.error('Error al agregar producto:', error);
         alert('Hubo un error al agregar el producto');
-        console.error(error);
       }
     } else {
       alert('Por favor, completa todos los campos requeridos.');
@@ -99,5 +104,44 @@ export class AddProductPage {
       reader.readAsDataURL(file);
     });
   }
+
+  async ngOnInit() {
+    this.productId = this.activatedRoute.snapshot.paramMap.get('id');
+    if (this.productId) {
+      this.isEditing = true;
+      try {
+        const product = await this.productService.getProductById(this.productId);
+        if (product) {
+          this.productForm.patchValue(product); // Cargar datos en el formulario
+          console.log('Producto cargado para edición:', product);
+        }
+      } catch (error) {
+        console.error('Error al cargar el producto:', error);
+      }
+    }
+  }
+  
+
+  async saveProduct() {
+    if (this.productForm.valid) {
+      try {
+        if (this.isEditing && this.productId) {
+          // Modo de edición
+          await this.productService.updateProduct(this.productId, this.productForm.value);
+          alert('Producto actualizado exitosamente');
+        } else {
+          // Modo de creación
+          await this.productService.addProduct(this.productForm.value);
+          alert('Producto agregado exitosamente');
+        }
+        this.router.navigate(['/profile']); // Redirige al perfil
+      } catch (error) {
+        alert('Hubo un error al guardar el producto');
+        console.error(error);
+      }
+    } else {
+      alert('Por favor, completa todos los campos requeridos.');
+    }
+  }  
   
 }

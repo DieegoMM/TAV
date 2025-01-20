@@ -5,14 +5,18 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let product of userProducts">
+  <ion-list *ngFor="let product of userProducts">
+    <ion-item>
       <ion-label>
         <h2>{{ product.name }}</h2>
         <p>Estado: {{ product.state }}</p>
         <p>Precio: {{ product.price | currency }}</p>
       </ion-label>
-      <ion-button (click)="editProduct(product.id)" color="primary">Editar</ion-button>
+
+      <ion-button [routerLink]="['/addproduct', product.id]" expand="block">
+        EDITAR
+      </ion-button>
+      
     </ion-item>
   </ion-list>
 </ion-content>

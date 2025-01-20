@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { AutheticationService } from '../../authetication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-editproducts',
@@ -13,7 +14,8 @@ export class EditproductsPage implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private authService: AutheticationService // Servicio para autenticación
+    private authService: AutheticationService, // Servicio para autenticación
+    private router: Router
   ) {}
 
   async ngOnInit() {
@@ -32,7 +34,7 @@ export class EditproductsPage implements OnInit {
   }
 
   editProduct(productId: string) {
-    // Lógica para redirigir a una página de edición o abrir un modal
-    console.log('Editar producto con ID:', productId);
+    console.log('Editing product with ID:', productId); // Asegúrate de que el ID se pasa correctamente
+    this.router.navigate(['/addproduct', productId]); // Redirige a la página de edición
   }
 }
