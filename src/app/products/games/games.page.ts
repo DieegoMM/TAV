@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-games',
@@ -7,10 +8,26 @@ import { Component, OnInit } from '@angular/core';
   standalone: false,
 })
 export class GamesPage implements OnInit {
+  games: any[] = []; // Aquí se almacenarán los productos de juegos
 
-  constructor() { }
+  constructor(private productService: ProductService) {}
 
-  ngOnInit() {
+  stateMap = {
+    sin_uso: 'Sin uso',
+    algo_uso: 'Algo de uso',
+    casi_nuevo: 'Casi nuevo',
+    mal_estado: 'Mal estado',
+    inutilizable: 'Necesita reparo',
+  };
+  
+
+  async ngOnInit() {
+    try {
+      const allProducts = await this.productService.getAllProducts();
+      this.games = allProducts.filter((product) => product.type === 'juegos');
+    } catch (error) {
+      console.error('Error al cargar juegos:', error);
+    }
   }
-
+  
 }

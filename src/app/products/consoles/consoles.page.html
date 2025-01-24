@@ -1,13 +1,25 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>consoles</ion-title>
+    <ion-title>Consolas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">consoles</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-card *ngFor="let console of consoles">
+    <ion-img [src]="console.image" alt="Imagen del producto"></ion-img>
+    <ion-card-header>
+      <ion-card-title>{{ console.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Precio:</strong> {{ console.price | currency }}</p>
+      <p><strong>Estado:</strong> {{ stateMap[console.state] || console.state }}</p>
+      <p><strong>Vendedor:</strong> {{ console.ownerName }}</p>
+      <p><strong>Email:</strong> {{ console.ownerEmail }}</p>
+      <p><strong>Teléfono:</strong> {{ console.ownerPhone }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-text *ngIf="consoles.length === 0">
+    No se encontraron consolas.
+  </ion-text>
 </ion-content>

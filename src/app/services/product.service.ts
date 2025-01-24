@@ -99,6 +99,20 @@ export class ProductService {
       throw error;
     }
   }
+
+  async getProductsByType(type: string): Promise<any[]> {
+    try {
+      const snapshot = await this.firestore
+        .collection('products', (ref) => ref.where('type', '==', type))
+        .get()
+        .toPromise();
+      return snapshot.docs.map((doc) => ({ id: doc.id, ...(doc.data() as any) }));
+    } catch (error) {
+      console.error('Error al obtener productos por tipo:', error);
+      throw error;
+    }
+  }
+  
   
 
 }

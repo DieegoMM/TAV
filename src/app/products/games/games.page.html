@@ -1,13 +1,27 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>games</ion-title>
+    <ion-title>Juegos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">games</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <!-- Lista de productos -->
+  <ion-card *ngFor="let product of games">
+    <ion-img [src]="product.image" alt="Imagen del producto"></ion-img>
+    <ion-card-header>
+      <ion-card-title>{{ product.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Precio:</strong> {{ product.price | currency }}</p>
+      <p><strong>Estado:</strong> {{ stateMap[product.state] || product.state }}</p>
+      <p><strong>Vendedor:</strong> {{ product.ownerName }}</p>
+      <p><strong>Email:</strong> {{ product.ownerEmail }}</p>
+      <p><strong>Teléfono:</strong> {{ product.ownerPhone }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Mensaje si no hay juegos -->
+  <ion-text *ngIf="games.length === 0">
+    No se encontraron juegos.
+  </ion-text>
 </ion-content>
