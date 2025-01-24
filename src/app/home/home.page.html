@@ -9,7 +9,14 @@
       </div>
     </div>
 
-    <input type="text" placeholder="Buscar Productos">
+    <!-- Campo de búsqueda con evento de entrada -->
+    <input
+    type="search"
+    placeholder="Buscar Productos"
+    [(ngModel)]="searchQuery"
+    (input)="onSearch($event)"
+  />
+
 
     <p>
       <a routerLink="/profile">Mi Perfil</a>
@@ -24,6 +31,26 @@
       </ng-template>
     </p>
   </div>
+
+  <!-- Lista de productos -->
+<ion-list *ngIf="filteredProducts.length > 0">
+  <ion-item *ngFor="let product of filteredProducts">
+    <ion-thumbnail slot="start">
+      <ion-img [src]="product.image"></ion-img>
+    </ion-thumbnail>
+    <ion-label>
+      <h2>{{ product.name }}</h2>
+      <p><strong>Tipo:</strong> {{ product.type }}</p>
+      <p><strong>Precio:</strong> {{ product.price | currency }}</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
+
+<!-- Mensaje si no hay resultados -->
+<ion-text *ngIf="filteredProducts.length === 0 && searchQuery.length > 0">
+  No se encontraron productos.
+</ion-text>
+
 
   <div class="services">
     <div class="service_names">
@@ -48,5 +75,4 @@
       <p>Ver Catálogo Completo</p>
     </div>
   </div>
-  
 </ion-content>

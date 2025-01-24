@@ -39,7 +39,7 @@ ion-menu-button {
   display: block;
 }
 
-input {
+input[type="search"] {
   margin-top: 20px;
   width: 90%;
   height: 45px;
@@ -47,8 +47,17 @@ input {
   padding-left: 15px;
   border: 1px solid #ccc;
   font-size: 16px;
-  background-color: #ffffff;
+  background-color: #fff;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  outline: none;
+  position: relative;
+  z-index: 10;
+  color: #000;
+}
+
+input[type="search"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 /* Estilo de los enlaces */
@@ -135,3 +144,4 @@ p a:hover {
 }
 
 }
+

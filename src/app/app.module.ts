@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { AutheticationService } from './authetication.service';
 import { ProductService } from './services/product.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { ProductService } from './services/product.service';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    FormsModule
   ],
   providers: [AutheticationService, ProductService],
   bootstrap: [AppComponent],
