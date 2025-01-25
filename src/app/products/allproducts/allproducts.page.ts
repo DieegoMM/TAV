@@ -20,15 +20,19 @@ export class AllproductsPage implements OnInit {
     inutilizable: 'Necesita reparación',
   };
 
+  logProductId(product: any) {
+    console.log('ID del producto seleccionado:', product.id); // Esto debería mostrar un ID válido
+  }
+
   constructor(private productService: ProductService) {}
 
   async ngOnInit() {
     try {
       this.products = await this.productService.getAllProducts();
+      console.log('Productos cargados:', this.products);
     } catch (error) {
-      console.error('Error al cargar los productos:', error);
+      console.error('Error al cargar productos:', error);
     }
   }
-
   
 }

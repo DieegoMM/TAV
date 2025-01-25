@@ -86,10 +86,29 @@ const routes: Routes = [
     canActivate: [AuthGuard], // Protegido con el guard
   },
   {
+    path: 'product-profile',
+    loadChildren: () => import('./products/product-profile/product-profile.module').then( m => m.ProductProfilePageModule)
+  },
+  {
+    path: 'product-profile/:id',
+  loadChildren: () =>
+    import('./products/product-profile/product-profile.module').then(
+      (m) => m.ProductProfilePageModule
+    ),
+  },
+  {
+    path: 'test-product',
+    loadChildren: () =>
+      import('./products/product-profile/product-profile.module').then(
+        (m) => m.ProductProfilePageModule
+      ),
+  },
+  {
     path: '**',
     redirectTo: '/home',
     pathMatch: 'full'
   }
+
 ];
 
 @NgModule({

@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detalles del Producto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="product">
+  <ion-card>
+    <ion-img [src]="product.image" alt="Imagen del producto"></ion-img>
+    <ion-card-header>
+      <ion-card-title>{{ product.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Precio:</strong> {{ product.price | currency }}</p>
+      <p><strong>Estado:</strong> {{ product.state }}</p>
+      <p><strong>Descripción:</strong> {{ product.description || 'Sin descripción' }}</p>
+      <p><strong>Vendedor:</strong> {{ product.ownerName }}</p>
+      <p><strong>Email:</strong> {{ product.ownerEmail }}</p>
+      <p><strong>Teléfono:</strong> {{ product.ownerPhone }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

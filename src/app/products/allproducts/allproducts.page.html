@@ -15,6 +15,11 @@
       <p><strong>Estado:</strong> {{ stateMap[product.state] || product.state }}</p>
       <p><strong>Vendedor:</strong> {{ product.ownerName }}</p>
       
+      <ion-button [routerLink]="['/product-profile', product.id]" fill="outline">
+        Ver Producto
+      </ion-button>
+      
+
        <!-- Botón para ir al perfil del vendedor -->
       <ion-button [routerLink]="['/profile', product.ownerId]" fill="outline">
         Ver Perfil

@@ -83,9 +83,14 @@ export class ProductService {
 
   async getProductById(productId: string): Promise<any> {
     try {
-      const productDoc = await this.firestore.collection('products').doc(productId).get().toPromise();
+      const productDoc = await this.firestore
+        .collection('products')
+        .doc(productId)
+        .get()
+        .toPromise();
+  
       if (productDoc.exists) {
-        return { id: productDoc.id, ...(productDoc.data() as any)}; // Incluye el ID del documento
+        return { id: productDoc.id, ...(productDoc.data() as any) };
       } else {
         throw new Error('Producto no encontrado');
       }
@@ -94,6 +99,7 @@ export class ProductService {
       throw error;
     }
   }
+  
 
   async deleteProduct(productId: string): Promise<void> {
     try {
