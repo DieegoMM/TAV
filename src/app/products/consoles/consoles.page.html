@@ -14,8 +14,11 @@
       <p><strong>Precio:</strong> {{ console.price | currency }}</p>
       <p><strong>Estado:</strong> {{ stateMap[console.state] || console.state }}</p>
       <p><strong>Vendedor:</strong> {{ console.ownerName }}</p>
-      <p><strong>Email:</strong> {{ console.ownerEmail }}</p>
-      <p><strong>Teléfono:</strong> {{ console.ownerPhone }}</p>
+
+      <!-- Botón para ir al perfil del vendedor -->
+      <ion-button [routerLink]="['/profile', console.ownerId]" fill="outline">
+        Ver Perfil
+      </ion-button>
     </ion-card-content>
   </ion-card>
 
