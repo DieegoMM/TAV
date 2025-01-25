@@ -18,18 +18,24 @@
   />
 
 
-    <p>
+  <p>
+    <!-- Mostrar "Mi Perfil" solo si el usuario está autenticado -->
+    <ng-container *ngIf="isAuthenticated">
       <a routerLink="/profile">Mi Perfil</a>
+    </ng-container>
+  
+    <!-- Mostrar "Iniciar Sesión" y "Registrarse" si no está autenticado -->
+    <ng-container *ngIf="!isAuthenticated; else authenticated">
+      <a routerLink="/login">Iniciar Sesión</a>
+      <a routerLink="/signup">Registrarse</a>
+    </ng-container>
 
-      <!-- Mostrar botones dependiendo del estado de autenticación -->
-      <ng-container *ngIf="isAuthenticated; else notAuthenticated">
-        <a href="#" (click)="logout()">Cerrar Sesión</a>
-      </ng-container>
-      <ng-template #notAuthenticated>
-        <a routerLink="/login">Iniciar Sesión</a>
-        <a routerLink="/signup">Registrarse</a>
-      </ng-template>
-    </p>
+    <!-- Mostrar "Cerrar Sesión" solo para usuarios autenticados -->
+    <ng-template #authenticated>
+      <a href="#" (click)="logout()">Cerrar Sesión</a>
+    </ng-template>
+  </p>
+  
   </div>
 
   <!-- Lista de productos -->
