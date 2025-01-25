@@ -142,4 +142,23 @@ export class ProfilePage implements OnInit {
     }
   }  
 
+  copyToClipboard(text: string) {
+    if (!navigator.clipboard) {
+      console.error('El portapapeles no está soportado en este navegador.');
+      alert('Tu navegador no soporta esta función.');
+      return;
+    }
+  
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        console.log(`Texto copiado al portapapeles: ${text}`);
+        alert('Copiado al portapapeles.');
+      })
+      .catch((error) => {
+        console.error('Error al copiar al portapapeles:', error);
+        alert('Hubo un error al copiar. Intenta nuevamente.');
+      });
+  }
+
 }
