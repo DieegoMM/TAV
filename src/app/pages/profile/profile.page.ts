@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AutheticationService } from 'src/app/authetication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
@@ -16,12 +16,14 @@ export class ProfilePage implements OnInit {
   userData: any; // Datos del usuario
   editForm: FormGroup; // Formulario de edición
   products: any[] = [];
+  currentUserId: string | null = null; // Aquí guardaremos el ID del usuario autenticado
 
   constructor(
     private authService: AutheticationService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    private activatedRoute: ActivatedRoute
   ) {
     // Configurar el formulario reactivo
     this.editForm = this.formBuilder.group({
@@ -30,39 +32,46 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.authService.getAuthState().subscribe(
       async (user) => {
-        if (user) {
-          console.log('Usuario autenticado:', user);
-          try {
-            // Obtener datos del usuario autenticado
-            const userData = await this.authService.getUserData(user.uid);
-            if (userData) {
-              this.userData = userData;
+        // Si hay un usuario autenticado, guarda su ID
+        this.currentUserId = user ? user.uid : null;
   
-              // Obtener productos del usuario autenticado
-              this.products = await this.productService.getProductsByUser(user.uid);
-              console.log('Productos del usuario:', this.products);
-            } else {
-              console.warn('No se encontraron datos del usuario.');
-            }
-          } catch (error) {
-            console.error('Error al obtener los datos del usuario o productos:', error);
-            alert('Hubo un problema al cargar tus datos. Por favor, intenta nuevamente.');
+        // Obtener el ID del perfil desde la URL
+        const profileId = this.activatedRoute.snapshot.paramMap.get('id');
+        console.log('Cargando perfil con UID:', profileId);
+  
+        try {
+          // Cargar datos del perfil (propio o ajeno)
+          if (profileId) {
+            this.userData = await this.authService.getUserData(profileId);
+            console.log('Datos del usuario cargados:', this.userData);
+  
+            // Cargar productos del usuario
+            this.products = await this.productService.getProductsByUser(profileId);
+            console.log('Productos del usuario:', this.products);
+          } else if (user) {
+            // Si no hay ID en la URL, pero hay un usuario autenticado, carga su perfil
+            this.userData = await this.authService.getUserData(user.uid);
+            this.products = await this.productService.getProductsByUser(user.uid);
+          } else {
+            alert('No se puede cargar el perfil. Inicia sesión o selecciona un usuario válido.');
+            this.router.navigate(['/home']);
           }
-        } else {
-          console.warn('No se encontró un usuario autenticado.');
-          alert('Por favor, inicia sesión primero.');
-          this.router.navigate(['/login']); // Redirige al login si no está autenticado
+        } catch (error) {
+          console.error('Error al cargar los datos del usuario o productos:', error);
+          alert('Hubo un problema al cargar los datos. Por favor, intenta nuevamente.');
+          this.router.navigate(['/home']);
         }
       },
       (error) => {
         console.error('Error al verificar el estado de autenticación:', error);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/home']);
       }
     );
   }
+  
 
   // Método para guardar cambios
   async saveChanges() {

@@ -9,82 +9,63 @@
   <ion-card *ngIf="userData">
     <ion-card-header>
       <ion-card-title>
-        Bienvenido, {{ userData.fullname || 'Usuario' }}
+        Perfil de {{ userData.fullname || 'Usuario' }}
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <!-- Imagen de perfil -->
       <ion-img
         *ngIf="userData.profileImage"
         [src]="userData.profileImage"
         style="width: 100px; height: 100px; border-radius: 50px; margin-bottom: 15px;">
       </ion-img>
-
-      <!-- Datos del usuario -->
-      <p><strong>Email:</strong> {{ userData.email }}</p>
-      <p><strong>Edad:</strong> {{ userData.edad }}</p>
-      <p><strong>Teléfono:</strong> {{ userData.phone }}</p>
+      <p><strong>Email:</strong> {{ userData.email || 'No disponible' }}</p>
+      <p><strong>Edad:</strong> {{ userData.edad || 'No especificada' }}</p>
+      <p><strong>Teléfono:</strong> {{ userData.phone || 'No disponible' }}</p>
     </ion-card-content>
   </ion-card>
 
-  <!-- Enlaces para cambiar datos y contraseña -->
-  <div>
+  <!-- Opciones de edición: Solo en el perfil propio -->
+  <div *ngIf="userData?.uid === currentUserId">
     <a [routerLink]="['/changedata']">Cambia tus datos</a>
-  </div>
-
-  <div>
     <p><a [routerLink]="['/changepassword']">Cambia tu contraseña</a></p>
-  </div>
-
-  <div>
     <ion-button expand="block" routerLink="/addproduct">
       Agregar Producto
     </ion-button>
-    
-  </div>
-
+  </div>  
 
   <!-- Mostrar productos en venta -->
-<ion-card *ngIf="products && products.length > 0">
-  <ion-card-header>
-    <ion-card-title>Productos en venta</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-list>
-      <ion-item *ngFor="let product of products">
-        <ion-thumbnail slot="start">
-          <ion-img [src]="product.image"></ion-img>
-        </ion-thumbnail>
-        <ion-label>
-          <h2>{{ product.name }}</h2>
-          <p><strong>Tipo:</strong> {{ product.type }}</p>
-          <p><strong>Estado:</strong> {{ stateMap[product.state] }}</p>
-          <p><strong>Precio:</strong> {{ product.price | currency }}</p>
-        </ion-label>
-        <!-- Botón para eliminar producto -->
-        <ion-button 
-          slot="end" 
-          color="danger" 
-          (click)="deleteProduct(product.id)">
-          Eliminar
-        </ion-button>
-      </ion-item>
-    </ion-list>
-  </ion-card-content>
-</ion-card>
+  <ion-card *ngIf="products && products.length > 0">
+    <ion-card-header>
+      <ion-card-title>Productos en venta</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let product of products">
+          <ion-thumbnail slot="start">
+            <ion-img [src]="product.image"></ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ product.name }}</h2>
+            <p><strong>Tipo:</strong> {{ product.type }}</p>
+            <p><strong>Estado:</strong> {{ stateMap[product.state] }}</p>
+            <p><strong>Precio:</strong> {{ product.price | currency }}</p>
+          </ion-label>
+          <!-- Botón para eliminar producto: Solo en el perfil propio -->
+          <ion-button
+            slot="end"
+            color="danger"
+            (click)="deleteProduct(product.id)"
+            *ngIf="userData?.uid === currentUserId">
+            Eliminar
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 
-
-<div>
-  <ion-button [routerLink]="['/editproducts']" expand="block">
-    Editar Productos
-  </ion-button>    
-  
-</div>
-
-
-<ion-text *ngIf="products && products.length === 0">
-  Aún no tienes productos en venta.
-</ion-text>
+  <ion-text *ngIf="products && products.length === 0">
+    Aún no tienes productos en venta.
+  </ion-text>
 
   <ion-text *ngIf="!userData">Cargando datos del usuario...</ion-text>
 </ion-content>

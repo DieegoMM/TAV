@@ -6,8 +6,9 @@ import { lastValueFrom } from 'rxjs';
 import 'firebase/compat/auth'; // Asegúrate de que esta línea esté incluida
 
 export interface UserData {
-  username: string; // Nombre de usuario
-  fullname?: string; // Nombre completo (opcional si no lo necesitas)
+  uid?: string; // ID único del usuario (opcional)
+  username?: string; // Nombre de usuario
+  fullname?: string; // Nombre completo
   age?: number; // Edad
   edad?: number; // Alias para edad
   phone?: string; // Teléfono
@@ -17,6 +18,7 @@ export interface UserData {
   createdAt?: Date; // Fecha de creación
   updatedAt?: Date; // Fecha de actualización
 }
+
 
 @Injectable({
   providedIn: 'root',
@@ -121,10 +123,10 @@ export class AutheticationService {
 
   async getUserData(uid: string): Promise<UserData | null> {
     try {
-      console.log('Obteniendo datos para el UID:', uid);
       const userDoc = await this.firestore.collection('users').doc(uid).get().toPromise();
       if (userDoc.exists) {
-        return userDoc.data() as UserData;
+        const data = userDoc.data() as UserData;
+        return { ...data, uid }; // Agrega el UID al objeto retornado
       } else {
         console.warn('No se encontró un documento para el UID:', uid);
         return null;
@@ -133,7 +135,7 @@ export class AutheticationService {
       console.error('Error al obtener los datos del usuario:', error);
       throw error;
     }
-  }
+  }  
 
   async updateUserData(
     uid: string,

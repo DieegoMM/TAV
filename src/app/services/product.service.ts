@@ -42,17 +42,23 @@ export class ProductService {
   
   
   
-  async getProductsByUser(uid: string): Promise<any[]> {
-    try {
-      const snapshot = await this.firestore
-        .collection('products', (ref) => ref.where('ownerId', '==', uid))
-        .get()
-        .toPromise();
-      return snapshot.docs.map((doc) => ({ id: doc.id, ...(doc.data() as any) }));
-    } catch (error) {
-      console.error('Error al obtener productos:', error);
-      throw error;
-    }
+  async getProductsByUser(userId: string): Promise<any[]> {
+    return this.firestore
+      .collection('products', (ref) => ref.where('ownerId', '==', userId))
+      .get()
+      .toPromise()
+      .then((snapshot) => {
+        const products = snapshot.docs.map((doc) => {
+          const data = doc.data() as Record<string, any>; // Asegurar que sea un objeto
+          return { id: doc.id, ...data }; // Propagar los campos correctamente
+        });
+        console.log('Productos cargados desde Firestore:', products); // Mostrar los productos cargados
+        return products;
+      })
+      .catch((error) => {
+        console.error('Error al obtener los productos:', error);
+        throw error;
+      });
   }
 
   async getAllProducts(): Promise<any[]> {
