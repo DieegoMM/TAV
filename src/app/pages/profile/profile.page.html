@@ -57,34 +57,40 @@
   </div>  
 
   <!-- Mostrar productos en venta -->
-  <ion-card *ngIf="products && products.length > 0">
-    <ion-card-header>
-      <ion-card-title>Productos en venta</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let product of products">
-          <ion-thumbnail slot="start">
-            <ion-img [src]="product.image"></ion-img>
-          </ion-thumbnail>
-          <ion-label>
-            <h2>{{ product.name }}</h2>
-            <p><strong>Tipo:</strong> {{ product.type }}</p>
-            <p><strong>Estado:</strong> {{ stateMap[product.state] }}</p>
-            <p><strong>Precio:</strong> {{ product.price | currency }}</p>
-          </ion-label>
-          <!-- Botón para eliminar producto: Solo en el perfil propio -->
+<ion-card *ngIf="products && products.length > 0">
+  <ion-card-header>
+    <ion-card-title>Productos en venta</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item *ngFor="let product of products" [routerLink]="['/product-profile', product.id]">
+        <ion-thumbnail slot="start">
+          <ion-img [src]="product.image"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ product.name }}</h2>
+          <p><strong>Tipo:</strong> {{ product.type }}</p>
+          <p><strong>Estado:</strong> {{ stateMap[product.state] }}</p>
+          <p><strong>Precio:</strong> {{ product.price | currency }}</p>
+        </ion-label>
+        <div class="action-buttons">
+          <!-- Botón para editar -->
+          <ion-button fill="outline" color="primary" (click)="editProduct(product.id)">
+            Editar
+          </ion-button>
+          <!-- Botón para eliminar producto -->
           <ion-button
-            slot="end"
+            fill="outline"
             color="danger"
             (click)="deleteProduct(product.id)"
             *ngIf="userData?.uid === currentUserId">
             Eliminar
           </ion-button>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
 
   <ion-text *ngIf="products && products.length === 0">
     Aún no tienes productos en venta.
