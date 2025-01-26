@@ -5,6 +5,7 @@ import { Router } from '@angular/router'; // Importa el Router
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import imageCompression from 'browser-image-compression';
 import { ActivatedRoute } from '@angular/router';
+import { AutheticationService } from 'src/app/authetication.service';
 
 @Component({
   selector: 'app-addproduct',
@@ -21,7 +22,8 @@ export class AddProductPage {
     private fb: FormBuilder,
     private productService: ProductService,
     private router: Router,
-    private activatedRoute: ActivatedRoute // Agregado
+    private activatedRoute: ActivatedRoute,
+    private authService: AutheticationService // Agrega esta línea
   ) {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
@@ -30,25 +32,39 @@ export class AddProductPage {
       description: [''],
       price: ['', [Validators.required, Validators.min(0)]],
       image: [''],
+      region: [''], 
     });
   }
   
   async addProduct() {
-    console.log('Método addProduct llamado'); // Añade este log
+    console.log('Método addProduct llamado');
     if (this.productForm.valid) {
       try {
-        await this.productService.addProduct(this.productForm.value);
+        const user = await this.authService.getProfile();
+        if (!user?.region) {
+          alert('No se pudo determinar la región del usuario.');
+          return;
+        }
+  
+        // Agregar región del usuario al producto
+        const productData = {
+          ...this.productForm.value,
+          region: user.region, // Región obtenida del perfil del usuario
+          createdAt: new Date(),
+        };
+  
+        await this.productService.addProduct(productData); // Guardar producto en Firebase
         alert('Producto agregado exitosamente');
-        // this.router.navigate(['/profile']);
+        this.router.navigate(['/profile']); // Redirige al perfil
       } catch (error) {
         console.error('Error al agregar producto:', error);
-        alert('Hubo un error al agregar el producto');
+        alert('Hubo un error al agregar el producto.');
       }
     } else {
       alert('Por favor, completa todos los campos requeridos.');
     }
   }
-
+  
   async selectImage() {
     try {
       // Abrir cámara o galería
@@ -133,15 +149,24 @@ export class AddProductPage {
     console.log('Método saveProduct llamado');
     if (this.productForm.valid) {
       try {
-        if (this.isEditing && this.productId) {
-          console.log('Intentando eliminar el producto con ID:', this.productId);
-          await this.productService.deleteProduct(this.productId);
-          console.log('Producto eliminado correctamente.');
-        }
+        // Obtén la región del usuario actual
+        const region = await this.getRegionFromUser();
   
-        console.log('Agregando o actualizando producto:', this.productForm.value);
-        await this.productService.addProduct(this.productForm.value);
-        console.log('Producto agregado correctamente.');
+        // Crea el objeto del producto incluyendo la región
+        const productData = {
+          ...this.productForm.value,
+          region: region || this.productForm.value.region, // Prioriza la región del usuario
+        };
+  
+        if (this.isEditing && this.productId) {
+          console.log('Actualizando producto con ID:', this.productId);
+          await this.productService.updateProduct(this.productId, productData);
+          console.log('Producto actualizado correctamente.');
+        } else {
+          console.log('Agregando nuevo producto:', productData);
+          await this.productService.addProduct(productData);
+          console.log('Producto agregado correctamente.');
+        }
   
         alert('Producto guardado correctamente.');
         
@@ -154,6 +179,16 @@ export class AddProductPage {
       }
     } else {
       alert('Por favor, completa todos los campos requeridos.');
+    }
+  }
+
+  async getRegionFromUser(): Promise<string> {
+    try {
+      const user = await this.authService.getProfile(); // Obtén el perfil del usuario autenticado
+      return user?.region || ''; // Devuelve la región o un valor vacío si no existe
+    } catch (error) {
+      console.error('Error al obtener la región del usuario:', error);
+      return ''; // Devuelve un valor por defecto en caso de error
     }
   }
   

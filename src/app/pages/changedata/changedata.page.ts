@@ -4,6 +4,7 @@ import { AutheticationService } from 'src/app/authetication.service';
 import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import imageCompression from 'browser-image-compression';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-changedata',
@@ -18,7 +19,8 @@ export class ChangedataPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AutheticationService,
-    private router: Router
+    private router: Router,
+    private productService: ProductService // Agrega esta línea
   ) {
     // Inicializa el formulario reactivo
     this.changeDataForm = this.formBuilder.group({
@@ -71,16 +73,16 @@ export class ChangedataPage implements OnInit {
       alert('Por favor, completa todos los campos correctamente.');
       return;
     }
-  
+
     try {
       const updatedData = {
         fullname: this.changeDataForm.get('fullname')?.value,
         edad: this.changeDataForm.get('edad')?.value,
         phone: this.changeDataForm.get('phone')?.value,
         profileImage: this.changeDataForm.get('profileImage')?.value || '',
-        region: this.changeDataForm.get('region')?.value, // Asegúrate de incluir la región
+        region: this.changeDataForm.get('region')?.value,
       };
-  
+
       const user = await this.authService.getProfile();
       if (user) {
         await this.authService.updateUserData(
@@ -89,8 +91,12 @@ export class ChangedataPage implements OnInit {
           updatedData.edad,
           updatedData.phone,
           updatedData.profileImage,
-          updatedData.region // Ahora pasamos la región correctamente
+          updatedData.region
         );
+
+        // Aquí se llama a updateProductsRegion
+        await this.productService.updateProductsRegion(user.uid, updatedData.region);
+
         alert('Datos actualizados correctamente.');
       } else {
         alert('No hay un usuario autenticado.');

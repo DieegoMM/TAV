@@ -149,12 +149,12 @@ export class AutheticationService {
     try {
       const userRef = this.firestore.collection('users').doc(uid);
       await userRef.update({
-        fullname, // Campo fullname
+        fullname, // Campo nombre completo
         edad,     // Campo edad
-        phone,    // Campo phone
-        profileImage, // Campo profileImage
-        region,   // Campo region (agregado)
-        updatedAt: new Date(), // También puedes incluir la fecha de actualización
+        phone,    // Campo teléfono
+        profileImage, // Campo imagen de perfil
+        region,   // Campo región
+        updatedAt: new Date(), // Fecha de actualización
       });
       console.log('Datos actualizados correctamente en Firestore.');
     } catch (error) {

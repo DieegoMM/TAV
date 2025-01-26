@@ -65,7 +65,7 @@
   </ion-card-header>
   <ion-card-content>
     <ion-list>
-      <ion-item *ngFor="let product of products" [routerLink]="['/product-profile', product.id]">
+      <ion-item *ngFor="let product of products">
         <ion-thumbnail slot="start">
           <ion-img [src]="product.image"></ion-img>
         </ion-thumbnail>

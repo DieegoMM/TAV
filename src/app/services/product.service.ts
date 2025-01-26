@@ -74,12 +74,12 @@ export class ProductService {
   async updateProduct(productId: string, productData: any): Promise<void> {
     try {
       await this.firestore.collection('products').doc(productId).update(productData);
-      console.log('Producto actualizado correctamente.');
+      console.log('Producto actualizado correctamente en Firestore.');
     } catch (error) {
       console.error('Error al actualizar el producto:', error);
       throw error;
     }
-  }  
+  }
 
   async getProductById(productId: string): Promise<any> {
     try {
@@ -125,6 +125,26 @@ export class ProductService {
     }
   }
   
+  async updateProductsRegion(ownerId: string, newRegion: string): Promise<void> {
+    try {
+      const productsSnapshot = await this.firestore
+        .collection('products', (ref) => ref.where('ownerId', '==', ownerId))
+        .get()
+        .toPromise();
   
-
+      const batch = this.firestore.firestore.batch();
+  
+      productsSnapshot.forEach((doc) => {
+        const productRef = this.firestore.collection('products').doc(doc.id).ref;
+        batch.update(productRef, { region: newRegion });
+      });
+  
+      await batch.commit();
+      console.log('Productos actualizados correctamente con la nueva región.');
+    } catch (error) {
+      console.error('Error al actualizar la región de los productos:', error);
+      throw error;
+    }
+  }  
+  
 }
