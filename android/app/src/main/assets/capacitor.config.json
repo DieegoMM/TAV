@@ -1,0 +1,6 @@
+{
+	"appId": "com.tav.app",
+	"appName": "tav",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
