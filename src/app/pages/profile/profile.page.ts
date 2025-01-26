@@ -4,6 +4,8 @@ import { AutheticationService } from 'src/app/authetication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { stateMap } from 'src/app/utils/state-map';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 
 @Component({
   selector: 'app-profile',
@@ -33,46 +35,62 @@ export class ProfilePage implements OnInit {
   }
 
   async ngOnInit() {
-    this.authService.getAuthState().subscribe(
-      async (user) => {
-        // Si hay un usuario autenticado, guarda su ID
-        this.currentUserId = user ? user.uid : null;
+    try {
+      // Obtener el ID del perfil desde la URL
+      const profileId = this.activatedRoute.snapshot.paramMap.get('id');
+      console.log('ID en la URL:', profileId);
   
-        // Obtener el ID del perfil desde la URL
-        const profileId = this.activatedRoute.snapshot.paramMap.get('id');
-        console.log('Cargando perfil con UID:', profileId);
+      // Verificar el estado de autenticación
+      this.authService.getAuthState().subscribe(async (user: firebase.User | null) => {
+        if (user) {
+          // Usuario autenticado
+          this.currentUserId = user.uid;
+          console.log('Usuario autenticado:', user);
   
-        try {
-          // Cargar datos del perfil (propio o ajeno)
+          if (profileId && profileId !== this.currentUserId) {
+            // Perfil de otro usuario
+            this.userData = await this.authService.getUserData(profileId);
+            this.products = await this.productService.getProductsByUser(profileId);
+          } else {
+            // Perfil del usuario autenticado
+            this.userData = await this.authService.getUserData(this.currentUserId);
+            this.products = await this.productService.getProductsByUser(this.currentUserId);
+          }
+        } else {
+          console.log('No hay usuario autenticado.');
+          // Cargar perfil de otro usuario incluso si no hay sesión iniciada
           if (profileId) {
             this.userData = await this.authService.getUserData(profileId);
-            console.log('Datos del usuario cargados:', this.userData);
-  
-            // Cargar productos del usuario
             this.products = await this.productService.getProductsByUser(profileId);
-            console.log('Productos del usuario:', this.products);
-          } else if (user) {
-            // Si no hay ID en la URL, pero hay un usuario autenticado, carga su perfil
-            this.userData = await this.authService.getUserData(user.uid);
-            this.products = await this.productService.getProductsByUser(user.uid);
           } else {
-            alert('No se puede cargar el perfil. Inicia sesión o selecciona un usuario válido.');
+            // Si no hay perfil en la URL, redirigir al home
             this.router.navigate(['/home']);
           }
-        } catch (error) {
-          console.error('Error al cargar los datos del usuario o productos:', error);
-          alert('Hubo un problema al cargar los datos. Por favor, intenta nuevamente.');
-          this.router.navigate(['/home']);
         }
-      },
-      (error) => {
-        console.error('Error al verificar el estado de autenticación:', error);
-        this.router.navigate(['/home']);
-      }
-    );
+      });
+    } catch (error) {
+      console.error('Error al cargar los datos del perfil:', error);
+      alert('Hubo un problema al cargar los datos. Intenta nuevamente.');
+      this.router.navigate(['/home']);
+    }
   }
   
 
+  private async loadUserProfile(uid: string) {
+    try {
+      // Cargar datos del usuario
+      this.userData = await this.authService.getUserData(uid);
+      console.log('Datos del usuario cargados:', this.userData);
+
+      // Cargar productos del usuario
+      this.products = await this.productService.getProductsByUser(uid);
+      console.log('Productos del usuario cargados:', this.products);
+    } catch (error) {
+      console.error('Error al cargar datos del perfil:', error);
+      alert('No se pudieron cargar los datos del perfil.');
+    }
+  }
+  
   // Método para guardar cambios
   async saveChanges() {
     if (this.userData) {

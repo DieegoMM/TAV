@@ -53,23 +53,25 @@ export class ProductService {
   }
     
   async getProductsByUser(userId: string): Promise<any[]> {
+    console.log('getProductsByUser: Recibiendo userId:', userId);
     return this.firestore
       .collection('products', (ref) => ref.where('ownerId', '==', userId))
       .get()
       .toPromise()
       .then((snapshot) => {
-        const products = snapshot.docs.map((doc) => {
-          const data = doc.data() as Record<string, any>; // Asegurar que sea un objeto
-          return { id: doc.id, ...data }; // Propagar los campos correctamente
-        });
-        console.log('Productos cargados desde Firestore:', products); // Mostrar los productos cargados
+        const products = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as any),
+        }));
+        console.log('Productos cargados desde Firestore:', products);
         return products;
       })
       .catch((error) => {
         console.error('Error al obtener los productos:', error);
-        throw error;
+        return []; // Retorna un arreglo vacío en caso de error
       });
   }
+  
 
   async getAllProducts(): Promise<any[]> {
     try {

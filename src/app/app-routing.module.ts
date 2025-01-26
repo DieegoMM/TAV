@@ -47,7 +47,6 @@ const routes: Routes = [
   {
     path: 'profile/:id', // Ruta para ver perfiles de otros usuarios
     loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
-    canActivate: [AuthGuard], // Protegido con el guard
   },
   {
     path: 'profile', // Ruta para ver el perfil del usuario actual

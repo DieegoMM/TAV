@@ -2,7 +2,6 @@ import { Injectable, Injector } from '@angular/core';
 import firebase from 'firebase/compat/app';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { lastValueFrom } from 'rxjs';
 import 'firebase/compat/auth'; // Asegúrate de que esta línea esté incluida
 
 export interface UserData {
@@ -44,7 +43,7 @@ export class AutheticationService {
   }
 
   getAuthState() {
-    return this.afAuth.authState;
+    return this.afAuth.authState; // Retorna el observable directamente
   }
 
   // Métodos de autenticación
