@@ -162,4 +162,13 @@ export class ProfilePage implements OnInit {
       });
   }
 
+  formatRegion(region: string | undefined): string {
+    if (!region) return 'No especificada'; // Manejo de regiones vacías
+    return region
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ')
+      .replace("O'higgins", "O'Higgins"); // Caso especial para O'Higgins
+  }  
+
 }

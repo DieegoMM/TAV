@@ -44,7 +44,7 @@
 
   <!-- Lista de productos -->
   <ion-list *ngIf="filteredProducts.length > 0">
-    <ion-item *ngFor="let product of filteredProducts">
+    <ion-item *ngFor="let product of filteredProducts" (click)="goToProduct(product.id)">
       <ion-thumbnail slot="start">
         <ion-img [src]="product.image"></ion-img>
       </ion-thumbnail>

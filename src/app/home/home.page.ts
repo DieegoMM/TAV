@@ -112,6 +112,9 @@ export class HomePage implements OnInit {
     this.selectedRegion = ''; // Limpia la región seleccionada
     this.applyFilters(); // Aplica los filtros para mostrar todos los productos
   }
-  
+
+  goToProduct(productId: string) {
+    this.router.navigate(['/product-profile', productId]);
+  }  
   
 }

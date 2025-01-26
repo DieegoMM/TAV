@@ -29,5 +29,15 @@ export class GamesPage implements OnInit {
       console.error('Error al cargar juegos:', error);
     }
   }
+
+  formatRegion(region: string | undefined): string {
+    if (!region) return 'No especificada'; // Si no hay región
+    return region
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ')
+      .replace("O'higgins", "O'Higgins"); // Caso especial para O'Higgins
+  }
+  
   
 }

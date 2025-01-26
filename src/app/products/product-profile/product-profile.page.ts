@@ -62,5 +62,14 @@ export class ProductProfilePage implements OnInit {
         alert('Hubo un error al copiar. Intenta nuevamente.');
       });
   }
+
+  formatRegion(region: string | undefined): string {
+    if (!region) return 'No especificada'; // Si no hay región
+    return region
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ')
+      .replace("O'higgins", "O'Higgins"); // Caso especial para O'Higgins
+  }  
   
 }

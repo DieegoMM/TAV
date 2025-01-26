@@ -7,24 +7,32 @@
 <ion-content>
   <!-- Lista de productos -->
   <ion-card *ngFor="let product of controllers">
-    <ion-img [src]="product.image" alt="Imagen del producto"></ion-img>
+    <ion-img [src]="product.image" alt="Imagen del producto" [routerLink]="['/product-profile', product.id]"></ion-img>
     <ion-card-header>
       <ion-card-title>{{ product.name }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
+
+      <p>
+        <strong>Vendedor:</strong>
+        <a 
+          [routerLink]="['/profile', product.ownerId]" 
+          style="text-decoration: none; color: #007bff; font-weight: bold;">
+          {{ product.ownerName }}
+        </a>
+      </p> 
+        
+
       <p><strong>Precio:</strong> {{ product.price | currency }}</p>
       <p><strong>Estado:</strong> {{ stateMap[product.state] || product.state }}</p>
-      <p><strong>Vendedor:</strong> {{ product.ownerName }}</p>
+
+      <p><strong>Región:</strong> {{ formatRegion(product.region) }}</p>
 
       <!-- Botón para ir al detalle del producto -->
       <ion-button [routerLink]="['/product-profile', product.id]" fill="outline">
         Ver Producto
       </ion-button>
 
-      <!-- Botón para ir al perfil del vendedor -->
-      <ion-button [routerLink]="['/profile', product.ownerId]" fill="outline">
-        Ver Perfil
-      </ion-button>
     </ion-card-content>
   </ion-card>
 
