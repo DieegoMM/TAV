@@ -10,6 +10,16 @@ import { ProductService } from '../../services/product.service';
 })
 export class ProductProfilePage implements OnInit {
   product: any;
+  stateMap = {
+    sin_uso: 'Sin uso',
+    casi_nuevo: 'Casi nuevo',
+    muy_poco_uso: 'Muy poco uso',
+    poco_uso: 'Poco uso',
+    algo_uso: 'Algo de uso',
+    mucho_uso: 'Mucho uso',
+    mal_estado: 'Mal estado',
+    inutilizable: 'Necesita reparación',
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -32,4 +42,25 @@ export class ProductProfilePage implements OnInit {
       console.warn('No se recibió un ID válido.');
     }
   }
+
+  // Función para copiar al portapapeles
+  copyToClipboard(text: string) {
+    if (!navigator.clipboard) {
+      console.error('El portapapeles no está soportado en este navegador.');
+      alert('Tu navegador no soporta esta función.');
+      return;
+    }
+
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        console.log(`Texto copiado al portapapeles: ${text}`);
+        alert('Copiado al portapapeles.');
+      })
+      .catch((error) => {
+        console.error('Error al copiar al portapapeles:', error);
+        alert('Hubo un error al copiar. Intenta nuevamente.');
+      });
+  }
+  
 }

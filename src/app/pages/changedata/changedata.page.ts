@@ -22,8 +22,11 @@ export class ChangedataPage implements OnInit {
   ) {
     // Inicializa el formulario reactivo
     this.changeDataForm = this.formBuilder.group({
-      fullname: ['', [Validators.required, Validators.minLength(3)]], // El nombre es obligatorio y debe tener al menos 3 caracteres
-      edad: ['', [Validators.required, Validators.min(18)]],          // La edad es obligatoria y debe ser mayor o igual a 18
+      fullname: ['', [Validators.required, 
+        Validators.pattern('^[a-zA-Z0-9._-]{3,}[a-zA-Z0-9._-]*$') // El nombre es obligatorio y debe tener al menos 3 caracteres
+      ]], 
+      edad: ['', [Validators.required, 
+        Validators.min(18), Validators.max(100)]],          // La edad es obligatoria y debe ser mayor o igual a 18
       phone: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]], // El teléfono debe ser un número de 9 dígitos
       profileImage: [''] // No requiere validación ya que es opcional
     });

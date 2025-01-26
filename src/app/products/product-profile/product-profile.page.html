@@ -12,11 +12,33 @@
     </ion-card-header>
     <ion-card-content>
       <p><strong>Precio:</strong> {{ product.price | currency }}</p>
-      <p><strong>Estado:</strong> {{ product.state }}</p>
+      <p><strong>Estado:</strong> {{ stateMap[product.state] || product.state }}</p>
       <p><strong>Descripción:</strong> {{ product.description || 'Sin descripción' }}</p>
-      <p><strong>Vendedor:</strong> {{ product.ownerName }}</p>
-      <p><strong>Email:</strong> {{ product.ownerEmail }}</p>
-      <p><strong>Teléfono:</strong> {{ product.ownerPhone }}</p>
+
+      <p>
+        <strong>Vendedor:</strong>
+        <a 
+          [routerLink]="['/profile', product.ownerId]" 
+          style="text-decoration: none; color: #007bff; font-weight: bold;">
+          {{ product.ownerName }}
+        </a>
+      </p>      
+      <!-- Email con botón de copiar -->
+      <p>
+        <strong>Email:</strong> {{ product.ownerEmail }}
+        <ion-button size="small" fill="clear" (click)="copyToClipboard(product.ownerEmail)">
+          Copiar
+        </ion-button>
+      </p>
+      
+      <!-- Teléfono con botón de copiar -->
+      <p>
+        <strong>Teléfono:</strong> {{ product.ownerPhone }}
+        <ion-button size="small" fill="clear" (click)="copyToClipboard(product.ownerPhone)">
+          Copiar
+        </ion-button>
+      </p>
+
     </ion-card-content>
   </ion-card>
 </ion-content>

@@ -20,7 +20,10 @@ export class ChangepasswordPage implements OnInit {
   ) {
     this.passwordForm = this.formBuilder.group({
       currentPassword: ['', [Validators.required]], // Contraseña actual
-      newPassword: ['', [Validators.required, Validators.minLength(6)]], // Nueva contraseña
+      newPassword: ['', [Validators.required, 
+        Validators.pattern(
+          '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'
+        )]], // Nueva contraseña
     });
   }
 
