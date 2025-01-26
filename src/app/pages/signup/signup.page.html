@@ -86,6 +86,18 @@
       El número de teléfono debe tener exactamente 9 dígitos
     </ion-text>
 
+    <!-- Región -->
+    <ion-item>
+      <ion-select formControlName="region" placeholder="Selecciona tu región">
+        <ion-select-option *ngFor="let region of regiones" [value]="region">
+          {{ region }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text *ngIf="regForm.get('region')?.touched && regForm.get('region')?.errors?.['required']" class="error">
+      La región es obligatoria.
+    </ion-text>
+
     </div>
 
     <!-- Enlace para iniciar sesión -->

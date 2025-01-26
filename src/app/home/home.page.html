@@ -2,41 +2,39 @@
   <div class="heading">
     <div class="btn_flex">
       <div>
+        <!-- Botón de menú para abrir el filtro de regiones -->
         <ion-buttons slot="start">
-          <ion-menu-button mode="ios" defaultHref="/home1" colors="dark"></ion-menu-button>
+          <ion-menu-button mode="ios" (click)="openRegionFilter()" colors="dark"></ion-menu-button>
           <ion-label>Second Games</ion-label>
         </ion-buttons>
       </div>
     </div>
 
-    <!-- Campo de búsqueda con evento de entrada -->
+    <!-- Campo de búsqueda -->
     <input
-    type="search"
-    placeholder="Buscar Productos"
-    [(ngModel)]="searchQuery"
-    (input)="onSearch($event)"
-  />
+      type="search"
+      placeholder="Buscar Productos"
+      [(ngModel)]="searchQuery"
+      (input)="onSearch($event)"
+    />
 
-
-  <p>
-    <!-- Mostrar "Mi Perfil" solo si el usuario está autenticado -->
-    <ng-container *ngIf="isAuthenticated">
-      <a routerLink="/profile">Mi Perfil</a>
-    </ng-container>
-  
-    <!-- Mostrar "Iniciar Sesión" y "Registrarse" si no está autenticado -->
-    <ng-container *ngIf="!isAuthenticated; else authenticated">
-      <a routerLink="/login">Iniciar Sesión</a>
-      <a routerLink="/signup">Registrarse</a>
-    </ng-container>
-
-    <!-- Mostrar "Cerrar Sesión" solo para usuarios autenticados -->
-    <ng-template #authenticated>
-      <a href="#" (click)="logout()">Cerrar Sesión</a>
-    </ng-template>
-  </p>
-  
+    <!-- Opciones debajo de la barra de búsqueda -->
+    <div class="session-buttons">
+      <ng-container *ngIf="isAuthenticated">
+        <a routerLink="/profile">Mi Perfil</a>
+        <a href="#" (click)="logout()">Cerrar Sesión</a>
+      </ng-container>
+      <ng-container *ngIf="!isAuthenticated">
+        <a routerLink="/login">Iniciar Sesión</a>
+        <a routerLink="/signup">Registrarse</a>
+      </ng-container>
+    </div>
   </div>
+
+  <!-- Selector de regiones oculto -->
+  <ion-select #regionSelect [(ngModel)]="selectedRegion" (ionChange)="filterByRegion()" interface="action-sheet">
+    <ion-select-option *ngFor="let region of regions" [value]="region">{{ region }}</ion-select-option>
+  </ion-select>
 
   <!-- Lista de productos -->
   <ion-list *ngIf="filteredProducts.length > 0">
@@ -50,34 +48,31 @@
         <p><strong>Precio:</strong> {{ product.price | currency }}</p>
       </ion-label>
     </ion-item>
-  </ion-list>  
+  </ion-list>
 
-<!-- Mensaje si no hay resultados -->
-<ion-text *ngIf="filteredProducts.length === 0 && searchQuery.length > 0">
-  No se encontraron productos.
-</ion-text>
-
+  <!-- Mensaje si no hay resultados -->
+  <ion-text *ngIf="filteredProducts.length === 0 && (searchQuery || selectedRegion)">
+    No se encontraron productos.
+  </ion-text>
 
   <!-- Sección de imágenes con enlaces -->
   <div class="services">
     <div class="service_names" routerLink="/consoles">
-      <img src="../../assets/console.png" alt="Consolas">
+      <img src="../../assets/console.png" alt="Consolas" />
       <p>Consolas</p>
     </div>
-
     <div class="service_names" routerLink="/controllers">
-      <img src="../../assets/mandos.png" alt="Mandos">
+      <img src="../../assets/mandos.png" alt="Mandos" />
       <p>Mandos</p>
     </div>
-
     <div class="service_names" routerLink="/games">
-      <img src="../../assets/games.jpg" alt="Juegos">
+      <img src="../../assets/games.jpg" alt="Juegos" />
       <p>Juegos</p>
     </div>
   </div>
 
   <div class="banner" routerLink="/allproducts">
-    <img src="../../assets/banner.jpg" alt="Banner">
+    <img src="../../assets/banner.jpg" alt="Banner" />
     <div class="banner-text">
       <p>Ver Catálogo Completo</p>
     </div>

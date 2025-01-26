@@ -15,6 +15,7 @@ export interface UserData {
   phoneNumber?: string; // Alias para teléfono
   email?: string; // Correo electrónico
   profileImage?: string; // URL o base64 de la imagen de perfil
+  region?: string,
   createdAt?: Date; // Fecha de creación
   updatedAt?: Date; // Fecha de actualización
 }
@@ -142,7 +143,8 @@ export class AutheticationService {
     fullname: string,
     edad: number,
     phone: string,
-    profileImage: string
+    profileImage: string,
+    region: string
   ): Promise<void> {
     try {
       const userRef = this.firestore.collection('users').doc(uid);
@@ -150,7 +152,9 @@ export class AutheticationService {
         fullname, // Campo fullname
         edad,     // Campo edad
         phone,    // Campo phone
-        profileImage // Campo profileImage
+        profileImage, // Campo profileImage
+        region,   // Campo region (agregado)
+        updatedAt: new Date(), // También puedes incluir la fecha de actualización
       });
       console.log('Datos actualizados correctamente en Firestore.');
     } catch (error) {
@@ -158,6 +162,7 @@ export class AutheticationService {
       throw error;
     }
   }
+
   async updatePassword(currentPassword: string, newPassword: string): Promise<void> {
     try {
       // Reautenticar al usuario

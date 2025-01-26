@@ -33,6 +33,32 @@
       El número de teléfono es obligatorio y debe tener exactamente 9 dígitos.
     </ion-text>
 
+    <!-- Campo Región -->
+    <ion-item>
+      <ion-label position="stacked">Región</ion-label>
+      <ion-select formControlName="region" placeholder="Selecciona tu región">
+        <ion-select-option value="Arica y Parinacota">Arica y Parinacota</ion-select-option>
+        <ion-select-option value="Tarapacá">Tarapacá</ion-select-option>
+        <ion-select-option value="Antofagasta">Antofagasta</ion-select-option>
+        <ion-select-option value="Atacama">Atacama</ion-select-option>
+        <ion-select-option value="Coquimbo">Coquimbo</ion-select-option>
+        <ion-select-option value="Valparaíso">Valparaíso</ion-select-option>
+        <ion-select-option value="Metropolitana">Metropolitana</ion-select-option>
+        <ion-select-option value="O'Higgins">O'Higgins</ion-select-option>
+        <ion-select-option value="Maule">Maule</ion-select-option>
+        <ion-select-option value="Ñuble">Ñuble</ion-select-option>
+        <ion-select-option value="Biobío">Biobío</ion-select-option>
+        <ion-select-option value="Araucanía">Araucanía</ion-select-option>
+        <ion-select-option value="Los Ríos">Los Ríos</ion-select-option>
+        <ion-select-option value="Los Lagos">Los Lagos</ion-select-option>
+        <ion-select-option value="Aysén">Aysén</ion-select-option>
+        <ion-select-option value="Magallanes">Magallanes</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text color="danger" *ngIf="changeDataForm.get('region')?.touched && changeDataForm.get('region')?.invalid">
+      Seleccionar una región es obligatorio.
+    </ion-text>
+
     <!-- Botón para usar cámara o galería -->
     <ion-item>
       <ion-label position="stacked">Foto de Perfil</ion-label>

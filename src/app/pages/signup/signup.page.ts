@@ -15,6 +15,25 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 export class SignupPage implements OnInit {
   regForm: FormGroup;
 
+  regiones: string[] = [
+    'Arica y Parinacota',
+    'Tarapacá',
+    'Antofagasta',
+    'Atacama',
+    'Coquimbo',
+    'Valparaíso',
+    'Metropolitana de Santiago',
+    'O’Higgins',
+    'Maule',
+    'Ñuble',
+    'Biobío',
+    'Araucanía',
+    'Los Ríos',
+    'Los Lagos',
+    'Aysén',
+    'Magallanes y Antártica Chilena'
+  ];
+
   constructor(
     private formBuilder: FormBuilder,
     public loadingCtrl: LoadingController,
@@ -65,6 +84,7 @@ export class SignupPage implements OnInit {
             Validators.pattern('^[0-9]{9}$'), // Valida exactamente 9 números
           ],
         ],
+        region: ['', Validators.required], // Nuevo campo para la región
       },
       { validator: this.passwordsCoinciden } // Validador personalizado para contraseñas
     );
@@ -114,6 +134,7 @@ export class SignupPage implements OnInit {
           email: this.regForm.get('email')?.value, // Email
           edad: this.regForm.get('edad')?.value, // Edad
           phone: this.regForm.get('phone')?.value, // Guardar el número de teléfono
+          region: this.regForm.get('region')?.value, // Guardar la región seleccionada
           createdAt: new Date(), // Fecha de creación
         });
 

@@ -22,13 +22,11 @@ export class ChangedataPage implements OnInit {
   ) {
     // Inicializa el formulario reactivo
     this.changeDataForm = this.formBuilder.group({
-      fullname: ['', [Validators.required, 
-        Validators.pattern('^[a-zA-Z0-9._-]{3,}[a-zA-Z0-9._-]*$') // El nombre es obligatorio y debe tener al menos 3 caracteres
-      ]], 
-      edad: ['', [Validators.required, 
-        Validators.min(18), Validators.max(100)]],          // La edad es obligatoria y debe ser mayor o igual a 18
-      phone: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]], // El teléfono debe ser un número de 9 dígitos
-      profileImage: [''] // No requiere validación ya que es opcional
+      fullname: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._-]{3,}[a-zA-Z0-9._-]*$')]],
+      edad: ['', [Validators.required, Validators.min(18), Validators.max(100)]],
+      phone: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
+      profileImage: [''],
+      region: ['', Validators.required], // Campo región
     });
   }
 
@@ -50,13 +48,14 @@ export class ChangedataPage implements OnInit {
 
   async loadUserData(uid: string) {
     try {
-      const userData = await this.authService.getUserData(uid); // Usa el uid para obtener los datos
+      const userData = await this.authService.getUserData(uid); // Obtiene los datos del usuario
       if (userData) {
         this.changeDataForm.patchValue({
-          username: userData.fullname || '',
-          age: userData.edad || '',
+          fullname: userData.fullname || '',
+          edad: userData.edad || '',
           phone: userData.phone || '',
           profileImage: userData.profileImage || '',
+          region: userData.region || '', // Carga la región correctamente
         });
       } else {
         console.warn('No se encontraron datos para el usuario.');
@@ -66,6 +65,7 @@ export class ChangedataPage implements OnInit {
       alert('Hubo un error al cargar los datos del usuario.');
     }
   }
+
   async saveChanges() {
     if (this.changeDataForm.invalid) {
       alert('Por favor, completa todos los campos correctamente.');
@@ -74,10 +74,11 @@ export class ChangedataPage implements OnInit {
   
     try {
       const updatedData = {
-        fullname: this.changeDataForm.get('fullname')?.value, // Campo fullname
-        edad: this.changeDataForm.get('edad')?.value,         // Campo edad
-        phone: this.changeDataForm.get('phone')?.value,       // Campo phone
-        profileImage: this.changeDataForm.get('profileImage')?.value || '' // Campo profileImage
+        fullname: this.changeDataForm.get('fullname')?.value,
+        edad: this.changeDataForm.get('edad')?.value,
+        phone: this.changeDataForm.get('phone')?.value,
+        profileImage: this.changeDataForm.get('profileImage')?.value || '',
+        region: this.changeDataForm.get('region')?.value, // Asegúrate de incluir la región
       };
   
       const user = await this.authService.getProfile();
@@ -87,7 +88,8 @@ export class ChangedataPage implements OnInit {
           updatedData.fullname,
           updatedData.edad,
           updatedData.phone,
-          updatedData.profileImage
+          updatedData.profileImage,
+          updatedData.region // Ahora pasamos la región correctamente
         );
         alert('Datos actualizados correctamente.');
       } else {
@@ -99,7 +101,6 @@ export class ChangedataPage implements OnInit {
       alert('Hubo un error al actualizar los datos.');
     }
   }
-  
 
   async selectImage() {
     try {

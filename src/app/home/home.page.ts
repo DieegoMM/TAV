@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonSelect } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AutheticationService } from 'src/app/authetication.service';
 import { ProductService } from '../services/product.service';
@@ -12,8 +13,30 @@ import { ProductService } from '../services/product.service';
 export class HomePage implements OnInit {
   isAuthenticated: boolean = false;
   allProducts: any[] = [];
-  filteredProducts: any[] = []; // Ahora estará vacío inicialmente
-  searchQuery: string = ''; // Mantener el texto de búsqueda
+  filteredProducts: any[] = [];
+  searchQuery: string = '';
+  selectedRegion: string = '';
+
+  regions: string[] = [
+    'Región de Arica y Parinacota',
+    'Región de Tarapacá',
+    'Región de Antofagasta',
+    'Región de Atacama',
+    'Región de Coquimbo',
+    'Región de Valparaíso',
+    'Región Metropolitana de Santiago',
+    'Región del Libertador General Bernardo O’Higgins',
+    'Región del Maule',
+    'Región de Ñuble',
+    'Región del Biobío',
+    'Región de La Araucanía',
+    'Región de Los Ríos',
+    'Región de Los Lagos',
+    'Región de Aysén del General Carlos Ibáñez del Campo',
+    'Región de Magallanes y de la Antártica Chilena',
+  ];
+
+  @ViewChild('regionSelect', { static: false }) regionSelect: IonSelect;
 
   constructor(
     private authService: AutheticationService,
@@ -24,6 +47,7 @@ export class HomePage implements OnInit {
   async ngOnInit() {
     try {
       this.allProducts = await this.productService.getAllProducts();
+      this.filteredProducts = [];
     } catch (error) {
       console.error('Error al cargar los productos:', error);
     }
@@ -39,27 +63,37 @@ export class HomePage implements OnInit {
   }
 
   onSearch(event: Event) {
-    // Captura el texto de búsqueda
     this.searchQuery = (event.target as HTMLInputElement).value.toLowerCase();
-    console.log('Texto buscado:', this.searchQuery); // Log para depuración
-  
-    // Si hay texto en la barra de búsqueda, filtra los productos
-    if (this.searchQuery.trim() !== '') {
-      this.filteredProducts = this.allProducts.filter((product) =>
-        product.name.toLowerCase().includes(this.searchQuery)
-      );
-      console.log('Productos filtrados:', this.filteredProducts); // Log para depuración
-    } else {
-      // Si no hay texto en la búsqueda, vacía la lista de productos
-      this.filteredProducts = [];
-      console.log('Búsqueda vacía, lista de productos vacía.');
-    }
-  }  
+    this.applyFilters();
+  }
 
-  // Método para redirigir a la página del producto
+
+  openRegionFilter() {
+    this.regionSelect.open();
+  }
+
+  filterByRegion() {
+    this.applyFilters();
+  }
+
+  applyFilters() {
+    // Verifica si no hay búsqueda ni región seleccionada
+    if (!this.searchQuery.trim() && !this.selectedRegion) {
+      this.filteredProducts = []; // Muestra una lista vacía si no hay filtros activos
+      return;
+    }
+  
+    // Filtra los productos
+    this.filteredProducts = this.allProducts.filter((product) => {
+      const matchesQuery =
+        !this.searchQuery || product.name.toLowerCase().includes(this.searchQuery);
+      const matchesRegion =
+        !this.selectedRegion || product.region === this.selectedRegion;
+      return matchesQuery && matchesRegion; // Producto debe coincidir con ambos filtros
+    });
+  }
+  
   goToProduct(productId: string) {
     this.router.navigate(['/product-profile', productId]);
   }
-
-  
 }
