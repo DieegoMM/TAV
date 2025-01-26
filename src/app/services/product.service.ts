@@ -8,8 +8,13 @@ import { AutheticationService } from '../authetication.service';
 export class ProductService {
   constructor(
     private firestore: AngularFirestore,
-    private authService: AutheticationService
+    private authService: AutheticationService,  
+    
   ) {}
+
+  generateProductId(): string {
+    return this.firestore.createId();
+  }
 
   async addProduct(productData: any): Promise<void> {
     try {
@@ -18,9 +23,15 @@ export class ProductService {
         throw new Error('No se encontró al usuario autenticado');
       }
   
+      // Validar que la región del usuario exista
+      if (!user.region || user.region.trim() === '') {
+        throw new Error('El usuario no tiene configurada una región.');
+      }
+  
       // Genera un nuevo ID para el producto
       const productId = this.firestore.createId();
   
+      // Incluye la región del usuario en los datos del producto
       const product = {
         ...productData,
         id: productId, // Incluye el ID generado
@@ -28,20 +39,19 @@ export class ProductService {
         ownerName: user.fullname,
         ownerEmail: user.email,
         ownerPhone: user.phone,
+        region: user.region.trim().toLowerCase(), // Normaliza la región
         createdAt: new Date(),
       };
   
       // Guarda el producto usando el ID generado
       await this.firestore.collection('products').doc(productId).set(product);
-      console.log('Producto agregado correctamente.');
+      console.log('Producto agregado correctamente en Firebase.');
     } catch (error) {
       console.error('Error al agregar producto:', error);
       throw error;
     }
   }
-  
-  
-  
+    
   async getProductsByUser(userId: string): Promise<any[]> {
     return this.firestore
       .collection('products', (ref) => ref.where('ownerId', '==', userId))

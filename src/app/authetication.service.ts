@@ -145,23 +145,22 @@ export class AutheticationService {
     phone: string,
     profileImage: string,
     region: string
-  ): Promise<void> {
+): Promise<void> {
     try {
-      const userRef = this.firestore.collection('users').doc(uid);
-      await userRef.update({
-        fullname, // Campo nombre completo
-        edad,     // Campo edad
-        phone,    // Campo teléfono
-        profileImage, // Campo imagen de perfil
-        region,   // Campo región
-        updatedAt: new Date(), // Fecha de actualización
-      });
-      console.log('Datos actualizados correctamente en Firestore.');
+        const userRef = this.firestore.collection('users').doc(uid);
+        await userRef.update({
+            fullname, // Campo fullname
+            edad,     // Campo edad
+            phone,    // Campo phone
+            profileImage, // Campo profileImage
+            region: region.trim().toLowerCase(), // Asegúrate de normalizar la región aquí
+        });
+        console.log('Datos actualizados correctamente en Firestore.');
     } catch (error) {
-      console.error('Error al actualizar los datos en Firestore:', error);
-      throw error;
+        console.error('Error al actualizar los datos en Firestore:', error);
+        throw error;
     }
-  }
+}
 
   async updatePassword(currentPassword: string, newPassword: string): Promise<void> {
     try {

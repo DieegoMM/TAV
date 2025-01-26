@@ -70,43 +70,43 @@ export class ChangedataPage implements OnInit {
 
   async saveChanges() {
     if (this.changeDataForm.invalid) {
-      alert('Por favor, completa todos los campos correctamente.');
-      return;
+        alert('Por favor, completa todos los campos correctamente.');
+        return;
     }
 
     try {
-      const updatedData = {
-        fullname: this.changeDataForm.get('fullname')?.value,
-        edad: this.changeDataForm.get('edad')?.value,
-        phone: this.changeDataForm.get('phone')?.value,
-        profileImage: this.changeDataForm.get('profileImage')?.value || '',
-        region: this.changeDataForm.get('region')?.value,
-      };
+        const updatedData = {
+            fullname: this.changeDataForm.get('fullname')?.value, // Campo fullname
+            edad: this.changeDataForm.get('edad')?.value,         // Campo edad
+            phone: this.changeDataForm.get('phone')?.value,       // Campo phone
+            profileImage: this.changeDataForm.get('profileImage')?.value || '', // Campo profileImage
+            region: this.changeDataForm.get('region')?.value.trim().toLowerCase(), // Normalizar región
+        };
 
-      const user = await this.authService.getProfile();
-      if (user) {
-        await this.authService.updateUserData(
-          user.uid,
-          updatedData.fullname,
-          updatedData.edad,
-          updatedData.phone,
-          updatedData.profileImage,
-          updatedData.region
-        );
+        const user = await this.authService.getProfile();
+        if (user) {
+            await this.authService.updateUserData(
+                user.uid,
+                updatedData.fullname,
+                updatedData.edad,
+                updatedData.phone,
+                updatedData.profileImage,
+                updatedData.region // Asegúrate de pasar la región normalizada
+            );
 
-        // Aquí se llama a updateProductsRegion
-        await this.productService.updateProductsRegion(user.uid, updatedData.region);
+            // Actualiza también los productos del usuario
+            await this.productService.updateProductsRegion(user.uid, updatedData.region);
 
-        alert('Datos actualizados correctamente.');
-      } else {
-        alert('No hay un usuario autenticado.');
-        this.router.navigate(['/login']);
-      }
+            alert('Datos actualizados correctamente.');
+        } else {
+            alert('No hay un usuario autenticado.');
+            this.router.navigate(['/login']);
+        }
     } catch (error) {
-      console.error('Error al actualizar los datos:', error);
-      alert('Hubo un error al actualizar los datos.');
+        console.error('Error al actualizar los datos:', error);
+        alert('Hubo un error al actualizar los datos.');
     }
-  }
+}
 
   async selectImage() {
     try {

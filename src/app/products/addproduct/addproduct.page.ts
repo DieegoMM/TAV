@@ -38,19 +38,23 @@ export class AddProductPage {
   
   async addProduct() {
     console.log('Método addProduct llamado');
+    
     if (this.productForm.valid) {
       try {
         const user = await this.authService.getProfile();
-        if (!user?.region) {
-          alert('No se pudo determinar la región del usuario.');
+  
+        // Validar que la región del usuario esté configurada
+        if (!user?.region || user.region.trim() === '') {
+          alert('La región del usuario no está configurada. Por favor, actualiza tu perfil.');
           return;
         }
   
         // Agregar región del usuario al producto
         const productData = {
           ...this.productForm.value,
-          region: user.region, // Región obtenida del perfil del usuario
+          region: user.region.trim().toLowerCase(), // Normalizar región
           createdAt: new Date(),
+          id: this.productService.generateProductId(), // Generar un ID único
         };
   
         await this.productService.addProduct(productData); // Guardar producto en Firebase
@@ -64,6 +68,7 @@ export class AddProductPage {
       alert('Por favor, completa todos los campos requeridos.');
     }
   }
+  
   
   async selectImage() {
     try {
@@ -147,15 +152,24 @@ export class AddProductPage {
 
   async saveProduct() {
     console.log('Método saveProduct llamado');
+  
     if (this.productForm.valid) {
       try {
         // Obtén la región del usuario actual
-        const region = await this.getRegionFromUser();
+        const user = await this.authService.getProfile();
+        
+        // Verifica si el usuario tiene una región configurada
+        if (!user?.region || user.region.trim() === '') {
+          alert('La región del usuario no está configurada. Por favor, actualiza tu perfil.');
+          return;
+        }
   
-        // Crea el objeto del producto incluyendo la región
+        // Crea el objeto del producto incluyendo la región del usuario
         const productData = {
           ...this.productForm.value,
-          region: region || this.productForm.value.region, // Prioriza la región del usuario
+          region: user.region.trim().toLowerCase(), // Normalizar región
+          createdAt: new Date(),
+          id: this.productService.generateProductId(), // Generar un ID único
         };
   
         if (this.isEditing && this.productId) {
@@ -164,7 +178,7 @@ export class AddProductPage {
           console.log('Producto actualizado correctamente.');
         } else {
           console.log('Agregando nuevo producto:', productData);
-          await this.productService.addProduct(productData);
+          await this.productService.addProduct(productData); // Guardar producto en Firebase
           console.log('Producto agregado correctamente.');
         }
   
@@ -172,7 +186,6 @@ export class AddProductPage {
         
         // Redirige al perfil después de guardar el producto
         this.router.navigate(['/profile']);
-        
       } catch (error) {
         console.error('Error en saveProduct:', error);
         alert('Hubo un error al guardar el producto.');
@@ -181,7 +194,7 @@ export class AddProductPage {
       alert('Por favor, completa todos los campos requeridos.');
     }
   }
-
+  
   async getRegionFromUser(): Promise<string> {
     try {
       const user = await this.authService.getProfile(); // Obtén el perfil del usuario autenticado

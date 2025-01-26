@@ -32,13 +32,15 @@
   </div>
 
   <!-- Selector de regiones oculto -->
-  <ion-select #regionSelect [(ngModel)]="selectedRegion" (ionChange)="filterByRegion()" interface="action-sheet">
-    <ion-select-option *ngFor="let region of regions" [value]="region">{{ region }}</ion-select-option>
+  <ion-select [(ngModel)]="selectedRegion" (ionChange)="applyFilters()">
+    <ion-select-option *ngFor="let region of regions" [value]="region.trim().toLowerCase()">
+      {{ region }}
+    </ion-select-option>
   </ion-select>
 
   <!-- Lista de productos -->
   <ion-list *ngIf="filteredProducts.length > 0">
-    <ion-item *ngFor="let product of filteredProducts" (click)="goToProduct(product.id)">
+    <ion-item *ngFor="let product of filteredProducts">
       <ion-thumbnail slot="start">
         <ion-img [src]="product.image"></ion-img>
       </ion-thumbnail>
@@ -46,12 +48,12 @@
         <h2>{{ product.name }}</h2>
         <p><strong>Tipo:</strong> {{ product.type }}</p>
         <p><strong>Precio:</strong> {{ product.price | currency }}</p>
+        <p><strong>Región:</strong> {{ product.region }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
-
-  <!-- Mensaje si no hay resultados -->
-  <ion-text *ngIf="filteredProducts.length === 0 && (searchQuery || selectedRegion)">
+  
+  <ion-text *ngIf="filteredProducts.length === 0">
     No se encontraron productos.
   </ion-text>
 

@@ -47,13 +47,17 @@ export class HomePage implements OnInit {
   async ngOnInit() {
     try {
       this.allProducts = await this.productService.getAllProducts();
+      console.log('Productos cargados:', this.allProducts); // Verifica los datos cargados
       this.filteredProducts = [];
     } catch (error) {
       console.error('Error al cargar los productos:', error);
     }
-
+  
     const user = await this.authService.getProfile();
     this.isAuthenticated = !!user;
+  
+    // Aplicar filtros iniciales
+    this.applyFilters();
   }
 
   async logout() {
@@ -77,20 +81,23 @@ export class HomePage implements OnInit {
   }
 
   applyFilters() {
-    // Verifica si no hay búsqueda ni región seleccionada
+    console.log('Aplicando filtros...');
+    console.log('Texto de búsqueda:', this.searchQuery);
+    console.log('Región seleccionada:', this.selectedRegion);
+  
     if (!this.searchQuery.trim() && !this.selectedRegion) {
-      this.filteredProducts = []; // Muestra una lista vacía si no hay filtros activos
+      this.filteredProducts = [];
+      console.log('Sin filtros aplicados, lista vacía.');
       return;
     }
   
-    // Filtra los productos
     this.filteredProducts = this.allProducts.filter((product) => {
-      const matchesQuery =
-        !this.searchQuery || product.name.toLowerCase().includes(this.searchQuery);
-      const matchesRegion =
-        !this.selectedRegion || product.region === this.selectedRegion;
-      return matchesQuery && matchesRegion; // Producto debe coincidir con ambos filtros
+      const matchesQuery = !this.searchQuery || product.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+      const matchesRegion = !this.selectedRegion || product.region.toLowerCase() === this.selectedRegion.toLowerCase();
+      return matchesQuery && matchesRegion;
     });
+  
+    console.log('Productos filtrados:', this.filteredProducts);
   }
   
   goToProduct(productId: string) {
