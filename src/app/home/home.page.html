@@ -39,18 +39,18 @@
   </div>
 
   <!-- Lista de productos -->
-<ion-list *ngIf="filteredProducts.length > 0">
-  <ion-item *ngFor="let product of filteredProducts">
-    <ion-thumbnail slot="start">
-      <ion-img [src]="product.image"></ion-img>
-    </ion-thumbnail>
-    <ion-label>
-      <h2>{{ product.name }}</h2>
-      <p><strong>Tipo:</strong> {{ product.type }}</p>
-      <p><strong>Precio:</strong> {{ product.price | currency }}</p>
-    </ion-label>
-  </ion-item>
-</ion-list>
+  <ion-list *ngIf="filteredProducts.length > 0">
+    <ion-item *ngFor="let product of filteredProducts" (click)="goToProduct(product.id)">
+      <ion-thumbnail slot="start">
+        <ion-img [src]="product.image"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ product.name }}</h2>
+        <p><strong>Tipo:</strong> {{ product.type }}</p>
+        <p><strong>Precio:</strong> {{ product.price | currency }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>  
 
 <!-- Mensaje si no hay resultados -->
 <ion-text *ngIf="filteredProducts.length === 0 && searchQuery.length > 0">

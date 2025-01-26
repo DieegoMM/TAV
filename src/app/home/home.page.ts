@@ -54,6 +54,12 @@ export class HomePage implements OnInit {
       this.filteredProducts = [];
       console.log('Búsqueda vacía, lista de productos vacía.');
     }
+  }  
+
+  // Método para redirigir a la página del producto
+  goToProduct(productId: string) {
+    this.router.navigate(['/product-profile', productId]);
   }
+
   
 }
