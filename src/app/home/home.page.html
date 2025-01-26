@@ -32,10 +32,14 @@
   </div>
 
   <!-- Selector de regiones oculto -->
-  <ion-select [(ngModel)]="selectedRegion" (ionChange)="applyFilters()">
+  <ion-select 
+    [(ngModel)]="selectedRegion" 
+    (ionChange)="applyFilters()" 
+    (ionCancel)="clearRegionFilter()"
+  >
     <ion-select-option *ngFor="let region of regions" [value]="region.trim().toLowerCase()">
       {{ region }}
-    </ion-select-option>    
+    </ion-select-option>
   </ion-select>
 
   <!-- Lista de productos -->

@@ -24,14 +24,14 @@ export class HomePage implements OnInit {
     'Atacama',
     'Coquimbo',
     'Valparaíso',
-    'Metropolitana de Santiago',
-    'Bernardo O’Higgins',
+    'Metropolitana',
+    'O\'higgins',
     'Maule',
     'Ñuble',
     'Biobío',
     'Araucanía',
-    'Ríos',
-    'Lagos',
+    'Los Ríos',
+    'Los Lagos',
     'Aysén',
     'Magallanes',
   ];
@@ -81,24 +81,37 @@ export class HomePage implements OnInit {
   }
 
   applyFilters() {
-    if (!this.searchQuery.trim() && !this.selectedRegion) {
-      // Si no hay búsqueda ni región seleccionada, limpiar productos
-      this.filteredProducts = [];
-      return;
-    }
-  
-    this.filteredProducts = this.allProducts.filter((product) => {
-      const matchesQuery =
-        !this.searchQuery || product.name.toLowerCase().includes(this.searchQuery.trim().toLowerCase());
-      const matchesRegion =
-        !this.selectedRegion ||
-        (product.region &&
-          product.region.trim().toLowerCase() === this.selectedRegion.replace('región de ', '').trim().toLowerCase());
-  
-      return matchesQuery && matchesRegion;
+      console.log('Selected Region:', this.selectedRegion);
+      
+      if (!this.searchQuery.trim() && !this.selectedRegion) {
+        // Si no hay búsqueda ni región seleccionada, limpiar productos
+        this.filteredProducts = [];
+        return;
+      }
+    
+      this.filteredProducts = this.allProducts.filter((product) => {
+        const matchesQuery =
+          !this.searchQuery || product.name.toLowerCase().includes(this.searchQuery.trim().toLowerCase());
+        const matchesRegion =
+          !this.selectedRegion ||
+          (product.region &&
+            product.region.trim().toLowerCase() === this.selectedRegion.replace('región de ', '').trim().toLowerCase());
+    
+        return matchesQuery && matchesRegion;
+      });
+    
+      console.log('All Products:', this.allProducts); // Log de todos los productos cargados
+      console.log('Filtered Products:', this.filteredProducts); // Log de los productos filtrados
+      this.filteredProducts.forEach((product) => {
+        console.log(`Product Region: ${product.region} | Selected Region: ${this.selectedRegion}`); // Log de cada producto filtrado
     });
-  
-    console.log('Filtered Products:', this.filteredProducts);
   }  
+
+  clearRegionFilter() {
+    console.log('Filtro de región cancelado');
+    this.selectedRegion = ''; // Limpia la región seleccionada
+    this.applyFilters(); // Aplica los filtros para mostrar todos los productos
+  }
+  
   
 }

@@ -95,9 +95,12 @@ export class ChangedataPage implements OnInit {
             );
 
             // Actualiza también los productos del usuario
+            console.log('Actualizando región de los productos del usuario:', updatedData.region);
             await this.productService.updateProductsRegion(user.uid, updatedData.region);
 
             alert('Datos actualizados correctamente.');
+            
+            this.router.navigate(['/profile']);
         } else {
             alert('No hay un usuario autenticado.');
             this.router.navigate(['/login']);
