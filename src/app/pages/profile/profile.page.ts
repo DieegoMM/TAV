@@ -171,4 +171,8 @@ export class ProfilePage implements OnInit {
       .replace("O'higgins", "O'Higgins"); // Caso especial para O'Higgins
   }  
 
+  goToProduct(productId: string) {
+    this.router.navigate(['/product-profile', productId]);
+  }  
+
 }
