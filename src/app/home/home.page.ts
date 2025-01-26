@@ -18,22 +18,22 @@ export class HomePage implements OnInit {
   selectedRegion: string = '';
 
   regions: string[] = [
-    'Región de Arica y Parinacota',
-    'Región de Tarapacá',
-    'Región de Antofagasta',
-    'Región de Atacama',
-    'Región de Coquimbo',
-    'Región de Valparaíso',
-    'Región Metropolitana de Santiago',
-    'Región del Libertador General Bernardo O’Higgins',
-    'Región del Maule',
-    'Región de Ñuble',
-    'Región del Biobío',
-    'Región de La Araucanía',
-    'Región de Los Ríos',
-    'Región de Los Lagos',
-    'Región de Aysén del General Carlos Ibáñez del Campo',
-    'Región de Magallanes y de la Antártica Chilena',
+    'Arica y Parinacota',
+    'Tarapacá',
+    'Antofagasta',
+    'Atacama',
+    'Coquimbo',
+    'Valparaíso',
+    'Metropolitana de Santiago',
+    'Bernardo O’Higgins',
+    'Maule',
+    'Ñuble',
+    'Biobío',
+    'Araucanía',
+    'Ríos',
+    'Lagos',
+    'Aysén',
+    'Magallanes',
   ];
 
   @ViewChild('regionSelect', { static: false }) regionSelect: IonSelect;
@@ -81,26 +81,24 @@ export class HomePage implements OnInit {
   }
 
   applyFilters() {
-    console.log('Aplicando filtros...');
-    console.log('Texto de búsqueda:', this.searchQuery);
-    console.log('Región seleccionada:', this.selectedRegion);
-  
     if (!this.searchQuery.trim() && !this.selectedRegion) {
+      // Si no hay búsqueda ni región seleccionada, limpiar productos
       this.filteredProducts = [];
-      console.log('Sin filtros aplicados, lista vacía.');
       return;
     }
   
     this.filteredProducts = this.allProducts.filter((product) => {
-      const matchesQuery = !this.searchQuery || product.name.toLowerCase().includes(this.searchQuery.toLowerCase());
-      const matchesRegion = !this.selectedRegion || product.region.toLowerCase() === this.selectedRegion.toLowerCase();
+      const matchesQuery =
+        !this.searchQuery || product.name.toLowerCase().includes(this.searchQuery.trim().toLowerCase());
+      const matchesRegion =
+        !this.selectedRegion ||
+        (product.region &&
+          product.region.trim().toLowerCase() === this.selectedRegion.replace('región de ', '').trim().toLowerCase());
+  
       return matchesQuery && matchesRegion;
     });
   
-    console.log('Productos filtrados:', this.filteredProducts);
-  }
+    console.log('Filtered Products:', this.filteredProducts);
+  }  
   
-  goToProduct(productId: string) {
-    this.router.navigate(['/product-profile', productId]);
-  }
 }

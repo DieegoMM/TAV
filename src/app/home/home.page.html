@@ -35,7 +35,7 @@
   <ion-select [(ngModel)]="selectedRegion" (ionChange)="applyFilters()">
     <ion-select-option *ngFor="let region of regions" [value]="region.trim().toLowerCase()">
       {{ region }}
-    </ion-select-option>
+    </ion-select-option>    
   </ion-select>
 
   <!-- Lista de productos -->
@@ -48,7 +48,6 @@
         <h2>{{ product.name }}</h2>
         <p><strong>Tipo:</strong> {{ product.type }}</p>
         <p><strong>Precio:</strong> {{ product.price | currency }}</p>
-        <p><strong>Región:</strong> {{ product.region }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
