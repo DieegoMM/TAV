@@ -1,0 +1,81 @@
+.add-product-content {
+    --background: transparent; /* Fondo transparente inicial */
+    background-image: url('../../../assets/fondo.jpg'); /* Ruta de la imagen */
+    background-size: cover; /* Cubrir toda la pantalla */
+    background-position: center; /* Centrar la imagen */
+    background-repeat: no-repeat; /* Evitar repeticiones */
+    backdrop-filter: blur(10px); /* Efecto borroso */
+    padding: 20px; /* Espaciado interno */
+    height: 100%; /* Ocupar toda la altura */
+  }
+  
+  ion-item {
+    --background: rgba(255, 255, 255, 0.2); /* Fondo semitransparente */
+    --border-radius: 10px; /* Bordes redondeados */
+    margin-bottom: 15px; /* Espaciado entre ítems */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  }
+  
+  ion-label {
+    color: white; /* Texto blanco */
+    font-weight: bold; /* Resaltar etiquetas */
+  }
+  
+  ion-input,
+  ion-select,
+  ion-textarea {
+    color: white; /* Texto dentro de los campos */
+  }
+  
+  ion-button {
+    --background: #5f50c6; /* Fondo del botón */
+    --color: white; /* Texto blanco */
+    --border-radius: 10px; /* Bordes redondeados */
+    margin-top: 10px; /* Espaciado superior */
+  }
+  
+  ion-button:hover {
+    --background: #4a40a5; /* Fondo más oscuro al pasar el mouse */
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrado vertical */
+    align-items: center; /* Centrado horizontal */
+    height: 100%; /* Ocupar toda la pantalla */
+    padding: 20px; /* Espaciado interno */
+    text-align: center; /* Texto centrado */
+  }
+  
+  .form-title {
+    font-size: 1.5rem; /* Tamaño del texto */
+    color: white; /* Color blanco */
+    margin-bottom: 20px; /* Espaciado inferior */
+  }
+  
+  ion-img {
+    display: block;
+    margin: 20px auto; /* Centrar la imagen */
+    width: 100px; /* Ancho de la imagen */
+    height: 100px; /* Altura de la imagen */
+    border-radius: 50%; /* Hacer la imagen circular */
+    object-fit: cover; /* Evitar deformaciones */
+    border: 3px solid #5f50c6; /* Borde */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra */
+  }
+  
+  ion-button[routerLink="/profile"] {
+    margin-top: 10px;
+    font-weight: bold;
+    --border-radius: 12px;
+    --color: white;
+    --background: transparent;
+    --border-color: #5f50c6; /* Color del borde */
+  }
+  
+  ion-button[routerLink="/profile"]:hover {
+    --background: #5f50c6;
+    --color: white;
+  }
+  

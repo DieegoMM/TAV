@@ -1,79 +1,80 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Agregar Producto</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <form [formGroup]="productForm" (ngSubmit)="isEditing ? saveProduct() : addProduct()">
-    <!-- Nombre del producto -->
-    <ion-item>
-      <ion-label position="stacked">Nombre</ion-label>
-      <ion-input formControlName="name" placeholder="Nombre del producto"></ion-input>
-    </ion-item>
-
-    <!-- Tipo del producto -->
-    <ion-item>
-      <ion-label position="stacked">Tipo</ion-label>
-      <ion-select formControlName="type" placeholder="Selecciona un tipo">
-        <ion-select-option value="consolas">Consola</ion-select-option>
-        <ion-select-option value="juegos">Juego</ion-select-option>
-        <ion-select-option value="mandos">Mandos/Accesorio/Cable</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <!-- Estado del producto -->
-    <ion-item>
-      <ion-label position="stacked">Estado</ion-label>
-      <ion-select formControlName="state" placeholder="Selecciona un estado">
-        <ion-select-option value="sin_uso">Sin uso</ion-select-option>
-        <ion-select-option value="casi_nuevo">Casi nada de uso</ion-select-option>
-        <ion-select-option value="muy_poco_uso">Muy poco uso</ion-select-option>
-        <ion-select-option value="poco_uso">Poco uso</ion-select-option>
-        <ion-select-option value="algo_uso">Algo de uso</ion-select-option>
-        <ion-select-option value="mucho_uso">Bastante uso</ion-select-option>
-        <ion-select-option value="mal_estado">Mal Estado</ion-select-option>
-        <ion-select-option value="inutilizable">Necesita reparo</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <!-- Descripción -->
-    <ion-item>
-      <ion-label position="stacked">Descripción</ion-label>
-      <ion-textarea
-        formControlName="description"
-        placeholder="Descripción del producto (opcional)"
-      ></ion-textarea>
-    </ion-item>
-
-    <!-- Precio -->
-    <ion-item>
-      <ion-label position="stacked">Precio</ion-label>
-      <ion-input
-        type="number"
-        formControlName="price"
-        placeholder="Precio del producto"
-      ></ion-input>
-    </ion-item>
-
-    <!-- Imagen -->
-    <ion-item>
-      <ion-label position="stacked">Imagen del producto</ion-label>
-      <ion-button (click)="selectImage()" expand="block">
-        Usar Cámara o Galería
+<ion-content class="add-product-content">
+  <div class="form-container">
+    <form class="add-product-form" [formGroup]="productForm" (ngSubmit)="isEditing ? saveProduct() : addProduct()">
+      <!-- Nombre del producto -->
+      <ion-item>
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input formControlName="name" placeholder="Nombre del producto"></ion-input>
+      </ion-item>
+  
+      <!-- Tipo del producto -->
+      <ion-item>
+        <ion-label position="stacked">Tipo</ion-label>
+        <ion-select formControlName="type" placeholder="Selecciona un tipo">
+          <ion-select-option value="consolas">Consola</ion-select-option>
+          <ion-select-option value="juegos">Juego</ion-select-option>
+          <ion-select-option value="mandos">Mandos/Accesorio/Cable</ion-select-option>
+        </ion-select>
+      </ion-item>
+  
+      <!-- Estado del producto -->
+      <ion-item>
+        <ion-label position="stacked">Estado</ion-label>
+        <ion-select formControlName="state" placeholder="Selecciona un estado">
+          <ion-select-option value="sin_uso">Sin uso</ion-select-option>
+          <ion-select-option value="casi_nuevo">Casi nada de uso</ion-select-option>
+          <ion-select-option value="muy_poco_uso">Muy poco uso</ion-select-option>
+          <ion-select-option value="poco_uso">Poco uso</ion-select-option>
+          <ion-select-option value="algo_uso">Algo de uso</ion-select-option>
+          <ion-select-option value="mucho_uso">Bastante uso</ion-select-option>
+          <ion-select-option value="mal_estado">Mal Estado</ion-select-option>
+          <ion-select-option value="inutilizable">Necesita reparo</ion-select-option>
+        </ion-select>
+      </ion-item>
+  
+      <!-- Descripción -->
+      <ion-item>
+        <ion-label position="stacked">Descripción</ion-label>
+        <ion-textarea
+          formControlName="description"
+          placeholder="Descripción del producto (opcional)"
+        ></ion-textarea>
+      </ion-item>
+  
+      <!-- Precio -->
+      <ion-item>
+        <ion-label position="stacked">Precio</ion-label>
+        <ion-input
+          type="number"
+          formControlName="price"
+          placeholder="Precio del producto"
+        ></ion-input>
+      </ion-item>
+  
+      <!-- Imagen -->
+      <ion-item>
+        <ion-label position="stacked">Imagen del producto</ion-label>
+        <ion-button (click)="selectImage()" expand="block">
+          Usar Cámara o Galería
+        </ion-button>
+      </ion-item>
+  
+      <ion-img
+      *ngIf="productForm.get('image')?.value"
+      [src]="productForm.get('image')?.value"
+      style="margin-top: 10px; width: 100px; height: 100px;">
+    </ion-img>
+  
+      <!-- Botón para agregar o editar el producto -->
+      <ion-button expand="block" type="submit" [disabled]="productForm.invalid">
+        {{ isEditing ? 'Guardar Cambios' : 'Agregar Producto' }}
       </ion-button>
-    </ion-item>
 
-    <ion-img
-    *ngIf="productForm.get('image')?.value"
-    [src]="productForm.get('image')?.value"
-    style="margin-top: 10px; width: 100px; height: 100px;">
-  </ion-img>
-
-    <!-- Botón para agregar o editar el producto -->
-    <ion-button expand="block" type="submit" [disabled]="productForm.invalid">
-      {{ isEditing ? 'Guardar Cambios' : 'Agregar Producto' }}
+      <!-- Botón Volver al Perfil -->
+    <ion-button expand="block" fill="outline" color="secondary" routerLink="/profile">
+      Volver al Perfil
     </ion-button>
-    
-  </form>
+      
+    </form>
+  </div>
 </ion-content>
