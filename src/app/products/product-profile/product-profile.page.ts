@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product.service';
+import { AutheticationService } from 'src/app/authetication.service';
 
 @Component({
   selector: 'app-product-profile',
@@ -9,6 +10,7 @@ import { ProductService } from '../../services/product.service';
   standalone: false
 })
 export class ProductProfilePage implements OnInit {
+  isAuthenticated: boolean = false;
   product: any;
   stateMap = {
     sin_uso: 'Sin uso',
@@ -23,7 +25,8 @@ export class ProductProfilePage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private authService: AutheticationService
   ) {}
 
   async ngOnInit() {
@@ -32,6 +35,9 @@ export class ProductProfilePage implements OnInit {
 
     if (productId) {
       try {
+        this.authService.getAuthState().subscribe(async (user) => {
+          this.isAuthenticated = !!user; // Si el usuario está autenticado, será true
+      });
         this.product = await this.productService.getProductById(productId);
         console.log('Producto cargado:', this.product);
       } catch (error) {

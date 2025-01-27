@@ -1,0 +1,140 @@
+/* Heading */
+.heading {
+    background-color: rgba(15, 13, 83, 0.8); /* Color principal */
+    backdrop-filter: blur(10px); /* Desenfoque del fondo */
+    width: 100%;
+    height: 80px; /* Ajustar altura */
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #fff;
+  }
+  
+  .heading ion-label {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  
+  /* Opciones de sesión */
+  .session-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .session-buttons a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .session-buttons a:hover {
+    text-decoration: underline;
+    color: #5f50c6; /* Color secundario */
+  }
+  
+/* Estilo del fondo en ion-content */
+ion-content {
+    --background: url('/assets/fondo.jpg') no-repeat center center / cover;
+    display: flex; /* Habilita Flexbox */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    min-height: 100vh; /* Asegura que ocupe toda la pantalla */
+    padding: 20px;
+    overflow-y: auto; /* Permite scroll si el contenido excede la altura */
+  }
+  
+/* Contenedor principal */
+.product-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra el contenido del contenedor */
+  padding: 20px;
+  color: #e0e0e0;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4); /* Fondo semitransparente */
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* Sombra */
+  max-width: 600px; /* Ancho máximo */
+  width: 100%; /* Ancho responsivo */
+  margin: auto; /* Centra el contenedor */
+  margin-top: 20px;
+}
+  
+  /* Título del producto */
+  .product-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+  
+  /* Vendedor */
+  .product-seller {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .product-link {
+    color: #23b9a0;
+    text-decoration: none;
+  }
+  
+  .product-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Contenedor de la imagen */
+  .product-image-container {
+    margin: 20px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 80%;
+    max-width: 400px;
+  }
+  
+  .product-image {
+    width: 85%;
+    height: auto;
+    border: 2px solid #5f50c6;
+  }
+  
+  /* Precio */
+  .product-price {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  /* Información adicional */
+  .product-info p {
+    font-size: 1rem;
+    margin: 10px 0;
+  }
+  
+  .product-info strong {
+    color: #ffffff;
+  }
+  
+  /* Botones de copiar */
+  ion-button {
+    --background: #5f50c6;
+    --color: white;
+    --border-radius: 5px;
+  }
+  
+  ion-button[fill="clear"] {
+    --color: #23b9a0;
+    font-size: 0.9rem;
+  }
+  
