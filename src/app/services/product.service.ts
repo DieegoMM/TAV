@@ -86,7 +86,7 @@ export class ProductService {
   async updateProduct(productId: string, productData: any): Promise<void> {
     try {
       await this.firestore.collection('products').doc(productId).update(productData);
-      console.log('Producto actualizado correctamente en Firestore.');
+      console.log('Producto actualizado correctamente.');
     } catch (error) {
       console.error('Error al actualizar el producto:', error);
       throw error;

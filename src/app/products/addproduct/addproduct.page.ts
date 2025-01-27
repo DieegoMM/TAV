@@ -167,9 +167,9 @@ export class AddProductPage {
         // Crea el objeto del producto incluyendo la región del usuario
         const productData = {
           ...this.productForm.value,
-          region: user.region.trim().toLowerCase(), // Normalizar región
+          region: user.region.trim().toLowerCase(),
           createdAt: new Date(),
-          id: this.productService.generateProductId(), // Generar un ID único
+          id: this.isEditing && this.productId ? this.productId : this.productService.generateProductId(),
         };
   
         if (this.isEditing && this.productId) {
