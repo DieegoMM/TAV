@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
+import { AutheticationService } from 'src/app/authetication.service';
 
 @Component({
   selector: 'app-games',
@@ -9,8 +10,9 @@ import { ProductService } from '../../services/product.service';
 })
 export class GamesPage implements OnInit {
   games: any[] = []; // Aquí se almacenarán los productos de juegos
+  isAuthenticated: boolean = false;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private authService: AutheticationService) {}
 
   stateMap = {
     sin_uso: 'Sin uso',
@@ -23,8 +25,18 @@ export class GamesPage implements OnInit {
 
   async ngOnInit() {
     try {
+      // Fetch all products from the service
       const allProducts = await this.productService.getAllProducts();
+  
+      // Filter products whose type is "juegos"
       this.games = allProducts.filter((product) => product.type === 'juegos');
+  
+      // Debugging the filtered games
+      console.log('Productos tipo "juegos":', this.games);
+
+      this.authService.getAuthState().subscribe((user) => {
+        this.isAuthenticated = !!user; // True si hay usuario autenticado
+      });
     } catch (error) {
       console.error('Error al cargar juegos:', error);
     }
@@ -38,6 +50,9 @@ export class GamesPage implements OnInit {
       .join(' ')
       .replace("O'higgins", "O'Higgins"); // Caso especial para O'Higgins
   }
-  
+
+  logout() {
+    this.authService.signOut();
+  }
   
 }

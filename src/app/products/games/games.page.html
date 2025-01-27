@@ -1,43 +1,61 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Juegos</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <!-- Lista de productos -->
-  <ion-card *ngFor="let product of games">
-    <ion-img [src]="product.image" alt="Imagen del producto" [routerLink]="['/product-profile', product.id]"></ion-img>
-    <ion-card-header>
-      <ion-card-title>{{ product.name }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
+  <!-- Encabezado con las opciones de sesión -->
+  <div class="heading">
+    <div>
+      <div>
+        <!-- Botón de menú -->
+        <ion-buttons slot="start">
+          <ion-menu-button mode="ios" colors="dark"></ion-menu-button>
+          <ion-label>Juegos</ion-label>
+        </ion-buttons>
+      </div>
+    </div>
 
-      <p>
-        <strong>Vendedor:</strong>
-        <a 
-          [routerLink]="['/profile', product.ownerId]" 
-          style="text-decoration: none; color: #007bff; font-weight: bold;">
-          {{ product.ownerName }}
-        </a>
-      </p> 
-        
+    <!-- Opciones debajo del título -->
+    <div class="session-buttons">
+      <ng-container *ngIf="isAuthenticated">
+        <a routerLink="/home">Inicio</a>
+        <a routerLink="/profile">Mi Perfil</a>
+        <a href="#" (click)="logout()">Cerrar Sesión</a>
+      </ng-container>
+      <ng-container *ngIf="!isAuthenticated">
+        <a routerLink="/home">Inicio</a>
+        <a routerLink="/login">Iniciar Sesión</a>
+        <a routerLink="/signup">Registrarse</a>
+      </ng-container>
+    </div>
+  </div>
 
-      <p><strong>Precio:</strong> {{ product.price | currency }}</p>
-      <p><strong>Estado:</strong> {{ stateMap[product.state] || product.state }}</p>
-
-      <p><strong>Región:</strong> {{ formatRegion(product.region) }}</p>
-
-      <!-- Botón para ir al detalle del producto -->
-      <ion-button [routerLink]="['/product-profile', product.id]" fill="outline">
-        Ver Producto
-      </ion-button>
-
-    </ion-card-content>
-  </ion-card>
-
-  <!-- Mensaje si no hay juegos -->
-  <ion-text *ngIf="games.length === 0">
-    No se encontraron juegos.
-  </ion-text>
+  <!-- Contenedor de productos -->
+  <div class="products-container">
+    <ion-card class="product-card" *ngFor="let game of games">
+      <ion-img
+        [routerLink]="['/product-profile', game.id]"
+        [src]="game.image"
+        alt="Imagen del producto"
+        class="product-image"
+      ></ion-img>
+      <ion-card-header class="product-header">
+        <ion-card-title class="product-title">{{ game.name }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="product-content">
+        <p>
+          <strong>Vendedor:</strong>
+          <a [routerLink]="['/profile', game.ownerId]" class="product-link">
+            {{ game.ownerName }}
+          </a>
+        </p>
+        <p><strong>Precio:</strong> {{ game.price | currency }}</p>
+        <p><strong>Estado:</strong> {{ stateMap[game.state] || game.state }}</p>
+        <p><strong>Región:</strong> {{ formatRegion(game.region) }}</p>
+        <ion-button
+          [routerLink]="['/product-profile', game.id]"
+          fill="outline"
+          class="product-button"
+        >
+          Ver Producto
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
