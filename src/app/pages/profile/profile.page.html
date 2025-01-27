@@ -110,7 +110,7 @@
             <h2 (click)="goToProduct(product.id)">{{ product.name }}</h2>
             <div class="action-buttons" *ngIf="userData?.uid === currentUserId">
               <ion-button fill="outline" color="primary" (click)="editProduct(product.id)">Editar</ion-button>
-              <ion-button fill="outline" color="danger" (click)="deleteProduct(product.id)">Eliminar</ion-button>
+              <ion-button fill="outline" color="danger" (click)="deleteProduct(product.id)">Borrar</ion-button>
             </div>
           </ion-label>
         </ion-item>

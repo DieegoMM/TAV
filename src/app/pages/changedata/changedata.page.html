@@ -1,10 +1,6 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Cambiar Datos</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
+<ion-content class="change-data-content">
+  <div class="form-container">
+    <h1 class="form-title">Cambia tus datos</h1>
   <form [formGroup]="changeDataForm" (ngSubmit)="saveChanges()">
     <!-- Campo Nombre -->
     <ion-item>
@@ -66,13 +62,20 @@
     </ion-item>
     
     <!-- Vista previa de la imagen seleccionada -->
-    <ion-img
-      *ngIf="changeDataForm.get('profileImage')?.value"
-      [src]="changeDataForm.get('profileImage')?.value"
-      style="margin-top: 10px; width: 100px; height: 100px;">
-    </ion-img>
+    <img
+    class="profile-image-preview"
+    *ngIf="changeDataForm.get('profileImage')?.value"
+    [src]="changeDataForm.get('profileImage')?.value"
+    alt="Foto de perfil"
+    />
 
     <!-- Botón Guardar Cambios -->
     <ion-button expand="block" type="submit" [disabled]="changeDataForm.invalid">Guardar Cambios</ion-button>
   </form>
+
+  <!-- Botón Volver al Perfil -->
+    <ion-button expand="block" fill="outline" color="secondary" routerLink="/profile">
+      Volver al Perfil
+    </ion-button>
+  </div>
 </ion-content>

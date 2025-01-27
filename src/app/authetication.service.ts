@@ -180,8 +180,6 @@ export class AutheticationService {
       throw error;
     }
   }
-  
-  
 
   private async reauthenticate(currentPassword: string): Promise<void> {
     const user = await this.afAuth.currentUser; // Obtén el usuario autenticado
@@ -198,5 +196,11 @@ export class AutheticationService {
     await user.reauthenticateWithCredential(credential);
     console.log('Usuario reautenticado correctamente.');
   }
+
+  isLoggedIn(): boolean {
+    const user = firebase.auth().currentUser; // Verifica si hay un usuario autenticado
+    return !!user; // Retorna true si existe un usuario, false si no
+  }
+  
 
 }

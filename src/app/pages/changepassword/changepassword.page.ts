@@ -22,14 +22,18 @@ export class ChangepasswordPage implements OnInit {
       currentPassword: ['', [Validators.required]], // Contraseña actual
       newPassword: ['', [Validators.required, 
         Validators.pattern(
-          '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'
-        )]], // Nueva contraseña
+          '^(?=.*[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ])(?=.*[A-ZÁÉÍÓÚÜÑ])(?=.*[a-záéíóúüñ])(?=.*\\d)(?=.*[@$!%*?&])\\S{8,}$'
+        )        
+        ]], // Nueva contraseña
     });
   }
 
   ngOnInit() {}
 
   async updatePassword() {
+    console.log('Formulario válido:', this.passwordForm.valid);
+    console.log('Valores del formulario:', this.passwordForm.value);
+  
     if (this.passwordForm.invalid) {
       alert('Por favor, completa el formulario correctamente.');
       return;
@@ -48,4 +52,5 @@ export class ChangepasswordPage implements OnInit {
       alert('Hubo un error al actualizar la contraseña.');
     }
   }
+  
 }

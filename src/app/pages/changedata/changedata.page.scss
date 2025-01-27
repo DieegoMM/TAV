@@ -1,0 +1,89 @@
+.change-data-content {
+    --background: transparent; /* Evitar el color de fondo predeterminado de Ionic */
+    background-image: url('../../../assets/fondo.jpg'); /* Ruta de tu imagen */
+    background-size: cover; /* La imagen cubrirá todo el fondo */
+    background-position: center; /* Centrar la imagen */
+    background-repeat: no-repeat; /* Evitar que la imagen se repita */
+    backdrop-filter: blur(10px); /* Efecto borroso sobre la imagen */
+    padding: 20px; /* Espaciado interno */
+    height: 100%; /* Asegurar que ocupe todo el alto */
+  }
+  
+  
+  ion-item {
+    --background: rgba(255, 255, 255, 0.2); /* Fondo semitransparente para los ítems */
+    --border-radius: 10px; /* Bordes redondeados */
+    margin-bottom: 15px; /* Separación entre ítems */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+  }
+  
+  ion-label {
+    color: white; /* Texto blanco */
+  }
+  
+  ion-input, ion-select {
+    color: white; /* Texto dentro de los campos */
+  }
+  
+  ion-button {
+    --background: #5f50c6; /* Color de fondo del botón */
+    --color: white; /* Color del texto */
+    --border-radius: 10px; /* Bordes redondeados */
+  }
+  
+  ion-button:hover {
+    --background: #4a40a5; /* Color más oscuro al pasar el mouse */
+  }
+
+  .profile-image-preview {
+    display: block;
+    margin: 20px auto; /* Centrar la imagen */
+    width: 100px; /* Ancho de la imagen */
+    height: 100px; /* Alto de la imagen */
+    border-radius: 50%; /* Bordes redondeados */
+    object-fit: cover; /* Ajusta la imagen sin deformarla */
+    border: 3px solid #5f50c6; /* Borde con color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para resaltar */
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    height: 100%; /* Toma todo el alto disponible */
+    padding: 20px; /* Espaciado interno */
+    text-align: center;
+  }
+  
+  /* Título del formulario */
+  .form-title {
+    font-size: 1.5rem; /* Tamaño del texto */
+    color: white; /* Color blanco */
+    margin-bottom: 20px; /* Espacio debajo del título */
+  }
+
+  /* Contenedor para centrar el formulario */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    height: 100%; /* Toma todo el alto disponible */
+    padding: 20px; /* Espaciado interno */
+    text-align: center;
+  }
+
+  ion-button[routerLink="/profile"] {
+    margin-top: 10px; /* Espaciado superior */
+    font-weight: bold;
+    --border-radius: 12px; /* Bordes redondeados */
+    --color: white; /* Color del texto */
+    --background: transparent; /* Fondo transparente */
+    --border-color: #5f50c6; /* Borde color secundario */
+  }
+  
+  ion-button[routerLink="/profile"]:hover {
+    --background: #5f50c6; /* Fondo color secundario al pasar el mouse */
+    --color: white;
+  }
