@@ -40,3 +40,100 @@
     text-decoration: underline;
     color: #5f50c6; /* Color secundario */
   }
+
+  /* Fondo del contenido */
+ion-content {
+    --background: url('/assets/fondo.jpg') no-repeat center center / cover; /* Fondo con la imagen */
+    backdrop-filter: blur(10px); /* Efecto borroso para dar estilo */
+    padding: 10px; /* Espaciado interno */
+  }
+  
+  /* Encabezado */
+  .heading {
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .session-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espaciado entre botones */
+    margin-bottom: 20px;
+  }
+  
+  .session-buttons a {
+    text-decoration: none;
+    color: #007bff; /* Azul para los enlaces */
+    font-weight: bold;
+  }
+  
+  /* Contenedor de productos */
+  .products-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los productos se ajusten en varias filas */
+    gap: 20px; /* Espaciado entre tarjetas */
+    justify-content: center; /* Centra las tarjetas */
+    margin-top: 20px;
+  }
+  
+  /* Tarjetas de productos */
+  .product-card {
+    width: 300px; /* Ancho de cada tarjeta */
+    background: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+    border-radius: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra */
+    overflow: hidden;
+  }
+  
+  .product-image {
+    height: 200px; /* Altura fija para la imagen */
+    width: 100%; /* Ocupa todo el ancho */
+    object-fit: cover; /* Ajusta la imagen dentro del contenedor */
+    border-bottom: 2px solid #5f50c6; /* Línea decorativa debajo de la imagen */
+  }
+  
+  .product-header {
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.8); /* Fondo oscuro para el título */
+  }
+  
+  .product-title {
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  
+  /* Contenido del producto */
+  .product-content {
+    padding: 10px;
+    color: white;
+    font-size: 0.9rem;
+  }
+  
+  .product-link {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .product-link:hover {
+    text-decoration: underline; /* Subrayado al pasar el mouse */
+  }
+  
+  .product-button {
+    --background: #5f50c6;
+    --color: white;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .product-card:hover {
+    transform: translateY(-10px); /* Eleva la tarjeta al pasar el cursor */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Aumenta la sombra */
+  }
+
+  .product-button:hover {
+    --background: #4834d4; /* Cambia el color al pasar el cursor */
+  }

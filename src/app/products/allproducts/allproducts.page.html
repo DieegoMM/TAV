@@ -1,5 +1,6 @@
 <ion-content>
 
+  <!-- Encabezado -->
   <div class="heading">
     <div>
       <div>
@@ -25,26 +26,36 @@
     </div>
   </div>
 
-  <!-- Contenido de los productos -->
-  <div>
-    <ion-card *ngFor="let product of products">
-      <ion-img [src]="product.image" alt="Imagen del producto"></ion-img>
-      <ion-card-header>
-        <ion-card-title>{{ product.name }}</ion-card-title>
+  <!-- Contenedor de productos -->
+  <div class="products-container">
+    <ion-card class="product-card" *ngFor="let product of products">
+      
+      <!-- Imagen del producto con navegación -->
+      <a [routerLink]="['/product-profile', product.id]">
+        <ion-img [src]="product.image" alt="Imagen del producto" class="product-image"></ion-img>
+      </a>
+
+      <!-- Encabezado del producto -->
+      <ion-card-header class="product-header">
+        <ion-card-title class="product-title">{{ product.name }}</ion-card-title>
       </ion-card-header>
-      <ion-card-content>
+
+      <!-- Detalles del producto -->
+      <ion-card-content class="product-content">
         <p>
           <strong>Vendedor:</strong>
           <a 
             [routerLink]="['/profile', product.ownerId]" 
-            style="text-decoration: none; color: #007bff; font-weight: bold;">
+            class="product-link">
             {{ product.ownerName }}
           </a>
         </p>
         <p><strong>Precio:</strong> {{ product.price | currency }}</p>
         <p><strong>Estado:</strong> {{ stateMap[product.state] || product.state }}</p>
         <p><strong>Región:</strong> {{ formatRegion(product.region) }}</p>
-        <ion-button [routerLink]="['/product-profile', product.id]" fill="outline">
+
+        <!-- Botón Ver Producto -->
+        <ion-button [routerLink]="['/product-profile', product.id]" fill="outline" class="product-button">
           Ver Producto
         </ion-button>
       </ion-card-content>
