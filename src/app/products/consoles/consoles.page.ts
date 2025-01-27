@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
+import { AutheticationService } from 'src/app/authetication.service';
 
 @Component({
   selector: 'app-consoles',
@@ -9,8 +10,12 @@ import { ProductService } from '../../services/product.service';
 })
 export class ConsolesPage implements OnInit {
   consoles: any[] = []; // Aquí se almacenarán las consolas
+  isAuthenticated: boolean = false;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private authService: AutheticationService // Inyección del servicio de autenticación
+  ) {}
 
   stateMap = {
     sin_uso: 'Sin uso',
@@ -22,7 +27,13 @@ export class ConsolesPage implements OnInit {
 
   async ngOnInit() {
     try {
+      // Obteniendo las consolas por tipo
       this.consoles = await this.productService.getProductsByType('consolas');
+
+      // Obteniendo el estado de autenticación
+      this.authService.getAuthState().subscribe((user) => {
+        this.isAuthenticated = !!user; // true si el usuario está autenticado, false si no
+      });
     } catch (error) {
       console.error('Error al cargar consolas:', error);
     }
@@ -36,5 +47,8 @@ export class ConsolesPage implements OnInit {
       .join(' ')
       .replace("O'higgins", "O'Higgins"); // Caso especial para O'Higgins
   }
-  
+
+  logout() {
+    this.authService.signOut(); // Llama al método para cerrar sesión
+  }
 }

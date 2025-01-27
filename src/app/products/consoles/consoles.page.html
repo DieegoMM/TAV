@@ -5,36 +5,70 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let console of consoles">
-    <ion-img [src]="console.image" alt="Imagen del producto" [routerLink]="['/product-profile', console.id]"></ion-img>
-    <ion-card-header>
-      <ion-card-title>{{ console.name }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
+  <!-- Encabezado similar al de AllProducts -->
+  <div class="heading">
+    <div>
+      <div>
+        <!-- Botón de menú -->
+        <ion-buttons slot="start">
+          <ion-menu-button mode="ios" colors="dark"></ion-menu-button>
+          <ion-label>Consolas</ion-label>
+        </ion-buttons>
+      </div>
+    </div>
 
-      <p>
-        <strong>Vendedor:</strong>
-        <a 
-          [routerLink]="['/profile', console.ownerId]" 
-          style="text-decoration: none; color: #007bff; font-weight: bold;">
-          {{ console.ownerName }}
-        </a>
-      </p> 
+    <!-- Opciones de sesión -->
+    <div class="session-buttons">
+      <ng-container *ngIf="isAuthenticated">
+        <a routerLink="/home">Inicio</a>
+        <a routerLink="/profile">Mi Perfil</a>
+        <a href="#" (click)="logout()">Cerrar Sesión</a>
+      </ng-container>
+      <ng-container *ngIf="!isAuthenticated">
+        <a routerLink="/home">Inicio</a>
+        <a routerLink="/login">Iniciar Sesión</a>
+        <a routerLink="/signup">Registrarse</a>
+      </ng-container>
+    </div>
+  </div>
 
-      <p><strong>Precio:</strong> {{ console.price | currency }}</p>
-      <p><strong>Estado:</strong> {{ stateMap[console.state] || console.state }}</p>
+  <!-- Contenedor de consolas -->
+  <div class="products-container">
+    <ion-card class="product-card" *ngFor="let console of consoles">
+      <!-- Imagen de la consola con navegación -->
+      <a [routerLink]="['/product-profile', console.id]">
+        <ion-img [src]="console.image" alt="Imagen del producto" class="product-image"></ion-img>
+      </a>
 
-      <p><strong>Región:</strong> {{ formatRegion(console.region) }}</p>
+      <!-- Encabezado de la consola -->
+      <ion-card-header class="product-header">
+        <ion-card-title class="product-title">{{ console.name }}</ion-card-title>
+      </ion-card-header>
 
-      <!-- Botón para ir al perfil del vendedor -->
-      <ion-button [routerLink]="['/profile', console.ownerId]" fill="outline" size="small">
-        Ver Perfil
-      </ion-button>
+      <!-- Detalles de la consola -->
+      <ion-card-content class="product-content">
+        <p>
+          <strong>Vendedor:</strong>
+          <a 
+            [routerLink]="['/profile', console.ownerId]" 
+            class="product-link">
+            {{ console.ownerName }}
+          </a>
+        </p>
+        <p><strong>Precio:</strong> {{ console.price | currency }}</p>
+        <p><strong>Estado:</strong> {{ stateMap[console.state] || console.state }}</p>
+        <p><strong>Región:</strong> {{ formatRegion(console.region) }}</p>
 
-    </ion-card-content>
-  </ion-card>
+        <!-- Botón Ver Producto -->
+        <ion-button [routerLink]="['/product-profile', console.id]" fill="outline" class="product-button">
+          Ver Producto
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
-  <ion-text *ngIf="consoles.length === 0">
+  <!-- Texto cuando no haya consolas -->
+  <ion-text *ngIf="consoles.length === 0" class="no-products-text">
     No se encontraron consolas.
   </ion-text>
 </ion-content>

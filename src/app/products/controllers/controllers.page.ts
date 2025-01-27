@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
+import { AutheticationService } from 'src/app/authetication.service';
 
 @Component({
   selector: 'app-controllers',
@@ -9,6 +10,7 @@ import { ProductService } from '../../services/product.service';
 })
 export class ControllersPage implements OnInit {
   controllers: any[] = []; // Lista de productos de tipo "mandos"
+  isAuthenticated: boolean = false;
 
   stateMap = {
     sin_uso: 'Sin uso',
@@ -18,23 +20,29 @@ export class ControllersPage implements OnInit {
     inutilizable: 'Necesita reparo',
   };
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private authService: AutheticationService) {}
 
   async ngOnInit() {
     try {
-      // Obtener todos los productos desde el servicio
+      // Obtener todos los productos
       const allProducts = await this.productService.getAllProducts();
       console.log('Todos los productos:', allProducts);
-
-      // Filtrar los productos cuyo tipo sea "mandos"
+  
+      // Filtrar productos de tipo "mandos"
       this.controllers = allProducts.filter(
         (product) => product.type === 'mandos'
       );
       console.log('Productos tipo "mandos":', this.controllers);
+  
+      // Verificar si el usuario está autenticado
+      this.authService.getAuthState().subscribe((user) => {
+        this.isAuthenticated = !!user; // True si hay usuario autenticado
+      });
     } catch (error) {
       console.error('Error al cargar los mandos:', error);
     }
   }
+  
 
   formatRegion(region: string | undefined): string {
     if (!region) return 'No especificada'; // Si no hay región
@@ -43,6 +51,10 @@ export class ControllersPage implements OnInit {
       .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' ')
       .replace("O'higgins", "O'Higgins"); // Caso especial para O'Higgins
+  }
+
+  logout() {
+    this.authService.signOut(); // Cierra la sesión del usuario
   }
   
 }

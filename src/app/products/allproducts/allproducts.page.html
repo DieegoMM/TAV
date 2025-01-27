@@ -16,6 +16,7 @@
     <div class="session-buttons">
       <ng-container *ngIf="isAuthenticated">
         <a routerLink="/home">Inicio</a>
+        <a routerLink="/profile">Mi Perfil</a>
         <a href="#" (click)="logout()">Cerrar Sesión</a>
       </ng-container>
       <ng-container *ngIf="!isAuthenticated">
