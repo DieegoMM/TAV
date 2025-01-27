@@ -10,7 +10,7 @@ ion-content {
   background-color: rgba(15, 13, 83, 0.8); /* Color principal */
   backdrop-filter: blur(10px); /* Desenfoque del fondo */
   width: 100%;
-  height: 250px; /* Incrementar altura para más espacio */
+  height: 225px; /* Incrementar altura para más espacio */
   border-bottom-right-radius: 55px;
   border-bottom-left-radius: 55px;
   display: flex;
@@ -167,4 +167,84 @@ ion-button {
 
 ion-item {
   margin-top: 10px; /* Asegura separación */
+}
+
+/* Contenedor principal */
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
+  justify-content: flex-start; /* Alinea verticalmente al inicio */
+  padding: 20px;
+  color: #e0e0e0;
+}
+
+/* Selector de regiones */
+.region-selector {
+  margin-bottom: 20px;
+  width: 80%;
+  max-width: 400px;
+  --placeholder-color: #ffffff; /* Color del placeholder */
+}
+
+/* Lista de productos */
+.product-list {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espacio entre los productos */
+}
+
+/* Elementos individuales de la lista */
+ion-item {
+  --background: #5f50c6; /* Fondo negro semitransparente */
+  --border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 6px #5f50c6; /* Sombra */
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+ion-item:hover {
+  transform: translateY(-5px); /* Eleva el producto al pasar el cursor */
+  box-shadow: 0 6px 10px #5f50c6; /* Aumenta la sombra */
+}
+
+/* Imagen del producto */
+ion-thumbnail {
+  margin-right: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+}
+
+ion-thumbnail ion-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajusta la imagen sin distorsionarla */
+}
+
+/* Información del producto */
+ion-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #e0e0e0; /* Texto gris claro */
+}
+
+ion-label h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+  color: #ffffff; /* Títulos blancos */
+}
+
+ion-label p {
+  margin: 3px 0;
+  font-size: 0.9rem;
+  color: #cccccc; /* Texto de detalle gris claro */
 }

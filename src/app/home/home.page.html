@@ -31,34 +31,33 @@
     </div>
   </div>
 
-  <!-- Selector de regiones oculto -->
+  <div class="content-container">
+    <!-- Selector de regiones oculto -->
   <ion-select 
-    [(ngModel)]="selectedRegion" 
-    (ionChange)="applyFilters()" 
-    (ionCancel)="clearRegionFilter()"
-  >
-    <ion-select-option *ngFor="let region of regions" [value]="region.trim().toLowerCase()">
-      {{ region }}
-    </ion-select-option>
-  </ion-select>
+  [(ngModel)]="selectedRegion" 
+  (ionChange)="applyFilters()" 
+  placeholder="Buscar en tu Región"
+  (ionCancel)="clearRegionFilter()"
+>
+  <ion-select-option *ngFor="let region of regions" [value]="region.trim().toLowerCase()">
+    {{ region }}
+  </ion-select-option>
+</ion-select>
 
-  <!-- Lista de productos -->
-  <ion-list *ngIf="filteredProducts.length > 0">
-    <ion-item *ngFor="let product of filteredProducts" (click)="goToProduct(product.id)">
-      <ion-thumbnail slot="start">
-        <ion-img [src]="product.image"></ion-img>
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ product.name }}</h2>
-        <p><strong>Tipo:</strong> {{ product.type }}</p>
-        <p><strong>Precio:</strong> {{ product.price | currency }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-  
-  <ion-text *ngIf="filteredProducts.length === 0">
-    No se encontraron productos.
-  </ion-text>
+<!-- Lista de productos -->
+<ion-list *ngIf="filteredProducts.length > 0">
+  <ion-item *ngFor="let product of filteredProducts" (click)="goToProduct(product.id)">
+    <ion-thumbnail slot="start">
+      <ion-img [src]="product.image"></ion-img>
+    </ion-thumbnail>
+    <ion-label>
+      <h2>{{ product.name }}</h2>
+      <p><strong>Tipo:</strong> {{ product.type }}</p>
+      <p><strong>Precio:</strong> {{ product.price | currency }}</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
+  </div>
 
   <!-- Sección de imágenes con enlaces -->
   <div class="services">
