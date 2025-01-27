@@ -1,8 +1,202 @@
-.header-title {
-    clear: left;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 30px;
-    margin-bottom: 0;
-    margin-top: 0;
+/* Heading */
+.heading {
+  background-color: rgba(15, 13, 83, 0.8); /* Color principal */
+  width: 100%;
+  height: 125px; /* Ajustar altura */
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #fff;
+}
+
+.heading ion-label {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+/* Opciones de sesión */
+.session-buttons {
+  margin-top: 10px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.session-buttons a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.session-buttons a:hover {
+  text-decoration: underline;
+  color: #5f50c6; /* Color secundario */
+}
+
+/* Opciones de edición */
+.edit-options {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-options a {
+  color: #5f50c6; /* Color secundario */
+  font-size: 14px;
+  text-decoration: none;
+  margin-bottom: 5px;
+}
+
+.edit-options a:hover {
+  text-decoration: underline;
+}
+
+ion-content {
+  --background: url('/assets/fondo.jpg') no-repeat center center / cover;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.userdatos ion-card {
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+  backdrop-filter: blur(10px); /* Desenfoque del fondo */
+  border-radius: 15px; /* Bordes redondeados */
+  padding: 15px;
+  color: #fff; /* Texto en blanco para contraste */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
+  width: 100%;
+  max-width: 400px; /* Ancho máximo para mantener diseño responsivo */
+  margin: 20px auto; /* Centrado vertical y horizontal */
+}
+
+.userdatos ion-card-header {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.imagen {
+  display: block;
+  margin: 20px auto; /* Centrar la imagen */
+  width: 150px !important; /* Asegura el tamaño */
+  height: 150px !important; /* Mantiene proporciones */
+  border-radius: 50% !important; /* Hace que la imagen sea circular */
+  object-fit: cover !important; /* Ajusta la imagen dentro del contenedor */
+  border: 5px solid #5f50c6; /* Borde del color secundario */
+  background-color: transparent !important; /* Sin color de fondo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para resaltar */
+}
+
+.userdatos p {
+  font-size: 16px;
+  margin: 10px 0;
+  color: #fff;
+}
+
+.userdatos ion-button {
+  --background: #5f50c6; /* Color secundario */
+  --color: #fff;
+  --border-radius: 6px;
+  font-size: 12px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+.userdatos ion-button:hover {
+  --background: #4a40a5; /* Color más oscuro al pasar el mouse */
+}
+
+.edit-options ion-card {
+  background-color: rgba(15, 13, 83, 0.8); /* Fondo semitransparente */
+  border-radius: 12px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+  padding: 15px;
+  margin: 20px 0;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.option-link {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #5f50c6; /* Color secundario */
+  transition: all 0.3s ease;
+}
+
+.option-link ion-icon {
+  font-size: 20px;
+  margin-right: 10px;
+  color: #5f50c6;
+}
+
+.option-link:hover {
+  color: #4a40a5; /* Color más oscuro al pasar el mouse */
+  text-decoration: underline;
+}
+
+ion-button {
+  --background: #5f50c6; /* Color del botón */
+  --color: white;
+  font-size: 16px;
+  font-weight: bold;
+  --border-radius: 10px;
+}
+
+ion-button:hover {
+  --background: #4a40a5; /* Color más oscuro al pasar el mouse */
+}
+
+.producto-card {
+  width: 80%; /* Ajusta el ancho de los cards al 80% del contenedor */
+  max-width: 400px; /* Ancho máximo similar al card de perfil */
+  margin: 15px auto; /* Centra los cards y agrega un espacio entre ellos */
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  backdrop-filter: blur(10px); /* Efecto de desenfoque */
+  border-radius: 15px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
+  padding: 15px; /* Espaciado interno */
+}
+
+.prueba {
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+
+  width: 100%; /* Ajusta el ancho de los cards al 80% del contenedor */
+  max-width: 400px; /* Ancho máximo similar al card de perfil */
+  margin: 15px auto; /* Centra los cards y agrega un espacio entre ellos */
+  border-radius: 15px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
+  padding: 15px; /* Espaciado interno */
+}
+
+.prueba2 {
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+  backdrop-filter: blur(10px); /* Efecto borroso */
+  border-radius: 15px; /* Bordes redondeados */
+  padding: 15px; /* Espaciado interno */
+  margin-bottom: 20px; /* Espaciado entre tarjetas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para resaltar */
 }

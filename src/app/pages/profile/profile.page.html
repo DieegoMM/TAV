@@ -1,103 +1,125 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Perfil del Usuario</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+    <div class="heading">
+      <div>
+        <div>
+          <!-- Botón de menú -->
+          <ion-buttons slot="start">
+            <ion-menu-button mode="ios" colors="dark"></ion-menu-button>
+            <ion-label>Perfil de Usuario</ion-label>
+          </ion-buttons>
+        </div>
+      </div>
+    
+      <!-- Opciones debajo del título -->
+      <div class="session-buttons">
+        <ng-container *ngIf="isAuthenticated">
+          <a routerLink="/home">Inicio</a>
+          <a href="#" (click)="logout()">Cerrar Sesión</a>
+        </ng-container>
+        <ng-container *ngIf="!isAuthenticated">
+          <a routerLink="/home">Inicio</a>
+          <a routerLink="/login">Iniciar Sesión</a>
+          <a routerLink="/signup">Registrarse</a>
+        </ng-container>
+      </div>
+    </div>
+  
   <!-- Mostrar datos actuales -->
-  <ion-card *ngIf="userData">
-    <ion-card-header>
-      <ion-card-title>
-        Perfil de {{ userData.fullname || 'Usuario' }}
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-img
-        *ngIf="userData.profileImage"
-        [src]="userData.profileImage"
-        style="width: 100px; height: 100px; border-radius: 50px; margin-bottom: 15px;">
-      </ion-img>
-
-      <p><strong>Edad:</strong> {{ userData.edad || 'No especificada' }}</p>
-
-      <p><strong>Región:</strong> {{ formatRegion(userData?.region) }}</p>
-
-      <p>
-      <strong>Email:</strong> {{ userData.email || 'No disponible' }}
-        <ion-button
-          *ngIf="userData.email"
-          fill="outline"
-          color="secondary"
-          size="small"
-          (click)="copyToClipboard(userData.email)">
-          Copiar Email
-        </ion-button>
-      </p>
-
-      <p>
-        <strong>Teléfono:</strong> {{ userData.phone || 'No disponible' }}
-        <ion-button
-          *ngIf="userData.email"
-          fill="outline"
-          color="secondary"
-          size="small"
-          (click)="copyToClipboard(userData.phone)">
-          Copiar Número
-        </ion-button>
-      </p>
-    </ion-card-content>
-  </ion-card>
+  <div class="userdatos">
+    <ion-card *ngIf="userData">
+      <ion-card-header>
+        <ion-card-title>
+          {{ userData.fullname || 'Usuario' }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <img
+          class="imagen"
+          *ngIf="userData.profileImage"
+          [src]="userData.profileImage"
+          alt="Foto de perfil"
+        />
+  
+        <p><strong>Edad:</strong> {{ userData.edad || 'No especificada' }}</p>
+  
+        <p><strong>Región:</strong> {{ formatRegion(userData?.region) }}</p>
+  
+        <p>
+        <strong>Email:</strong> {{ userData.email || 'No disponible' }}
+          <ion-button
+            *ngIf="userData.email"
+            fill="outline"
+            color="secondary"
+            size="small"
+            (click)="copyToClipboard(userData.email)">
+            Copiar Email
+          </ion-button>
+        </p>
+  
+        <p>
+          <strong>Teléfono:</strong> {{ userData.phone || 'No disponible' }}
+          <ion-button
+            *ngIf="userData.email"
+            fill="outline"
+            color="secondary"
+            size="small"
+            (click)="copyToClipboard(userData.phone)">
+            Copiar Número
+          </ion-button>
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
   <!-- Opciones de edición: Solo visibles para el usuario autenticado -->
-<div *ngIf="userData?.uid === currentUserId">
-  <a [routerLink]="['/changedata']">Cambia tus datos</a>
-  <p><a [routerLink]="['/changepassword']">Cambia tu contraseña</a></p>
-  <ion-button expand="block" routerLink="/addproduct">
-    Agregar Producto
-  </ion-button>
-</div>
+  <div class="edit-options" *ngIf="userData?.uid === currentUserId">
+    <ion-card>
+      <ion-card-content>
+        <div class="options-container">
+          <a routerLink="/changedata" class="option-link">
+            <ion-icon name="create-outline"></ion-icon>
+            Cambia tus datos
+          </a>
+          <a routerLink="/changepassword" class="option-link">
+            <ion-icon name="key-outline"></ion-icon>
+            Cambia tu contraseña
+          </a>
+        </div>
+        <ion-button expand="block" routerLink="/addproduct" color="primary">
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          Agregar Producto
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
-<!-- Productos en venta -->
-<ion-card *ngIf="products && products.length > 0">
+<div class="productos">
+  <!-- Productos en venta -->
+<ion-card *ngIf="products && products.length > 0" class="prueba">
   <ion-card-header>
     <ion-card-title>Productos en venta</ion-card-title>
   </ion-card-header>
   <ion-card-content>
-    <ion-list>
-      <ion-item *ngFor="let product of products">
-        <ion-thumbnail slot="start" (click)="goToProduct(product.id)">
-          <ion-img [src]="product.image"></ion-img>
-        </ion-thumbnail>
-        <ion-label>
-          <h2 (click)="goToProduct(product.id)" style="cursor: pointer; color: #007bff;">
-            {{ product.name }}
-          </h2>
-          <p><strong>Tipo:</strong> {{ product.type }}</p>
-          <p><strong>Estado:</strong> {{ stateMap[product.state] }}</p>
-          <p><strong>Precio:</strong> {{ product.price | currency }}</p>
-        </ion-label>
-        <!-- Acciones solo visibles para el usuario autenticado -->
-        <div class="action-buttons" *ngIf="userData?.uid === currentUserId">
-          <ion-button fill="outline" color="primary" (click)="editProduct(product.id)">
-            Editar
-          </ion-button>
-          <ion-button
-            fill="outline"
-            color="danger"
-            (click)="deleteProduct(product.id)">
-            Eliminar
-          </ion-button>
-        </div>
-      </ion-item>
-    </ion-list>
-  </ion-card-content>
-</ion-card>
+      
+      <ion-card *ngFor="let product of products" class="prueba2">
+        <ion-item class="producto-contenedor">
+          <ion-thumbnail slot="start" class="producto-imagen" (click)="goToProduct(product.id)">
+            <ion-img [src]="product.image"></ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            <h2 (click)="goToProduct(product.id)">{{ product.name }}</h2>
+            <div class="action-buttons" *ngIf="userData?.uid === currentUserId">
+              <ion-button fill="outline" color="primary" (click)="editProduct(product.id)">Editar</ion-button>
+              <ion-button fill="outline" color="danger" (click)="deleteProduct(product.id)">Eliminar</ion-button>
+            </div>
+          </ion-label>
+        </ion-item>
+      </ion-card>
+      
 
   <ion-text *ngIf="products && products.length === 0">
     Aún no tienes productos en venta.
   </ion-text>
 
   <ion-text *ngIf="!userData">Cargando datos del usuario...</ion-text>
-</ion-content>
 

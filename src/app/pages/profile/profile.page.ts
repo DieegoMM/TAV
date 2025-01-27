@@ -19,6 +19,7 @@ export class ProfilePage implements OnInit {
   editForm: FormGroup; // Formulario de edición
   products: any[] = [];
   currentUserId: string | null = null; // Aquí guardaremos el ID del usuario autenticado
+  isAuthenticated: boolean = true; // Cambia a true o false según necesites
 
   constructor(
     private authService: AutheticationService,
