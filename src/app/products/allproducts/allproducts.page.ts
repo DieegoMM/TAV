@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
+import { AutheticationService } from 'src/app/authetication.service';
 
 @Component({
   selector: 'app-allproducts',
@@ -8,6 +9,8 @@ import { ProductService } from '../../services/product.service';
   standalone: false,
 })
 export class AllproductsPage implements OnInit {
+  isAuthenticated: boolean = false;
+
   products: any[] = [];
   stateMap = {
     sin_uso: 'Sin uso',
@@ -24,16 +27,23 @@ export class AllproductsPage implements OnInit {
     console.log('ID del producto seleccionado:', product.id); // Esto debería mostrar un ID válido
   }
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private authService: AutheticationService) {}
 
   async ngOnInit() {
     try {
+      // Lógica para verificar si el usuario está autenticado
+      this.authService.getAuthState().subscribe((user) => {
+        this.isAuthenticated = !!user; // Si el usuario está autenticado, será true
+      });
+  
+      // Lógica para cargar productos
       this.products = await this.productService.getAllProducts();
       console.log('Productos cargados:', this.products);
     } catch (error) {
-      console.error('Error al cargar productos:', error);
+      console.error('Error al cargar productos o al verificar la autenticación:', error);
     }
   }
+  
 
   formatRegion(region: string | undefined): string {
     if (!region) return 'No especificada'; // Si no hay región
@@ -43,6 +53,9 @@ export class AllproductsPage implements OnInit {
       .join(' ')
       .replace("O'higgins", "O'Higgins"); // Caso especial para O'Higgins
   }
-  
-  
+
+  logout() {
+    this.authService.signOut();
+  }
+   
 }

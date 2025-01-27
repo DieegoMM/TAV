@@ -1,0 +1,42 @@
+/* Heading */
+.heading {
+    background-color: rgba(15, 13, 83, 0.8); /* Color principal */
+    backdrop-filter: blur(10px); /* Desenfoque del fondo */
+    width: 100%;
+    height: 125px; /* Ajustar altura */
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #fff;
+  }
+  
+  .heading ion-label {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  
+  /* Opciones de sesión */
+  .session-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .session-buttons a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .session-buttons a:hover {
+    text-decoration: underline;
+    color: #5f50c6; /* Color secundario */
+  }

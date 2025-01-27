@@ -1,36 +1,54 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Todos los Productos</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <ion-card *ngFor="let product of products">
-    <ion-img [src]="product.image" alt="Imagen del producto"></ion-img>
-    <ion-card-header>
-      <ion-card-title>{{ product.name }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
 
-      <p>
-        <strong>Vendedor:</strong>
-        <a 
-          [routerLink]="['/profile', product.ownerId]" 
-          style="text-decoration: none; color: #007bff; font-weight: bold;">
-          {{ product.ownerName }}
-        </a>
-      </p> 
+  <div class="heading">
+    <div>
+      <div>
+        <!-- Botón de menú -->
+        <ion-buttons slot="start">
+          <ion-menu-button mode="ios" colors="dark"></ion-menu-button>
+          <ion-label>Todos los Productos</ion-label>
+        </ion-buttons>
+      </div>
+    </div>
+  
+    <!-- Opciones debajo del título -->
+    <div class="session-buttons">
+      <ng-container *ngIf="isAuthenticated">
+        <a routerLink="/home">Inicio</a>
+        <a href="#" (click)="logout()">Cerrar Sesión</a>
+      </ng-container>
+      <ng-container *ngIf="!isAuthenticated">
+        <a routerLink="/home">Inicio</a>
+        <a routerLink="/login">Iniciar Sesión</a>
+        <a routerLink="/signup">Registrarse</a>
+      </ng-container>
+    </div>
+  </div>
 
-      <p><strong>Precio:</strong> {{ product.price | currency }}</p>
-      <p><strong>Estado:</strong> {{ stateMap[product.state] || product.state }}</p>
+  <!-- Contenido de los productos -->
+  <div>
+    <ion-card *ngFor="let product of products">
+      <ion-img [src]="product.image" alt="Imagen del producto"></ion-img>
+      <ion-card-header>
+        <ion-card-title>{{ product.name }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          <strong>Vendedor:</strong>
+          <a 
+            [routerLink]="['/profile', product.ownerId]" 
+            style="text-decoration: none; color: #007bff; font-weight: bold;">
+            {{ product.ownerName }}
+          </a>
+        </p>
+        <p><strong>Precio:</strong> {{ product.price | currency }}</p>
+        <p><strong>Estado:</strong> {{ stateMap[product.state] || product.state }}</p>
+        <p><strong>Región:</strong> {{ formatRegion(product.region) }}</p>
+        <ion-button [routerLink]="['/product-profile', product.id]" fill="outline">
+          Ver Producto
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
-      <p><strong>Región:</strong> {{ formatRegion(product.region) }}</p>
-
-      
-      <ion-button [routerLink]="['/product-profile', product.id]" fill="outline">
-        Ver Producto
-      </ion-button>
-      
-    </ion-card-content>
-  </ion-card>
 </ion-content>
